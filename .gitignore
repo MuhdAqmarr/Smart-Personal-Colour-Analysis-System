@@ -1,0 +1,55 @@
+# --- Node / JavaScript ---
+node_modules/
+.pnpm-store/
+*.tsbuildinfo
+.next/
+out/
+dist/
+build/
+coverage/
+.turbo/
+.vercel/
+.eslintcache
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# --- Environment and secrets (never commit real values) ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Uploads / generated image artefacts (privacy) ---
+apps/api/tmp/
+tmp-uploads/
+*.tmp-upload
+
+# --- Test / build artefacts ---
+playwright-report/
+test-results/
+blob-report/
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# --- Local scratch files (not part of the project) ---
+/mm.txt
+
+# --- Logs ---
+*.log
+logs/
