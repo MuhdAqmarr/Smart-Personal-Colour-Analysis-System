@@ -22,9 +22,11 @@ COPY packages/colour-engine/config ./config
 # --- Runtime ------------------------------------------------------------------
 FROM python:3.12-slim-bookworm
 
-# OpenCV(headless) and MediaPipe native libraries.
+# OpenCV(headless) and MediaPipe native libraries. MediaPipe's Linux build
+# links against GLES/EGL even for CPU inference (libGLESv2.so.2).
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libgl1 libglib2.0-0 curl \
+    && apt-get install -y --no-install-recommends \
+        libgl1 libgles2 libegl1 libglib2.0-0 curl \
     && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --uid 10001 appuser
 
