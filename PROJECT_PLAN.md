@@ -147,10 +147,10 @@
 - **Complexity:** M.
 
 ### Phase 13 — Documentation and handover (`docs/fyp-documentation`)
-- [ ] README (install→deploy), docs/ tree of §43, Mermaid diagrams
-- [ ] FYP methodology, evaluation templates, demo script
-- [ ] User manual + administrator manual
-- [ ] Final `PROJECT_STATUS.md` update
+- [x] README (install→deploy), docs/ tree of §43, Mermaid diagrams
+- [x] FYP methodology, evaluation templates, demo script
+- [x] User manual + administrator manual
+- [x] Final `PROJECT_STATUS.md` update
 - **Acceptance:** a new machine can follow README to a running system; FYP docs complete.
 - **Dependencies:** all previous phases.
 - **Complexity:** M.
