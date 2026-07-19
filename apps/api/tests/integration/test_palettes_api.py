@@ -12,9 +12,7 @@ pytestmark = pytest.mark.integration
 
 
 class TestCatalogue:
-    async def test_lists_four_seasons_with_subseasons(
-        self, app_client: httpx.AsyncClient
-    ) -> None:
+    async def test_lists_four_seasons_with_subseasons(self, app_client: httpx.AsyncClient) -> None:
         response = await app_client.get("/api/v1/seasons")
         assert response.status_code == 200
         body = response.json()
@@ -23,9 +21,7 @@ class TestCatalogue:
             assert len(season["subSeasons"]) == 3
             assert season["characteristics"]["temperature"] in ("warm", "cool")
 
-    async def test_season_detail_groups_and_cosmetics(
-        self, app_client: httpx.AsyncClient
-    ) -> None:
+    async def test_season_detail_groups_and_cosmetics(self, app_client: httpx.AsyncClient) -> None:
         response = await app_client.get("/api/v1/seasons/autumn")
         assert response.status_code == 200
         body = response.json()
@@ -47,11 +43,16 @@ class TestCatalogue:
         assert "forbidden" not in cautious_text
         assert len(body["cosmetics"]) >= 10
         types = {c["productType"] for c in body["cosmetics"]}
-        assert {"lipstick", "blusher", "eyeshadow", "eyeliner", "highlighter", "foundation"} <= types
+        assert {
+            "lipstick",
+            "blusher",
+            "eyeshadow",
+            "eyeliner",
+            "highlighter",
+            "foundation",
+        } <= types
 
-    async def test_subseason_signature_colours_merged(
-        self, app_client: httpx.AsyncClient
-    ) -> None:
+    async def test_subseason_signature_colours_merged(self, app_client: httpx.AsyncClient) -> None:
         plain = await app_client.get("/api/v1/seasons/winter")
         with_sub = await app_client.get("/api/v1/seasons/winter?subseason=deep-winter")
         plain_core = {c["name"] for c in plain.json()["groups"]["core"]}
@@ -103,9 +104,7 @@ class TestAnalysisPalette:
 
 
 class TestFavouriteColours:
-    async def favourite_first_core_colour(
-        self, app_client: httpx.AsyncClient, token: str
-    ) -> str:
+    async def favourite_first_core_colour(self, app_client: httpx.AsyncClient, token: str) -> str:
         season = await app_client.get("/api/v1/seasons/spring")
         colour_id: str = season.json()["groups"]["core"][0]["id"]
         response = await app_client.post(

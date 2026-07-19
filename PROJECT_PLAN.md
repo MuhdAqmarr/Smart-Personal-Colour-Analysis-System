@@ -108,10 +108,10 @@
 
 ### Phase 9 — Products (`feat/product-recommendations`)
 - [ ] Product/store/product-colour APIs with pagination, filters, sorting
-- [ ] CIEDE2000 palette-match ranking (documented formula)
-- [ ] Recommended products for an analysis; favourites
-- [ ] External-link safety (http/https only, new tab, noopener/noreferrer, store label)
-- [ ] CSV import backend: dry-run, row validation, duplicates, transactions, history, error report
+- [x] CIEDE2000 palette-match ranking (documented formula)
+- [x] Recommended products for an analysis; favourites
+- [x] External-link safety (http/https only, new tab, noopener/noreferrer, store label)
+- [x] CSV import backend: dry-run, row validation, duplicates, transactions, history, error report
 - **Acceptance:** ranking unit-tested; import integration-tested with sample + broken CSVs.
 - **Dependencies:** Phase 2, Phase 6 (CIEDE2000).
 - **Complexity:** L.
