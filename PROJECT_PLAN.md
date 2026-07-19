@@ -138,10 +138,10 @@
 - **Complexity:** L.
 
 ### Phase 12 — Deployment (`chore/production-deployment`)
-- [ ] Production Dockerfile validated; `render.yaml`
-- [ ] Vercel configuration + environment documentation
-- [ ] Supabase production checklist (auth URLs, buckets, policies, admin role)
-- [ ] Smoke-test scripts and manual-action checklist for the owner
+- [x] Production Dockerfile validated (amd64 build + in-container MediaPipe smoke); `render.yaml`
+- [x] Vercel configuration + environment documentation
+- [x] Supabase production checklist (auth URLs, buckets, policies, admin role)
+- [x] Smoke-test scripts and manual-action checklist for the owner
 - **Acceptance:** deployment fully prepared; anything requiring owner credentials precisely documented.
 - **Dependencies:** Phase 11.
 - **Complexity:** M.

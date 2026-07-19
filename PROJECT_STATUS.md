@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~88%** — Phases 0–11 complete.
+**~93%** — Phases 0–12 complete.
 
 ## Current phase
-Phase 11 — Testing and hardening: **complete**. Next: Phase 12 — Deployment preparation.
+Phase 12 — Deployment preparation: **complete**. Next: Phase 13 — Documentation and handover.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -80,6 +80,13 @@ Phase 11 — Testing and hardening: **complete**. Next: Phase 12 — Deployment 
   - Backend hardening tests: rate-limit 429 envelope, log-hygiene (no tokens/image bytes/oversized lines in structured logs), error envelopes never leak stack traces, CORS allow/deny behaviour.
   - New `e2e-ci.yml`: full-stack CI (Postgres service → migrations+seed → API → built web on port 3100 → Playwright) with failure artefacts.
 
+- **Phase 12 (`chore/production-deployment`):**
+  - `render.yaml` Blueprint (Docker runtime, root context, health check, full env-var manifest with secrets marked `sync: false`).
+  - **Production image proven locally**: built for linux/amd64 (337 MB) and smoke-tested in-container — health/readiness OK and the full MediaPipe path exercised (no-face → 422 envelope, valid face → 200 quality report). Found and fixed a real deploy blocker: MediaPipe's Linux build needs `libGLESv2`/`libEGL`, now in the runtime layer. Platform constraint documented (no linux/arm64 MediaPipe wheel — build with `--platform linux/amd64` on Apple Silicon).
+  - Production Content-Security-Policy on the web app (connect-src pinned to API + Supabase; the `unsafe-inline` trade-off documented as future nonce work).
+  - `docs/deployment-guide.md`: step-by-step Supabase (migrations→seed→auth URLs→admin promotion→pooler DSN), Render Blueprint, Vercel monorepo setup, §42.4 validation checklist, owner action list, Railway alternative, rollback notes.
+  - `scripts/smoke-test.sh`: 13 endpoint/header checks against deployed URLs.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -99,9 +106,9 @@ Phase 11 — Testing and hardening: **complete**. Next: Phase 12 — Deployment 
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `test/system-hardening` (PR → `main`)
-- Commit: see `git log` — Phase 11 hardening commit.
+- Branch: `chore/production-deployment` (PR → `main`)
+- Commit: see `git log` — Phase 12 deployment commit.
 
 ## Next actions
-1. Phase 12 (`chore/production-deployment`): render.yaml, Vercel configuration, Supabase production checklist, smoke-test script, owner manual-action list.
-2. Phase 13 (`docs/fyp-documentation`): full docs/ tree, FYP methodology, manuals, demo script.
+1. Phase 13 (`docs/fyp-documentation`): README overhaul, full docs/ tree (§43), Mermaid diagrams, FYP methodology + evaluation templates, user/admin manuals, demo script, final status.
+2. Owner actions for go-live are fully listed in docs/deployment-guide.md §5.

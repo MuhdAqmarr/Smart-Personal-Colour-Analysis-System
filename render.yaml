@@ -1,0 +1,37 @@
+# Render Blueprint for the ColourSense API.
+# Deploy: Render Dashboard → New → Blueprint → point at this repository.
+# Docs: docs/deployment-guide.md (§ Render backend).
+
+services:
+  - type: web
+    name: coloursense-api
+    runtime: docker
+    plan: starter # free tier works for demos; cold starts apply (see guide)
+    region: singapore
+    dockerfilePath: ./apps/api/Dockerfile
+    dockerContext: .
+    healthCheckPath: /api/v1/health
+    autoDeploy: true
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: FRONTEND_URL
+        sync: false # e.g. https://your-app.vercel.app (exact origin, no slash)
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false # leave empty on projects using asymmetric JWT signing keys
+      - key: DATABASE_URL
+        sync: false # Supabase pooler URI as postgresql+asyncpg://...
+      - key: MAX_IMAGE_SIZE_MB
+        value: "10"
+      - key: IMAGE_STORAGE_ENABLED
+        value: "true"
+      - key: RATE_LIMIT
+        value: 10/minute
+      - key: LOG_LEVEL
+        value: INFO
