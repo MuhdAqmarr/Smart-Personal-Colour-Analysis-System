@@ -28,13 +28,13 @@
 - **Complexity:** M.
 
 ### Phase 2 — Database and authentication (`feat/database-authentication`)
-- [ ] SQL migrations for all conceptual tables (§24 of master prompt)
-- [ ] Automatic `updated_at` triggers, constraints, indexes
-- [ ] RLS policies for every table + storage policies for private image bucket
-- [ ] `is_admin()` helper + role model (`profiles.role`)
-- [ ] Seed: 4 seasons, 12 sub-seasons, palette colours, cosmetics, demo stores/products
-- [ ] RLS verification script run against local Postgres (auth shim) in CI
-- [ ] Backend JWT verification (HS256 secret + JWKS support)
+- [x] SQL migrations for all conceptual tables (§24 of master prompt)
+- [x] Automatic `updated_at` triggers, constraints, indexes
+- [x] RLS policies for every table + storage policies for private image bucket
+- [x] `is_admin()` helper + role model (`profiles.role`)
+- [x] Seed: 4 seasons, 12 sub-seasons, 156 palette colours, 48 cosmetics, demo stores/products
+- [x] RLS verification script run against local Postgres (auth shim) in CI
+- [x] Backend JWT verification (HS256 secret + JWKS support)
 - **Acceptance:** migrations apply cleanly to a fresh Postgres; RLS verification script proves user isolation; seed loads; JWT guard unit-tested.
 - **Dependencies:** Phase 1.
 - **Complexity:** L.
