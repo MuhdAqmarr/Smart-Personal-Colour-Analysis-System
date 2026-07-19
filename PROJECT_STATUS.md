@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~93%** — Phases 0–12 complete.
+**~97%** — all 14 phases (0–13) complete. Remaining: owner-credential deployment actions only (docs/deployment-guide.md §5).
 
 ## Current phase
-Phase 12 — Deployment preparation: **complete**. Next: Phase 13 — Documentation and handover.
+Phase 13 — Documentation and handover: **complete**. The project meets the Definition of Done for everything achievable without owner credentials.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -87,6 +87,10 @@ Phase 12 — Deployment preparation: **complete**. Next: Phase 13 — Documentat
   - `docs/deployment-guide.md`: step-by-step Supabase (migrations→seed→auth URLs→admin promotion→pooler DSN), Render Blueprint, Vercel monorepo setup, §42.4 validation checklist, owner action list, Railway alternative, rollback notes.
   - `scripts/smoke-test.sh`: 13 endpoint/header checks against deployed URLs.
 
+- **Phase 13 (`docs/fyp-documentation`):**
+  - README overhauled (features → architecture → install → commands → deployment → doc index → privacy/limitations).
+  - Complete `docs/` tree per spec §43: architecture (user-flow + auth-flow Mermaid), database schema/ERD, API reference, colour-analysis methodology (formulas + pipeline diagram), classifier configuration guide with tuning history, privacy & consent, threat model (13 threats + accepted risks), security review (§50.4 checklist with evidence + findings fixed), testing report (suite inventory + counts + gaps stated honestly), deployment guide, user manual, administrator manual, 14-beat demo script with Q&A safety notes, FYP methodology summary (§44 complete), evaluation templates (§44.5 instruments incl. repeatability + fairness protocol), future work.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -106,9 +110,10 @@ Phase 12 — Deployment preparation: **complete**. Next: Phase 13 — Documentat
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `chore/production-deployment` (PR → `main`)
-- Commit: see `git log` — Phase 12 deployment commit.
+- Branch: `docs/fyp-documentation` (PR → `main`)
+- Commit: see `git log` — Phase 13 documentation commit.
 
-## Next actions
-1. Phase 13 (`docs/fyp-documentation`): README overhaul, full docs/ tree (§43), Mermaid diagrams, FYP methodology + evaluation templates, user/admin manuals, demo script, final status.
-2. Owner actions for go-live are fully listed in docs/deployment-guide.md §5.
+## Next actions (owner)
+1. Go-live: the 5-step owner list in `docs/deployment-guide.md` §5 (Supabase project + migrations/seed, Render Blueprint, Vercel project, admin promotion, smoke tests).
+2. FYP evaluation: run the human study using `docs/evaluation-template.md`; capture screenshots during `docs/demo-script.md`.
+3. Decide the repository licence (DECISIONS.md D-015).
