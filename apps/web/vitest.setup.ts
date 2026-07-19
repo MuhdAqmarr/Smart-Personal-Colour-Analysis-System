@@ -8,6 +8,11 @@ afterEach(() => {
   cleanup();
 });
 
+// jsdom does not define isSecureContext; camera code checks it explicitly.
+if (typeof window !== "undefined" && window.isSecureContext === undefined) {
+  Object.defineProperty(window, "isSecureContext", { value: true, configurable: true });
+}
+
 // jsdom lacks matchMedia; several UI primitives (sonner, Base UI) query it.
 if (typeof window !== "undefined" && !window.matchMedia) {
   window.matchMedia = (query: string) =>

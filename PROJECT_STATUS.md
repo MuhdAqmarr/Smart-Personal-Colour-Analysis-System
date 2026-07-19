@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~28%** — Phases 0–3 complete.
+**~34%** — Phases 0–4 complete.
 
 ## Current phase
-Phase 3 — UI foundation: **complete**. Next: Phase 4 — Image acquisition.
+Phase 4 — Image acquisition: **complete**. Next: Phase 5 — Image-quality engine.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -26,6 +26,14 @@ Phase 3 — UI foundation: **complete**. Next: Phase 4 — Image acquisition.
   - App shell: sidebar + mobile bottom nav, server-gated dashboard with real action cards and privacy note.
   - Accessible SwatchGrid (copy-HEX buttons, names + hex, never colour-only).
 
+- **Phase 4 (`feat/image-acquisition`):**
+  - Analysis wizard at `/analysis` with accessible step indicator (consent → guidance → photo → preview → analysis → results) and reducer-based state.
+  - Consent step: §11-compliant explanations (why the photo, geometry-only landmarks, temporary by default, deletion rights), required agreement gate, image-storage opt-in **off by default**.
+  - Photography guidance step (aim-for / avoid lists per §10.3).
+  - Camera capture: permission requested only on user action, front-camera preference, camera switching, SVG face-position guide, still-frame capture only (never recording), full track cleanup on capture/tab-hide/unmount, distinct denied / no-hardware / insecure-context / generic-error states with upload fallback.
+  - Upload dropzone: drag-drop + keyboard accessible, extension/MIME/size/empty checks, real decode via createImageBitmap with EXIF orientation baked in, client-side downscale to ≤1600px JPEG.
+  - Preview step with retake; object URLs revoked on replace/unmount. Processing step wired to `POST /api/v1/analyses` (TanStack mutation, retake-vs-retry error branching by error code); in-wizard results summary renders undertone/season/confidence/evidence.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -33,9 +41,9 @@ Phase 3 — UI foundation: **complete**. Next: Phase 4 — Image acquisition.
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- Web: `vitest` → **10 passed** (landing page, swatch grid incl. clipboard, sign-in form validation/redirect/failure).
+- Web: `vitest` → **24 passed** (adds image validation ×6, consent gating ×4, camera permission/hardware/HTTPS fallbacks ×4).
 - Contracts: **7 passed**. API unit: **30 passed**; integration: **5 passed**; RLS proof: **21/21**.
-- `pnpm --filter web build` → success (14 routes + proxy).
+- `pnpm --filter web build` → success (15 routes incl. /analysis + proxy).
 
 ## Latest test results
 - All green (2026-07-19).
@@ -45,9 +53,9 @@ Phase 3 — UI foundation: **complete**. Next: Phase 4 — Image acquisition.
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/design-system` (PR → `main`)
-- Commit: see `git log` — Phase 3 UI foundation commit.
+- Branch: `feat/image-acquisition` (PR → `main`)
+- Commit: see `git log` — Phase 4 image acquisition commit.
 
 ## Next actions
-1. Phase 4 (`feat/image-acquisition`): analysis wizard — consent step (opt-in storage off by default), photography guidance, camera capture with MediaDevices + fallback, upload with client-side validation, preview/retake.
-2. Phase 5 (`feat/image-quality-engine`): backend upload hardening + quality metrics + preview-quality endpoint.
+1. Phase 5 (`feat/image-quality-engine`): backend upload hardening (magic bytes, decode, bomb guard), MediaPipe face detection + landmarks, pose/blur/exposure/lighting/cast metrics, composite quality score, `POST /api/v1/analyses/preview-quality`.
+2. Phase 6 (`feat/colour-analysis-engine`): ROIs, colour science, undertone/season classifiers, confidence, explainability.
