@@ -12,6 +12,7 @@ from slowapi.errors import RateLimitExceeded
 from app.api.v1.router import api_router
 from app.core.classifier import get_classifier_config
 from app.core.config import get_settings
+from app.core.db import create_engine, create_session_factory
 from app.core.errors import register_error_handlers
 from app.core.logging import configure_logging, get_logger
 from app.core.request_context import RequestContextMiddleware, SecurityHeadersMiddleware
@@ -24,13 +25,26 @@ logger = get_logger(__name__)
 async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
     config = get_classifier_config()
+
+    if settings.database_url:
+        engine = create_engine(settings.database_url)
+        app.state.db_engine = engine
+        app.state.db_session_factory = create_session_factory(engine)
+    else:
+        app.state.db_engine = None
+        app.state.db_session_factory = None
+
     logger.info(
         "startup",
         environment=settings.app_env,
         classifier_version=config.version,
         classifier_name=config.name,
+        database_configured=bool(settings.database_url),
     )
     yield
+    active_engine = getattr(app.state, "db_engine", None)
+    if active_engine is not None:
+        await active_engine.dispose()
     logger.info("shutdown")
 
 
