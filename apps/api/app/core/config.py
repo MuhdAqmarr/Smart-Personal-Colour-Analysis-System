@@ -69,7 +69,15 @@ class Settings(BaseSettings):
     def cors_origins(self) -> list[str]:
         origins = {self.frontend_url}
         if self.app_env != "production":
-            origins.update({"http://localhost:3000", "http://127.0.0.1:3000"})
+            # Local dev server and the dedicated Playwright port (3100).
+            origins.update(
+                {
+                    "http://localhost:3000",
+                    "http://127.0.0.1:3000",
+                    "http://localhost:3100",
+                    "http://127.0.0.1:3100",
+                }
+            )
         return sorted(origins)
 
     @property

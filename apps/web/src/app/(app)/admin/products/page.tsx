@@ -323,10 +323,7 @@ export default function AdminProductsPage() {
           <div className="flex items-center justify-between">
             <p className="text-muted-foreground text-sm">
               {query.data.pagination.totalItems} products ·{" "}
-              <Link
-                href="/admin/imports"
-                className="text-primary underline-offset-4 hover:underline"
-              >
+              <Link href="/admin/imports" className="text-primary underline underline-offset-4">
                 bulk import via CSV
               </Link>
             </p>

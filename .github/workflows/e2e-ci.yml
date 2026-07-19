@@ -1,0 +1,118 @@
+name: E2E CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "apps/**"
+      - "packages/**"
+      - "supabase/**"
+      - "scripts/**"
+      - ".github/workflows/e2e-ci.yml"
+  pull_request:
+    paths:
+      - "apps/**"
+      - "packages/**"
+      - "supabase/**"
+      - "scripts/**"
+      - ".github/workflows/e2e-ci.yml"
+
+concurrency:
+  group: e2e-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  playwright:
+    name: Playwright (full stack)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: coloursense
+          POSTGRES_PASSWORD: coloursense
+          POSTGRES_DB: coloursense
+        ports:
+          - 54329:5432
+        options: >-
+          --health-cmd "pg_isready -U coloursense -d coloursense"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: "apps/api/uv.lock"
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install JS dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install API dependencies
+        working-directory: apps/api
+        run: uv sync --frozen
+
+      - name: Prepare database (shim + migrations + seed)
+        run: ./scripts/db-reset.sh
+        env:
+          DATABASE_URL: postgresql://coloursense:coloursense@localhost:54329/coloursense
+
+      - name: Start API
+        working-directory: apps/api
+        run: |
+          nohup uv run uvicorn app.main:app --port 8000 --no-access-log > /tmp/api.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:8000/api/v1/health && break
+            sleep 1
+          done
+        env:
+          APP_ENV: development
+          DATABASE_URL: postgresql+asyncpg://coloursense:coloursense@localhost:54329/coloursense
+          RATE_LIMIT: 240/minute
+
+      - name: Build web
+        run: pnpm --filter web build
+        env:
+          NEXT_PUBLIC_API_URL: http://localhost:8000
+          NEXT_TELEMETRY_DISABLED: "1"
+
+      - name: Start web
+        working-directory: apps/web
+        run: |
+          nohup pnpm exec next start --port 3100 > /tmp/web.log 2>&1 &
+          for i in $(seq 1 30); do
+            curl -sf http://localhost:3100 > /dev/null && break
+            sleep 1
+          done
+
+      - name: Install Playwright browsers
+        working-directory: apps/web
+        run: pnpm exec playwright install chromium --with-deps
+
+      - name: Run Playwright
+        working-directory: apps/web
+        run: pnpm exec playwright test
+        env:
+          PLAYWRIGHT_BASE_URL: http://localhost:3100
+
+      - name: Upload report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report/
+          retention-days: 7
+
+      - name: Show server logs on failure
+        if: failure()
+        run: tail -50 /tmp/api.log /tmp/web.log || true

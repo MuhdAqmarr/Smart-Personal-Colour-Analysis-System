@@ -63,3 +63,16 @@ No scraped or private personal images — ever. Fixtures are **generated at test
 10. Camera denied → upload fallback (permission mocked).
 
 Camera hardware is emulated with Playwright's fake media stream flags where needed.
+
+## 7. Running E2E locally
+
+```bash
+docker compose up -d db && ./scripts/db-reset.sh
+cd apps/api && DATABASE_URL=postgresql+asyncpg://coloursense:coloursense@localhost:54329/coloursense RATE_LIMIT=120/minute uv run uvicorn app.main:app --port 8000 &
+cd apps/web && pnpm exec playwright install chromium && pnpm test:e2e
+```
+
+- Playwright starts its own Next dev server on the **dedicated port 3100** (never reuses a developer's app on 3000).
+- The API needs a raised `RATE_LIMIT` because the suite fires many analyses per minute; production keeps the strict default.
+- `e2e-ci.yml` runs the same stack in CI (Postgres service → shim+migrations+seed → API → built web → Playwright chromium desktop + mobile).
+- Camera-denial behaviour is emulated via an injected `getUserMedia` rejection because Playwright ships auto-granting fake media devices.

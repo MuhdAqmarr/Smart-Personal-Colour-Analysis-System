@@ -32,7 +32,7 @@ export default function SeasonsPage() {
             <CardHeader>
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <CardTitle className="font-heading text-2xl">{season.name}</CardTitle>
+                  <h2 className="font-heading text-2xl font-medium leading-snug">{season.name}</h2>
                   <CardDescription className="mt-1">{season.tagline}</CardDescription>
                 </div>
                 <div className="flex flex-wrap gap-2" aria-label={`${season.name} characteristics`}>
