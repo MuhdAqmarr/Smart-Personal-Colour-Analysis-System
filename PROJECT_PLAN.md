@@ -51,11 +51,11 @@
 - **Complexity:** L.
 
 ### Phase 4 — Image acquisition (`feat/image-acquisition`)
-- [ ] Consent step with explicit opt-in storage checkbox (off by default)
-- [ ] Photography guidance step
-- [ ] Camera capture (MediaDevices, front camera preference, switching, guide overlay, track cleanup)
-- [ ] Upload with client-side validation (type, size, decode) + EXIF-safe preview
-- [ ] Preview/retake step; object URLs revoked correctly
+- [x] Consent step with explicit opt-in storage checkbox (off by default)
+- [x] Photography guidance step
+- [x] Camera capture (MediaDevices, front camera preference, switching, guide overlay, track cleanup)
+- [x] Upload with client-side validation (type, size, decode) + EXIF-safe preview
+- [x] Preview/retake step; object URLs revoked correctly
 - **Acceptance:** camera denial falls back to upload with clear messaging; unit tests for validation logic.
 - **Dependencies:** Phase 3.
 - **Complexity:** M.
