@@ -1,0 +1,25 @@
+{
+  "name": "smart-personal-colour-analysis-system",
+  "private": true,
+  "packageManager": "pnpm@11.5.2",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "concurrently -n web,api -c cyan,magenta \"pnpm --filter web dev\" \"pnpm dev:api\"",
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "cd apps/api && uv run uvicorn app.main:app --reload --port 8000",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "test:e2e": "pnpm --filter web test:e2e"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11"
+  }
+}

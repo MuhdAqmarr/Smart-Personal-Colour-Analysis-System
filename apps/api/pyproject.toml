@@ -1,0 +1,82 @@
+[project]
+name = "coloursense-api"
+version = "0.1.0"
+description = "ColourSense backend API — image-quality validation and rule-based personal colour analysis"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.9",
+    "pydantic-settings>=2.5",
+    "python-multipart>=0.0.12",
+    "structlog>=24.4",
+    "pyjwt[crypto]>=2.9",
+    "httpx>=0.27",
+    "sqlalchemy[asyncio]>=2.0.35",
+    "asyncpg>=0.29",
+    "greenlet>=3.1",
+    "numpy>=1.26",
+    "opencv-python-headless>=4.10",
+    "pillow>=10.4",
+    "mediapipe>=0.10.14",
+    "slowapi>=0.1.9",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "pytest-cov>=5.0",
+    "ruff>=0.6",
+    "mypy>=1.11",
+    "scikit-image>=0.24",
+]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["app", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "B",   # bugbear
+    "SIM", # simplify
+    "C4",  # comprehensions
+    "T20", # no stray prints
+    "RET", # return rules
+    "PTH", # pathlib
+]
+ignore = [
+    "B008", # FastAPI Depends() in defaults is idiomatic
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["T20"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_unused_ignores = true
+show_error_codes = true
+files = ["app"]
+
+[[tool.mypy.overrides]]
+module = ["cv2.*", "mediapipe.*", "slowapi.*", "skimage.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "landmarker: tests that require the MediaPipe face landmarker model file",
+    "integration: tests that require a running PostgreSQL database",
+]
+
+[tool.coverage.run]
+source = ["app"]

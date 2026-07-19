@@ -1,0 +1,10 @@
+# Build context is the repo root (see apps/api/Dockerfile).
+# Keep the context minimal: only the API app, its lock files, the vendored
+# model, and the classifier config are copied.
+*
+!apps/api/pyproject.toml
+!apps/api/uv.lock
+!apps/api/app
+!apps/api/models
+!packages/colour-engine/config
+apps/api/app/**/__pycache__
