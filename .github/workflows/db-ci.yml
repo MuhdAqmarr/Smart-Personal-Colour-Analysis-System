@@ -1,0 +1,78 @@
+name: Database CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "supabase/**"
+      - "scripts/db/**"
+      - "scripts/db-reset.sh"
+      - "scripts/verify_rls.py"
+      - "scripts/generate_seed.py"
+      - "apps/api/**"
+      - ".github/workflows/db-ci.yml"
+  pull_request:
+    paths:
+      - "supabase/**"
+      - "scripts/db/**"
+      - "scripts/db-reset.sh"
+      - "scripts/verify_rls.py"
+      - "scripts/generate_seed.py"
+      - "apps/api/**"
+      - ".github/workflows/db-ci.yml"
+
+concurrency:
+  group: db-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  migrations-rls-integration:
+    name: Migrations, RLS proof, integration tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: coloursense
+          POSTGRES_PASSWORD: coloursense
+          POSTGRES_DB: coloursense
+        ports:
+          - 54329:5432
+        options: >-
+          --health-cmd "pg_isready -U coloursense -d coloursense"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          cache-dependency-glob: "apps/api/uv.lock"
+
+      - name: Install API dependencies
+        working-directory: apps/api
+        run: uv sync --frozen
+
+      - name: Verify seed.sql is up to date with its generator
+        run: |
+          python3 scripts/generate_seed.py
+          git diff --exit-code supabase/seed.sql
+
+      - name: Apply auth shim, migrations, and seed
+        run: ./scripts/db-reset.sh
+        env:
+          DATABASE_URL: postgresql://coloursense:coloursense@localhost:54329/coloursense
+
+      - name: Prove Row Level Security model
+        run: uv run --project apps/api python scripts/verify_rls.py
+        env:
+          DATABASE_URL: postgresql://coloursense:coloursense@localhost:54329/coloursense
+
+      - name: API integration tests
+        working-directory: apps/api
+        run: uv run pytest -m integration -q
+        env:
+          INTEGRATION_DATABASE_URL: postgresql://coloursense:coloursense@localhost:54329/coloursense
