@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~55%** — Phases 0–6 complete.
+**~64%** — Phases 0–7 complete.
 
 ## Current phase
-Phase 6 — Colour engine: **complete**. Next: Phase 7 — Results and persistence.
+Phase 7 — Results and persistence: **complete**. Next: Phase 8 — Palettes and cosmetics.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -53,6 +53,12 @@ Phase 6 — Colour engine: **complete**. Next: Phase 7 — Results and persisten
   - Explainability: evidence/warnings/tips generated strictly from measured signals with hedged wording.
   - `POST /api/v1/analyses`: full guest analysis (rate-limited, threadpool, sanitised questionnaire); QUALITY_TOO_LOW rejection carries issues + retake tips; wizard now works end-to-end.
 
+- **Phase 7 (`feat/analysis-results`):**
+  - Persistence: transactional insert of analyses + quality metrics + 4 colour samples + classification for authenticated users; guests structurally never stored (verified by integration test).
+  - Endpoints: `GET /analyses` (paginated summaries with combined swatch hex), `GET /analyses/{id}` (full detail + short-lived signed image URL), `DELETE /analyses/{id}`, `POST /analyses/{id}/save-image` (client re-sends the photo it still holds — privacy-preserving post-hoc save with full upload validation), `DELETE /analyses/{id}/image`, `GET/PATCH /me/preferences`, `POST /me/consents` (append-only), `PATCH /me`, `DELETE /me/analyses`, `DELETE /me` (storage cleanup + auth cascade).
+  - Supabase Storage service (httpx, service-role, private bucket): upload/signed-URL/delete/list with graceful degradation when unconfigured.
+  - Frontend: history list with delete confirms + pagination, analysis detail (samples table, dimension meters, evidence, stored-photo view/delete), settings + privacy pages (storage default toggle, wipe history, delete account), results step save actions (view details / save photo / guest sign-up CTA), session hook.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -60,9 +66,9 @@ Phase 6 — Colour engine: **complete**. Next: Phase 7 — Results and persisten
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- API: `uv run pytest` → **167 passed** (adds CIEDE2000 ×38, classifier boundaries ×22, full-pipeline + /analyses endpoint ×10).
-- Web: **24 passed**. Contracts: **7 passed**. Integration: **5 passed**. RLS proof: **21/21**.
-- `mypy --strict` clean across 50 source files; ruff clean.
+- API unit: **167 passed**. Integration: **16 passed** (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
+- Web: **24 passed**; build clean with /history, /history/[id], /settings, /settings/privacy routes.
+- `mypy --strict` clean across 53 source files; ruff clean.
 
 ## Latest test results
 - All green (2026-07-19).
@@ -72,9 +78,9 @@ Phase 6 — Colour engine: **complete**. Next: Phase 7 — Results and persisten
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/colour-analysis-engine` (PR → `main`)
-- Commit: see `git log` — Phase 6 colour engine commit.
+- Branch: `feat/analysis-results` (PR → `main`)
+- Commit: see `git log` — Phase 7 results/persistence commit.
 
 ## Next actions
-1. Phase 7 (`feat/analysis-results`): persistence for authenticated users (analyses + metrics + samples + classifications), GET/DELETE endpoints, optional image storage to the private bucket, results page tabs, history UI, privacy settings.
-2. Phase 8 (`feat/palette-recommendations`): palette/cosmetics APIs + UI.
+1. Phase 8 (`feat/palette-recommendations`): seasons/palette/cosmetics APIs from seeded data, palette UI with groups + copy HEX + cautious wording, favourite colours, printable palette card, analysis palette tab.
+2. Phase 9 (`feat/product-recommendations`): products, CIEDE2000 ranking, CSV import.

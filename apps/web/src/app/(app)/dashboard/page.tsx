@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Heart, History, Lock, ScanFace } from "lucide-react";
+import { History, Lock, ScanFace, Settings } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
@@ -58,16 +58,16 @@ export default async function DashboardPage() {
         <Card>
           <CardHeader>
             <span className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-lg">
-              <Heart className="size-5" aria-hidden="true" />
+              <Settings className="size-5" aria-hidden="true" />
             </span>
-            <CardTitle className="font-heading">Favourites</CardTitle>
+            <CardTitle className="font-heading">Settings &amp; privacy</CardTitle>
             <CardDescription>
-              Colours and products you have saved while exploring your palette.
+              Storage preferences, history deletion, and account controls.
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button variant="outline" render={<Link href="/favourites" />}>
-              View favourites
+            <Button variant="outline" render={<Link href="/settings" />}>
+              Open settings
             </Button>
           </CardContent>
         </Card>

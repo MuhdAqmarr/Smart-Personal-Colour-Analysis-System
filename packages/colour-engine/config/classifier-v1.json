@@ -4,11 +4,7 @@
   "description": "Versioned thresholds and weights for the ColourSense deterministic colour-analysis engine. Every number used by the pipeline lives here. See packages/colour-engine/README.md for field-by-field documentation and rationale.",
   "image": {
     "maxUploadMb": 10,
-    "allowedFormats": [
-      "jpeg",
-      "png",
-      "webp"
-    ],
+    "allowedFormats": ["jpeg", "png", "webp"],
     "maxAnalysisEdgePixels": 1600,
     "maxDecodedPixels": 50000000,
     "minEdgePixels": 320
@@ -182,26 +178,10 @@
       "strongTemperatureMaxCool": 0.3
     },
     "priority": {
-      "spring": [
-        "bright-spring",
-        "light-spring",
-        "warm-spring"
-      ],
-      "summer": [
-        "soft-summer",
-        "light-summer",
-        "cool-summer"
-      ],
-      "autumn": [
-        "deep-autumn",
-        "soft-autumn",
-        "warm-autumn"
-      ],
-      "winter": [
-        "bright-winter",
-        "deep-winter",
-        "cool-winter"
-      ]
+      "spring": ["bright-spring", "light-spring", "warm-spring"],
+      "summer": ["soft-summer", "light-summer", "cool-summer"],
+      "autumn": ["deep-autumn", "soft-autumn", "warm-autumn"],
+      "winter": ["bright-winter", "deep-winter", "cool-winter"]
     }
   },
   "confidence": {
