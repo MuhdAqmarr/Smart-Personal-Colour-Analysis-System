@@ -13,6 +13,7 @@ export const siteConfig = {
 export const mainNav = [
   { title: "How it works", href: "/how-it-works" },
   { title: "Colour seasons", href: "/seasons" },
+  { title: "Products", href: "/products" },
   { title: "FAQ", href: "/faq" },
 ] as const;
 
@@ -21,6 +22,7 @@ export const footerNav = {
     { title: "How it works", href: "/how-it-works" },
     { title: "Colour seasons", href: "/seasons" },
     { title: "Start an analysis", href: "/analysis" },
+    { title: "Product directory", href: "/products" },
     { title: "FAQ", href: "/faq" },
   ],
   legal: [

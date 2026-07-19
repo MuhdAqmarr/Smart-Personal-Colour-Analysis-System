@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~70%** — Phases 0–8 complete.
+**~76%** — Phases 0–9 complete.
 
 ## Current phase
-Phase 8 — Palettes and cosmetics: **complete**. Next: Phase 9 — Products.
+Phase 9 — Products: **complete**. Next: Phase 10 — Admin portal.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -64,6 +64,11 @@ Phase 8 — Palettes and cosmetics: **complete**. Next: Phase 9 — Products.
   - PaletteView UI: eight ordered groups incl. hijab/headwear and gently-worded “use with care”, copy-HEX swatch cards, favourite hearts, cosmetics grouped by product type with intensity/occasion notes, print-only palette card via print stylesheet.
   - Wired into: wizard results step (public season endpoint → works for guests), history detail (owner palette with favourites), new `/favourites` page, nav restored.
 
+- **Phase 9 (`feat/product-recommendations`):**
+  - APIs: `GET /products` (category/gender/season/store/search filters, 4 sorts, pagination), `GET /products/{id}`, `GET /analyses/{id}/recommended-products` (documented CIEDE2000 formula: 0.5·paletteProximity + 0.2·seasonTag + 0.1·subSeasonTag + 0.1·categoryRelevance + 0.1·availability, config-driven), product favourites add/remove/list.
+  - CSV import backend (`POST /api/v1/admin/products/import`): 17-column validation with per-row errors, javascript:-URL rejection, hex→Lab computed at parse time, duplicate detection, dry-run vs transactional upsert-by-URL commit, job + row-error records, audit log, import history endpoints. Sample CSV at `scripts/sample-products.csv`.
+  - Frontend: public `/products` directory (filters/search/sort/pagination, favourite hearts when signed in), ProductCard with safe external links (new tab, noopener/noreferrer, store named, purchase notice, demo badge), recommended-products section on history detail with match scores, favourite products on `/favourites`, nav links.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -71,7 +76,7 @@ Phase 8 — Palettes and cosmetics: **complete**. Next: Phase 9 — Products.
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- API unit: **167 passed**. Integration: **25 passed** (adds catalogue shape, sub-season merge, cautious wording check, analysis-palette ownership, favourite round-trip/privacy/auth) (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
+- API unit: **184 passed** (adds ranking ×7, CSV import ×10). Integration: **39 passed** (adds directory filters/sort/detail, ranked recommendations with ownership, product favourites privacy, CSV dry-run/commit/errors/authz) (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
 - Web: **24 passed**; build clean with /history, /history/[id], /settings, /settings/privacy routes.
 - `mypy --strict` clean across 53 source files; ruff clean.
 
@@ -83,9 +88,9 @@ Phase 8 — Palettes and cosmetics: **complete**. Next: Phase 9 — Products.
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/palette-recommendations` (PR → `main`)
-- Commit: see `git log` — Phase 8 palettes commit.
+- Branch: `feat/product-recommendations` (PR → `main`)
+- Commit: see `git log` — Phase 9 products commit.
 
 ## Next actions
-1. Phase 9 (`feat/product-recommendations`): product/store APIs with filters + pagination, CIEDE2000 palette-match ranking, recommended products for an analysis, product favourites, external-link safety, CSV import backend.
-2. Phase 10 (`feat/admin-portal`): admin CRUD + imports + audit logs.
+1. Phase 10 (`feat/admin-portal`): admin dashboard with anonymised stats, CRUD for seasons/palettes/cosmetics/stores/products, CSV import screens, audit-log viewer, algorithm versions, system settings.
+2. Phase 11 (`test/system-hardening`): e2e journeys, a11y checks, security review.

@@ -1,0 +1,4 @@
+product_name,brand,store_slug,category,gender,description,image_url,product_url,price,original_price,currency,availability,colour_name,colour_hex,season_tags,subseason_tags,active
+Sample Terracotta Blouse,SampleBrand,coloursense-demo-boutique,tops,women,A sample terracotta blouse,,https://example.com/import/terracotta-blouse,79.00,99.00,MYR,in_stock,Terracotta,#c66b3d,autumn,warm-autumn,true
+Sample Royal Jumper,SampleBrand,demo-mens-essentials,tops,men,A sample royal blue jumper,,https://example.com/import/royal-jumper,120.00,,MYR,in_stock,Royal Blue,#4169e1,winter,,true
+Sample Powder Scarf,SampleBrand,coloursense-demo-boutique,scarves,unisex,A sample powder blue scarf,,https://example.com/import/powder-scarf,45.50,,MYR,unknown,Powder Blue,#a3c1d9,summer|spring,,true

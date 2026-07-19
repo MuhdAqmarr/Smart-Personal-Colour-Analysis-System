@@ -30,6 +30,13 @@ import {
 } from "@/lib/api/analyses";
 import { ApiError } from "@/lib/api/client";
 import { getAnalysisPalette } from "@/lib/api/palettes";
+import { ProductCard } from "@/components/products/product-card";
+import {
+  favouriteProduct,
+  getRecommendedProducts,
+  unfavouriteProduct,
+  type Product,
+} from "@/lib/api/products";
 
 function titleCase(slug: string | null): string {
   if (!slug) return "";
@@ -78,6 +85,25 @@ export default function AnalysisDetailPage() {
     queryKey: ["analysis-palette", analysisId],
     queryFn: () => getAnalysisPalette(analysisId),
     enabled: query.isSuccess,
+  });
+
+  const recommended = useQuery({
+    queryKey: ["recommended-products", analysisId],
+    queryFn: () => getRecommendedProducts(analysisId),
+    enabled: query.isSuccess,
+  });
+
+  const toggleFavourite = useMutation({
+    mutationFn: async (product: Product) => {
+      if (product.isFavourite) await unfavouriteProduct(product.id);
+      else await favouriteProduct(product.id);
+    },
+    onSuccess: () =>
+      queryClient.invalidateQueries({ queryKey: ["recommended-products", analysisId] }),
+    onError: (error) =>
+      toast.error("Could not update favourites", {
+        description: error instanceof ApiError ? error.message : undefined,
+      }),
   });
 
   const removeAnalysis = useMutation({
@@ -294,6 +320,32 @@ export default function AnalysisDetailPage() {
               interactive
               invalidateKeys={[["analysis-palette", analysisId]]}
             />
+          </CardContent>
+        </Card>
+      ) : null}
+
+      {recommended.isSuccess && recommended.data.length > 0 ? (
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-heading text-lg">Products for your palette</CardTitle>
+            <CardDescription>
+              Ranked by CIEDE2000 colour distance to your recommended palette, plus season tags and
+              availability. Purchases happen on the external stores.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {recommended.data.slice(0, 9).map((product) => (
+                <li key={product.id}>
+                  <ProductCard
+                    product={product}
+                    interactive
+                    onToggleFavourite={(target) => toggleFavourite.mutate(target)}
+                    favouriteBusy={toggleFavourite.isPending}
+                  />
+                </li>
+              ))}
+            </ul>
           </CardContent>
         </Card>
       ) : null}

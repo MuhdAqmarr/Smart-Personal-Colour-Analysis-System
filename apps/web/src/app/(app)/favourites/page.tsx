@@ -16,12 +16,31 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { ApiError } from "@/lib/api/client";
 import { listFavouriteColours, unfavouriteColour } from "@/lib/api/palettes";
+import { ProductCard } from "@/components/products/product-card";
+import { listFavouriteProducts, unfavouriteProduct, type Product } from "@/lib/api/products";
 
 export default function FavouritesPage() {
   const queryClient = useQueryClient();
   const favourites = useQuery({
     queryKey: ["favourite-colours"],
     queryFn: listFavouriteColours,
+  });
+
+  const favouriteProducts = useQuery({
+    queryKey: ["favourite-products"],
+    queryFn: listFavouriteProducts,
+  });
+
+  const removeProduct = useMutation({
+    mutationFn: (product: Product) => unfavouriteProduct(product.id),
+    onSuccess: () => {
+      toast.success("Removed from favourites");
+      queryClient.invalidateQueries({ queryKey: ["favourite-products"] });
+    },
+    onError: (error) =>
+      toast.error("Could not remove", {
+        description: error instanceof ApiError ? error.message : undefined,
+      }),
   });
 
   const remove = useMutation({
@@ -41,8 +60,7 @@ export default function FavouritesPage() {
       <div>
         <h1 className="font-heading text-3xl font-semibold tracking-tight">Favourite colours</h1>
         <p className="text-muted-foreground mt-1">
-          Colours you hearted while exploring palettes. Product favourites join them in the product
-          phase.
+          Colours and products you hearted while exploring palettes and the directory.
         </p>
       </div>
 
@@ -114,6 +132,36 @@ export default function FavouritesPage() {
           ))}
         </ul>
       )}
+
+      <section aria-labelledby="favourite-products-heading" className="border-t pt-6">
+        <h2 id="favourite-products-heading" className="font-heading text-2xl font-semibold">
+          Favourite products
+        </h2>
+        {favouriteProducts.isPending ? (
+          <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-label="Loading">
+            {[0, 1, 2].map((index) => (
+              <Skeleton key={index} className="h-56 rounded-xl" />
+            ))}
+          </div>
+        ) : favouriteProducts.isError || favouriteProducts.data.length === 0 ? (
+          <p className="text-muted-foreground mt-3 text-sm">
+            No favourite products yet — browse the directory and tap the heart on pieces you like.
+          </p>
+        ) : (
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {favouriteProducts.data.map((product) => (
+              <li key={product.id}>
+                <ProductCard
+                  product={product}
+                  interactive
+                  onToggleFavourite={(target) => removeProduct.mutate(target)}
+                  favouriteBusy={removeProduct.isPending}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </div>
   );
 }
