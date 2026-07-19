@@ -73,6 +73,9 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
+# Integration tests need the docker-compose database; run them explicitly
+# with `uv run pytest -m integration` (the last -m on the CLI wins).
+addopts = "-m 'not integration'"
 markers = [
     "landmarker: tests that require the MediaPipe face landmarker model file",
     "integration: tests that require a running PostgreSQL database",
