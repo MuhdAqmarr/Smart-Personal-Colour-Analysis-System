@@ -100,10 +100,11 @@ export default function ProductsPage() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
+    <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
       <div className="mb-8">
-        <h1 className="font-heading text-3xl font-semibold tracking-tight">Product directory</h1>
-        <p className="text-muted-foreground mt-2 max-w-2xl leading-relaxed">
+        <p className="text-eyebrow text-muted-foreground">Catalogue</p>
+        <h1 className="text-title-1 mt-3">Product directory</h1>
+        <p className="text-muted-foreground mt-3 max-w-2xl leading-relaxed">
           Colour-tagged pieces from the demonstration catalogue. Run an analysis to see them ranked
           against your personal palette.
         </p>
@@ -112,7 +113,7 @@ export default function ProductsPage() {
       <form
         role="search"
         aria-label="Filter products"
-        className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5"
+        className="bg-surface ring-border mb-8 grid gap-3 rounded-2xl p-4 ring-1 sm:grid-cols-2 lg:grid-cols-5"
         onSubmit={(event) => {
           event.preventDefault();
           setSubmittedSearch(search.trim());
