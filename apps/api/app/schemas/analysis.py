@@ -71,3 +71,78 @@ class QualityReportSchema(CamelModel):
             ],
             retake_tips=report.retake_tips,
         )
+
+
+class RgbSchema(CamelModel):
+    r: float
+    g: float
+    b: float
+
+
+class HsvSchema(CamelModel):
+    h: float
+    s: float
+    v: float
+
+
+class LabSchema(CamelModel):
+    l: float  # noqa: E741 — CIE L* axis; the name is the domain standard
+    a: float
+    b: float
+
+
+class ColourSampleSchema(CamelModel):
+    region: Literal["forehead", "left_cheek", "right_cheek", "combined"]
+    rgb: RgbSchema
+    hex: str
+    hsv: HsvSchema
+    lab: LabSchema
+    chroma: float
+    hue_angle_degrees: float
+    usable_pixel_ratio: float
+    pixel_count: int
+
+
+class UndertoneResultSchema(CamelModel):
+    undertone: Literal["warm", "cool"]
+    internal_undertone: Literal["warm", "cool", "neutral", "uncertain"]
+    score: float
+    confidence: float
+    confidence_label: Literal["high", "medium", "low"]
+    evidence: list[str]
+    warnings: list[str]
+
+
+class SeasonDimensionsSchema(CamelModel):
+    temperature: float
+    value: float
+    chroma: float
+    contrast: float
+
+
+class SeasonResultSchema(CamelModel):
+    season: Literal["spring", "summer", "autumn", "winter"]
+    sub_season: str | None
+    scores: dict[str, float]
+    dimensions: SeasonDimensionsSchema
+
+
+class ExplanationSchema(CamelModel):
+    summary: str
+    evidence: list[str]
+    quality_notes: list[str]
+    improvement_tips: list[str]
+
+
+class AnalysisResultSchema(CamelModel):
+    analysis_id: str | None
+    persisted: bool
+    classifier_version: str
+    processing_ms: int
+    quality: QualityReportSchema
+    samples: list[ColourSampleSchema]
+    undertone: UndertoneResultSchema
+    season: SeasonResultSchema
+    confidence: float
+    confidence_label: Literal["high", "medium", "low"]
+    explanation: ExplanationSchema

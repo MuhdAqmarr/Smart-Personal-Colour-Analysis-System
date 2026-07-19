@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~45%** — Phases 0–5 complete.
+**~55%** — Phases 0–6 complete.
 
 ## Current phase
-Phase 5 — Image-quality engine: **complete**. Next: Phase 6 — Colour engine.
+Phase 6 — Colour engine: **complete**. Next: Phase 7 — Results and persistence.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -43,6 +43,16 @@ Phase 5 — Image-quality engine: **complete**. Next: Phase 6 — Colour engine.
   - `POST /api/v1/analyses/preview-quality` (rate-limited, CPU work off the event loop): 200 + report for gradable photos (acceptable true/false), error envelope for structural failures.
   - Hermetic fixtures from the public-domain astronaut photo + synthetic derivatives (documented in test-assets/README.md); cast thresholds tuned against real-photo gray-world behaviour (warn 12 / max 22 ΔE_ab).
 
+- **Phase 6 (`feat/colour-analysis-engine`):**
+  - CIEDE2000 (Sharma formulation) verified against **all 34 published reference pairs** to 1e-4, plus symmetry/identity/broadcasting properties.
+  - Skin ROIs: elliptical polygons anchored to stable landmarks (glabella→oval-top forehead; eyelid→mouth-corner cheeks pushed toward the face edge), rotated with the eye line, scaled by face width — never pixel boxes.
+  - Pixel filtering: L*/chroma bounds, specular-highlight rejection, MAD outlier removal (k=3, 1.4826 scaling); aggregation via median + 20% trimmed mean + std + usable-pixel ratios; weighted combined sample.
+  - Undertone classifier: hue-angle + b* + region-agreement signals with config weights; internal neutral band and quality-driven uncertain state; optional questionnaire nudges (gold/silver jewellery, sun reaction) capped by config weight.
+  - Season classifier: four normalised dimensions (temperature from undertone score, value from L*, chroma from C*ab, contrast from ROI spread blended with questionnaire) matched against prototype vectors; sub-season resolution by prioritised axis rules; sub-season displayed only above the confidence gate.
+  - Confidence: six weighted factors (quality, CIEDE2000 ROI agreement, usable skin, top-2 margin, cast penalty, questionnaire agreement) — separate from classification scores.
+  - Explainability: evidence/warnings/tips generated strictly from measured signals with hedged wording.
+  - `POST /api/v1/analyses`: full guest analysis (rate-limited, threadpool, sanitised questionnaire); QUALITY_TOO_LOW rejection carries issues + retake tips; wizard now works end-to-end.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -50,9 +60,9 @@ Phase 5 — Image-quality engine: **complete**. Next: Phase 6 — Colour engine.
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- API: `uv run pytest` → **95 passed** (adds preprocessing ×12, colour conversions ×16, quality metrics ×17, face pipeline ×13, preview-quality endpoint ×6) — includes real MediaPipe detection on fixtures.
+- API: `uv run pytest` → **167 passed** (adds CIEDE2000 ×38, classifier boundaries ×22, full-pipeline + /analyses endpoint ×10).
 - Web: **24 passed**. Contracts: **7 passed**. Integration: **5 passed**. RLS proof: **21/21**.
-- `mypy --strict` clean across 37 source files; ruff clean.
+- `mypy --strict` clean across 50 source files; ruff clean.
 
 ## Latest test results
 - All green (2026-07-19).
@@ -62,9 +72,9 @@ Phase 5 — Image-quality engine: **complete**. Next: Phase 6 — Colour engine.
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/image-quality-engine` (PR → `main`)
-- Commit: see `git log` — Phase 5 quality engine commit.
+- Branch: `feat/colour-analysis-engine` (PR → `main`)
+- Commit: see `git log` — Phase 6 colour engine commit.
 
 ## Next actions
-1. Phase 6 (`feat/colour-analysis-engine`): landmark-anchored forehead/cheek ROIs, pixel filtering + robust aggregation, CIEDE2000, undertone + season + sub-season classifiers, confidence, explainability.
-2. Phase 7 (`feat/analysis-results`): full `POST /api/v1/analyses`, persistence, results UI, history.
+1. Phase 7 (`feat/analysis-results`): persistence for authenticated users (analyses + metrics + samples + classifications), GET/DELETE endpoints, optional image storage to the private bucket, results page tabs, history UI, privacy settings.
+2. Phase 8 (`feat/palette-recommendations`): palette/cosmetics APIs + UI.
