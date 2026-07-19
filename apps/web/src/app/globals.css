@@ -7,9 +7,11 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-fraunces);
+  --font-sans:
+    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
+  --font-heading:
+    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -26,19 +28,32 @@
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-separator: var(--separator);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
   --color-muted: var(--muted);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-secondary: var(--secondary);
+  --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
   --color-primary: var(--primary);
   --color-popover-foreground: var(--popover-foreground);
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-strong: var(--surface-strong);
+  --color-season-spring: var(--season-spring);
+  --color-season-summer: var(--season-summer);
+  --color-season-autumn: var(--season-autumn);
+  --color-season-winter: var(--season-winter);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -46,77 +61,153 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+  --shadow-xs: var(--elevation-xs);
+  --shadow-sm: var(--elevation-sm);
+  --shadow-glass: var(--elevation-glass);
+  --shadow-floating: var(--elevation-floating);
+  --shadow-modal: var(--elevation-modal);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 :root {
-  /* ColourSense theme: warm porcelain neutrals with a clay/terracotta
-     primary — premium beauty-tech without stereotypical pink. */
-  --background: oklch(0.988 0.004 84);
-  --foreground: oklch(0.235 0.014 45);
+  /* ColourSense modern theme: cool off-white canvas, graphite ink,
+     glass materials, restrained blue-lilac accent. Seasonal colours are
+     a supporting language used only where seasons are the content. */
+  --background: oklch(0.985 0.002 250);
+  --foreground: oklch(0.215 0.012 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.235 0.014 45);
+  --card-foreground: oklch(0.215 0.012 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.235 0.014 45);
-  --primary: oklch(0.545 0.118 42);
-  --primary-foreground: oklch(0.985 0.005 84);
-  --secondary: oklch(0.958 0.008 78);
-  --secondary-foreground: oklch(0.31 0.02 45);
-  --muted: oklch(0.958 0.008 78);
-  --muted-foreground: oklch(0.5 0.014 50);
-  --accent: oklch(0.945 0.016 68);
-  --accent-foreground: oklch(0.31 0.02 45);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.914 0.01 75);
-  --input: oklch(0.914 0.01 75);
-  --ring: oklch(0.545 0.118 42);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --popover-foreground: oklch(0.215 0.012 260);
+  --primary: oklch(0.24 0.015 262);
+  --primary-hover: oklch(0.31 0.018 262);
+  --primary-foreground: oklch(0.99 0.001 250);
+  --secondary: oklch(0.955 0.004 250);
+  --secondary-foreground: oklch(0.3 0.014 260);
+  --muted: oklch(0.955 0.004 250);
+  --muted-foreground: oklch(0.495 0.014 258);
+  --accent: oklch(0.945 0.014 278);
+  --accent-foreground: oklch(0.36 0.05 278);
+  --destructive: oklch(0.55 0.19 25);
+  --success: oklch(0.54 0.11 155);
+  --warning: oklch(0.6 0.12 70);
+  --info: oklch(0.54 0.1 245);
+  --border: oklch(0.912 0.005 255);
+  --border-strong: oklch(0.858 0.007 255);
+  --separator: oklch(0.93 0.004 252);
+  --input: oklch(0.912 0.005 255);
+  --ring: oklch(0.55 0.09 272);
+  --surface: oklch(0.972 0.003 250);
+  --surface-elevated: oklch(1 0 0);
+  --surface-strong: oklch(0.955 0.004 250);
+
+  /* Glass material ingredients */
+  --glass-base: oklch(1 0 0);
+  --glass-border: oklch(1 0 0 / 55%);
+  --glass-highlight: oklch(1 0 0 / 70%);
+  --glass-shadow: oklch(0.28 0.02 262 / 8%);
+
+  /* Elevation (soft, layered, cool-tinted) */
+  --elevation-xs: 0 1px 2px oklch(0.28 0.02 262 / 5%);
+  --elevation-sm:
+    0 1px 2px oklch(0.28 0.02 262 / 5%), 0 3px 10px -2px oklch(0.28 0.02 262 / 6%);
+  --elevation-glass:
+    inset 0 1px 0 var(--glass-highlight), 0 14px 40px -18px oklch(0.28 0.02 262 / 22%);
+  --elevation-floating:
+    0 2px 6px oklch(0.28 0.02 262 / 5%), 0 22px 55px -22px oklch(0.28 0.02 262 / 24%);
+  --elevation-modal:
+    0 4px 12px oklch(0.28 0.02 262 / 7%), 0 32px 90px -24px oklch(0.28 0.02 262 / 32%);
+
+  /* Seasonal accents (muted; full-strength colour lives in palette data) */
+  --season-spring: oklch(0.72 0.1 55);
+  --season-summer: oklch(0.68 0.05 255);
+  --season-autumn: oklch(0.57 0.09 55);
+  --season-winter: oklch(0.46 0.1 282);
+
+  /* Motion */
+  --motion-fast: 160ms;
+  --motion-medium: 240ms;
+  --motion-slow: 320ms;
+
+  --radius: 0.8rem;
+
+  --chart-1: oklch(0.72 0.1 55);
+  --chart-2: oklch(0.68 0.05 255);
+  --chart-3: oklch(0.57 0.09 55);
+  --chart-4: oklch(0.46 0.1 282);
+  --chart-5: oklch(0.495 0.014 258);
+  --sidebar: oklch(0.972 0.003 250);
+  --sidebar-foreground: oklch(0.215 0.012 260);
+  --sidebar-primary: oklch(0.24 0.015 262);
+  --sidebar-primary-foreground: oklch(0.99 0.001 250);
+  --sidebar-accent: oklch(0.945 0.004 250);
+  --sidebar-accent-foreground: oklch(0.24 0.015 262);
+  --sidebar-border: oklch(0.912 0.005 255);
+  --sidebar-ring: oklch(0.55 0.09 272);
 }
 
 .dark {
-  --background: oklch(0.185 0.012 45);
-  --foreground: oklch(0.965 0.006 80);
-  --card: oklch(0.235 0.014 45);
-  --card-foreground: oklch(0.965 0.006 80);
-  --popover: oklch(0.235 0.014 45);
-  --popover-foreground: oklch(0.965 0.006 80);
-  --primary: oklch(0.72 0.105 48);
-  --primary-foreground: oklch(0.2 0.014 45);
-  --secondary: oklch(0.28 0.014 45);
-  --secondary-foreground: oklch(0.965 0.006 80);
-  --muted: oklch(0.28 0.014 45);
-  --muted-foreground: oklch(0.72 0.01 60);
-  --accent: oklch(0.31 0.02 48);
-  --accent-foreground: oklch(0.965 0.006 80);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.72 0.105 48);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Deep cool charcoal, not pure black; inverted (light) primary action;
+     translucent elevated surfaces with subtle light borders. */
+  --background: oklch(0.172 0.008 262);
+  --foreground: oklch(0.938 0.004 250);
+  --card: oklch(0.213 0.01 262);
+  --card-foreground: oklch(0.938 0.004 250);
+  --popover: oklch(0.226 0.011 262);
+  --popover-foreground: oklch(0.938 0.004 250);
+  --primary: oklch(0.93 0.004 250);
+  --primary-hover: oklch(0.86 0.005 250);
+  --primary-foreground: oklch(0.2 0.01 262);
+  --secondary: oklch(0.255 0.011 262);
+  --secondary-foreground: oklch(0.938 0.004 250);
+  --muted: oklch(0.255 0.011 262);
+  --muted-foreground: oklch(0.705 0.01 255);
+  --accent: oklch(0.29 0.02 275);
+  --accent-foreground: oklch(0.87 0.03 278);
+  --destructive: oklch(0.68 0.17 24);
+  --success: oklch(0.7 0.11 155);
+  --warning: oklch(0.75 0.12 75);
+  --info: oklch(0.7 0.1 245);
+  --border: oklch(1 0 0 / 9%);
+  --border-strong: oklch(1 0 0 / 16%);
+  --separator: oklch(1 0 0 / 7%);
+  --input: oklch(1 0 0 / 12%);
+  --ring: oklch(0.66 0.09 272);
+  --surface: oklch(0.2 0.009 262);
+  --surface-elevated: oklch(0.238 0.011 262);
+  --surface-strong: oklch(0.268 0.012 262);
+
+  --glass-base: oklch(0.21 0.01 262);
+  --glass-border: oklch(1 0 0 / 12%);
+  --glass-highlight: oklch(1 0 0 / 9%);
+  --glass-shadow: oklch(0 0 0 / 35%);
+
+  --elevation-xs: 0 1px 2px oklch(0 0 0 / 25%);
+  --elevation-sm: 0 1px 2px oklch(0 0 0 / 25%), 0 3px 10px -2px oklch(0 0 0 / 25%);
+  --elevation-glass:
+    inset 0 1px 0 var(--glass-highlight), 0 14px 40px -18px oklch(0 0 0 / 55%);
+  --elevation-floating:
+    0 2px 6px oklch(0 0 0 / 28%), 0 22px 55px -22px oklch(0 0 0 / 55%);
+  --elevation-modal: 0 4px 12px oklch(0 0 0 / 32%), 0 32px 90px -24px oklch(0 0 0 / 65%);
+
+  --season-spring: oklch(0.76 0.1 55);
+  --season-summer: oklch(0.74 0.05 255);
+  --season-autumn: oklch(0.66 0.09 55);
+  --season-winter: oklch(0.62 0.1 282);
+
+  --chart-1: oklch(0.76 0.1 55);
+  --chart-2: oklch(0.74 0.05 255);
+  --chart-3: oklch(0.66 0.09 55);
+  --chart-4: oklch(0.62 0.1 282);
+  --chart-5: oklch(0.705 0.01 255);
+  --sidebar: oklch(0.2 0.009 262);
+  --sidebar-foreground: oklch(0.938 0.004 250);
+  --sidebar-primary: oklch(0.93 0.004 250);
+  --sidebar-primary-foreground: oklch(0.2 0.01 262);
+  --sidebar-accent: oklch(0.255 0.011 262);
+  --sidebar-accent-foreground: oklch(0.938 0.004 250);
+  --sidebar-border: oklch(1 0 0 / 9%);
+  --sidebar-ring: oklch(0.66 0.09 272);
 }
 
 @layer base {
@@ -140,6 +231,159 @@
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
     }
+  }
+}
+
+@layer utilities {
+  /* Typography scale — Geist with clamp()-based responsive sizes.
+     Weights lean on the variable font: 650 display, 600 titles. */
+  .text-display {
+    font-size: clamp(2.375rem, 1.55rem + 3.4vw, 4rem);
+    line-height: 1.06;
+    letter-spacing: -0.022em;
+    font-weight: 650;
+  }
+  .text-title-1 {
+    font-size: clamp(2rem, 1.45rem + 2.2vw, 3rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 640;
+  }
+  .text-title-2 {
+    font-size: clamp(1.55rem, 1.3rem + 1vw, 2.125rem);
+    line-height: 1.16;
+    letter-spacing: -0.016em;
+    font-weight: 600;
+  }
+  .text-title-3 {
+    font-size: clamp(1.22rem, 1.1rem + 0.5vw, 1.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 600;
+  }
+  .text-eyebrow {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    letter-spacing: 0.055em;
+    font-weight: 550;
+    text-transform: uppercase;
+  }
+
+  /* Soft page/hero washes — two stops, low saturation, solid fallback. */
+  .wash-page {
+    background-color: var(--background);
+    background-image:
+      radial-gradient(52rem 30rem at 85% -12%, oklch(0.93 0.02 278 / 55%), transparent 68%),
+      radial-gradient(40rem 26rem at -10% 8%, oklch(0.95 0.012 225 / 45%), transparent 66%);
+  }
+  .dark .wash-page {
+    background-image:
+      radial-gradient(52rem 30rem at 85% -12%, oklch(0.3 0.035 278 / 42%), transparent 68%),
+      radial-gradient(40rem 26rem at -10% 8%, oklch(0.28 0.025 225 / 36%), transparent 66%);
+  }
+  .wash-season {
+    background-color: var(--card);
+    background-image: radial-gradient(
+      46rem 26rem at 78% -14%,
+      color-mix(in oklab, var(--season-tint, var(--accent)) 26%, transparent),
+      transparent 70%
+    );
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Glass material system.
+   Solid surfaces are declared first as the universal fallback; the
+   translucent recipe only applies where backdrop-filter is supported.
+   One blur layer per stacking context — never nest glass in glass. */
+
+.glass-subtle,
+.glass-default,
+.glass-elevated,
+.glass-navigation,
+.glass-modal,
+.glass-result {
+  background-color: var(--surface-elevated);
+  border: 1px solid var(--border);
+}
+.glass-subtle {
+  background-color: color-mix(in oklab, var(--surface-elevated) 82%, transparent);
+}
+.glass-default {
+  box-shadow: var(--elevation-sm);
+}
+.glass-elevated,
+.glass-result {
+  box-shadow: var(--elevation-floating);
+}
+.glass-navigation {
+  border: 0;
+  border-bottom: 1px solid var(--separator);
+}
+.glass-modal {
+  box-shadow: var(--elevation-modal);
+}
+
+@supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
+  .glass-subtle {
+    background-color: color-mix(in oklab, var(--glass-base) 60%, transparent);
+    -webkit-backdrop-filter: blur(10px) saturate(140%);
+    backdrop-filter: blur(10px) saturate(140%);
+    border-color: color-mix(in oklab, var(--glass-border) 60%, transparent);
+  }
+  .glass-default {
+    background-color: color-mix(in oklab, var(--glass-base) 72%, transparent);
+    -webkit-backdrop-filter: blur(16px) saturate(150%);
+    backdrop-filter: blur(16px) saturate(150%);
+    border-color: var(--glass-border);
+    box-shadow: var(--elevation-glass);
+  }
+  .glass-elevated {
+    background-color: color-mix(in oklab, var(--glass-base) 78%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    backdrop-filter: blur(20px) saturate(150%);
+    border-color: var(--glass-border);
+    box-shadow:
+      inset 0 1px 0 var(--glass-highlight),
+      var(--elevation-floating);
+  }
+  .glass-navigation {
+    background-color: color-mix(in oklab, var(--glass-base) 68%, transparent);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    backdrop-filter: blur(18px) saturate(160%);
+    border-bottom: 1px solid var(--separator);
+  }
+  .glass-modal {
+    background-color: color-mix(in oklab, var(--glass-base) 86%, transparent);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    backdrop-filter: blur(24px) saturate(150%);
+    border-color: var(--glass-border);
+    box-shadow:
+      inset 0 1px 0 var(--glass-highlight),
+      var(--elevation-modal);
+  }
+  .glass-result {
+    background-color: color-mix(in oklab, var(--glass-base) 76%, transparent);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    backdrop-filter: blur(18px) saturate(150%);
+    border-color: var(--glass-border);
+    box-shadow:
+      inset 0 1px 0 var(--glass-highlight),
+      var(--elevation-floating);
+  }
+}
+
+/* Respect reduced transparency: fall back to solid surfaces. */
+@media (prefers-reduced-transparency: reduce) {
+  .glass-subtle,
+  .glass-default,
+  .glass-elevated,
+  .glass-navigation,
+  .glass-modal,
+  .glass-result {
+    background-color: var(--surface-elevated);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 

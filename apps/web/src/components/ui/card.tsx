@@ -1,20 +1,40 @@
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
+
+const cardVariants = cva(
+  "group/card gap-(--card-spacing) py-(--card-spacing) text-card-foreground has-data-[slot=card-footer]:pb-0 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl flex flex-col overflow-hidden rounded-xl text-sm [--card-spacing:--spacing(4)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)]",
+  {
+    variants: {
+      variant: {
+        default: "bg-card ring-border shadow-xs ring-1",
+        plain: "bg-transparent",
+        tinted: "bg-surface ring-border/60 ring-1",
+        glass: "glass-default",
+        elevated: "bg-card ring-border/50 shadow-floating ring-1",
+        interactive:
+          "bg-card ring-border shadow-xs hover:shadow-floating hover:ring-border-strong ring-1 transition-[box-shadow,translate] duration-(--motion-medium) motion-safe:hover:-translate-y-0.5",
+      },
+    },
+    defaultVariants: {
+      variant: "default",
+    },
+  },
+);
 
 function Card({
   className,
   size = "default",
+  variant = "default",
   ...props
-}: React.ComponentProps<"div"> & { size?: "default" | "sm" }) {
+}: React.ComponentProps<"div"> & { size?: "default" | "sm" } & VariantProps<typeof cardVariants>) {
   return (
     <div
       data-slot="card"
       data-size={size}
-      className={cn(
-        "group/card gap-(--card-spacing) bg-card py-(--card-spacing) text-card-foreground ring-foreground/10 has-data-[slot=card-footer]:pb-0 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl flex flex-col overflow-hidden rounded-xl text-sm ring-1 [--card-spacing:--spacing(4)] has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)]",
-        className,
-      )}
+      data-variant={variant}
+      className={cn(cardVariants({ variant }), className)}
       {...props}
     />
   );
@@ -38,7 +58,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="card-title"
       className={cn(
-        "font-heading text-base font-medium leading-snug group-data-[size=sm]/card:text-sm",
+        "text-base font-semibold leading-snug tracking-[-0.01em] group-data-[size=sm]/card:text-sm",
         className,
       )}
       {...props}
