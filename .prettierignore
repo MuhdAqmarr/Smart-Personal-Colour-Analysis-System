@@ -1,0 +1,14 @@
+node_modules
+.next
+dist
+build
+coverage
+pnpm-lock.yaml
+apps/api
+supabase/migrations
+*.md
+.venv
+uv.lock
+test-assets/generated
+playwright-report
+test-results

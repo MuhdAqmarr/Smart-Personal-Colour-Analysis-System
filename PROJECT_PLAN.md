@@ -13,16 +13,16 @@
 - **Acceptance:** planning docs exist, repo initialised on `main`, first commit pushed.
 
 ### Phase 1 — Foundation (`feat/project-foundation`)
-- [ ] pnpm workspace (`pnpm-workspace.yaml`, root `package.json` scripts)
-- [ ] `apps/web`: Next.js App Router + TypeScript strict + Tailwind + shadcn/ui
-- [ ] `apps/web`: Vitest + React Testing Library + Playwright config
-- [ ] `apps/api`: FastAPI skeleton with uv, Ruff, MyPy, pytest, structlog JSON logging
-- [ ] `apps/api`: request-ID middleware, error envelope, health/readiness endpoints
-- [ ] `packages/contracts`: zod schemas + TS types for API payloads
-- [ ] `packages/colour-engine`: versioned classifier configuration (`classifier-v1.json`)
-- [ ] Dockerfile (api) + docker-compose (postgres + api)
-- [ ] `.env.example` for web and api
-- [ ] GitHub Actions: web CI + api CI
+- [x] pnpm workspace (`pnpm-workspace.yaml`, root `package.json` scripts)
+- [x] `apps/web`: Next.js App Router + TypeScript strict + Tailwind (shadcn/ui lands in Phase 3)
+- [x] `apps/web`: Vitest + React Testing Library + Playwright config
+- [x] `apps/api`: FastAPI skeleton with uv, Ruff, MyPy, pytest, structlog JSON logging
+- [x] `apps/api`: request-ID middleware, error envelope, health/readiness endpoints
+- [x] `packages/contracts`: zod schemas + TS types for API payloads
+- [x] `packages/colour-engine`: versioned classifier configuration (`classifier-v1.json`)
+- [x] Dockerfile (api) + docker-compose (postgres + api)
+- [x] `.env.example` for web and api
+- [x] GitHub Actions: web CI + api CI
 - **Acceptance:** `pnpm lint && pnpm typecheck && pnpm test && pnpm build` pass; `uv run pytest` passes; Docker image builds; CI green on push.
 - **Dependencies:** Phase 0.
 - **Complexity:** M.
