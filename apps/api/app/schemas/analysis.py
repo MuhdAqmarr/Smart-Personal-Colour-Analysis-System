@@ -146,3 +146,72 @@ class AnalysisResultSchema(CamelModel):
     confidence: float
     confidence_label: Literal["high", "medium", "low"]
     explanation: ExplanationSchema
+
+
+class AnalysisSummarySchema(CamelModel):
+    id: str
+    undertone: Literal["warm", "cool"]
+    season_slug: str
+    subseason_slug: str | None
+    confidence: float
+    confidence_label: Literal["high", "medium", "low"]
+    classifier_version: str
+    overall_score: float | None
+    combined_hex: str | None
+    has_image: bool
+    created_at: str
+
+
+class PaginationSchema(CamelModel):
+    page: int
+    page_size: int
+    total_items: int
+    total_pages: int
+
+
+class AnalysisListSchema(CamelModel):
+    items: list[AnalysisSummarySchema]
+    pagination: PaginationSchema
+
+
+class StoredSampleSchema(CamelModel):
+    region: str
+    r: int
+    g: int
+    b: int
+    hex: str
+    hsv_h: float
+    hsv_s: float
+    hsv_v: float
+    lab_l: float
+    lab_a: float
+    lab_b: float
+    chroma: float
+    hue_angle_degrees: float
+    usable_pixel_ratio: float
+    pixel_count: int
+
+
+class AnalysisDetailSchema(CamelModel):
+    id: str
+    undertone: Literal["warm", "cool"]
+    internal_undertone: Literal["warm", "cool", "neutral", "uncertain"]
+    undertone_score: float
+    season_slug: str
+    subseason_slug: str | None
+    confidence: float
+    confidence_label: Literal["high", "medium", "low"]
+    classifier_version: str
+    processing_ms: int
+    created_at: str
+    quality: dict[str, object] | None
+    classification: dict[str, object] | None
+    samples: list[StoredSampleSchema]
+    has_image: bool
+    image_url: str | None
+
+
+class SaveImageResponseSchema(CamelModel):
+    analysis_id: str
+    stored: bool
+    image_url: str | None

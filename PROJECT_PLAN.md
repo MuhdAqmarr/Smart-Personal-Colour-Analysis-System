@@ -88,11 +88,11 @@
 - **Complexity:** XL.
 
 ### Phase 7 — Results and persistence (`feat/analysis-results`)
-- [ ] `POST /api/v1/analyses` end-to-end pipeline endpoint (guest + authenticated)
-- [ ] Persistence of derived features for authenticated users (never guest images)
-- [ ] Results page: overview / fashion / cosmetics / products / technical tabs
-- [ ] History list, detail, delete; optional image save/delete (private bucket, signed URLs)
-- [ ] Privacy settings page wired to consents/preferences
+- [x] `POST /api/v1/analyses` end-to-end pipeline endpoint (guest + authenticated)
+- [x] Persistence of derived features for authenticated users (never guest images)
+- [x] Results summary + detail views (fashion/cosmetics/products tabs land with Phases 8–9)
+- [x] History list, detail, delete; optional image save/delete (private bucket, signed URLs)
+- [x] Privacy settings page wired to consents/preferences
 - **Acceptance:** guest flow stores nothing; user flow persists and lists analyses; deletion verified; integration tests.
 - **Dependencies:** Phase 6, Phase 2.
 - **Complexity:** L.

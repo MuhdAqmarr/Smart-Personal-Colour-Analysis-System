@@ -1,11 +1,17 @@
 "use client";
 
-import { RefreshCcw } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { Camera, CheckCircle2, History, LogIn, RefreshCcw } from "lucide-react";
+import Link from "next/link";
+import { toast } from "sonner";
 
 import { useWizard } from "@/components/analysis/wizard-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useSession } from "@/hooks/use-session";
+import { saveAnalysisImage } from "@/lib/api/analyses";
+import { ApiError } from "@/lib/api/client";
 
 const CONFIDENCE_STYLE: Record<string, string> = {
   high: "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200",
@@ -14,12 +20,25 @@ const CONFIDENCE_STYLE: Record<string, string> = {
 };
 
 /**
- * Compact in-wizard result summary. The full tabbed results experience
- * (fashion / cosmetics / products / technical details) is delivered by the
- * results phase and linked from here once available.
+ * In-wizard result summary with save actions. The full tabbed experience
+ * (fashion palette, cosmetics, products) lives on the analysis detail and
+ * palette screens as those phases land.
  */
 export function ResultsStep() {
-  const { result, reset } = useWizard();
+  const { result, image, consent, reset } = useWizard();
+  const { session, configured } = useSession();
+
+  const saveImage = useMutation({
+    mutationFn: () => {
+      if (!result?.analysisId || !image) throw new Error("Nothing to save.");
+      return saveAnalysisImage(result.analysisId, image.blob);
+    },
+    onSuccess: () => toast.success("Photo saved to your private storage"),
+    onError: (error) =>
+      toast.error("Could not save the photo", {
+        description: error instanceof ApiError ? error.message : undefined,
+      }),
+  });
 
   if (!result) {
     return (
@@ -61,6 +80,53 @@ export function ResultsStep() {
           </ul>
         </CardContent>
       </Card>
+
+      {/* Save state ---------------------------------------------------- */}
+      {result.persisted && result.analysisId ? (
+        <Card className="border-emerald-300/60 dark:border-emerald-900">
+          <CardContent className="flex flex-wrap items-center justify-between gap-3">
+            <p className="flex items-center gap-2 text-sm font-medium">
+              <CheckCircle2 className="size-4 text-emerald-600" aria-hidden="true" />
+              Saved to your history
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                render={<Link href={`/history/${result.analysisId}`} />}
+              >
+                <History aria-hidden="true" data-icon="inline-start" />
+                View details
+              </Button>
+              {consent.saveImage ? (
+                <p className="text-muted-foreground self-center text-xs">Photo stored ✓</p>
+              ) : image ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => saveImage.mutate()}
+                  disabled={saveImage.isPending || saveImage.isSuccess}
+                >
+                  <Camera aria-hidden="true" data-icon="inline-start" />
+                  {saveImage.isSuccess ? "Photo saved" : "Also save my photo"}
+                </Button>
+              ) : null}
+            </div>
+          </CardContent>
+        </Card>
+      ) : configured && !session ? (
+        <Card className="border-dashed">
+          <CardContent className="flex flex-wrap items-center justify-between gap-3">
+            <p className="text-muted-foreground text-sm">
+              This guest result is not stored anywhere. Create an account to keep your analyses.
+            </p>
+            <Button variant="outline" size="sm" render={<Link href="/register" />}>
+              <LogIn aria-hidden="true" data-icon="inline-start" />
+              Sign up to save
+            </Button>
+          </CardContent>
+        </Card>
+      ) : null}
 
       <div className="flex flex-wrap justify-center gap-3">
         <Button variant="outline" onClick={reset}>
