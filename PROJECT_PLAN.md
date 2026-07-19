@@ -40,12 +40,12 @@
 - **Complexity:** L.
 
 ### Phase 3 — UI foundation (`feat/design-system`)
-- [ ] Global layout, navigation, footer, theme tokens
-- [ ] Landing page (all 11 sections of §9)
-- [ ] Auth pages: sign-in, register, forgot/reset password (Supabase Auth)
-- [ ] Legal/info pages: privacy, terms, disclaimer, how-it-works, seasons, FAQ
-- [ ] Dashboard shell + route guards
-- [ ] Accessibility baseline (landmarks, focus states, skip link, reduced motion)
+- [x] Global layout, navigation, footer, theme tokens
+- [x] Landing page (all 11 sections of §9)
+- [x] Auth pages: sign-in, register, forgot/reset password (Supabase Auth)
+- [x] Legal/info pages: privacy, terms, disclaimer, how-it-works, seasons, FAQ
+- [x] Dashboard shell + route guards
+- [x] Accessibility baseline (landmarks, focus states, skip link, reduced motion)
 - **Acceptance:** responsive at 375/390/768/1024/1440; keyboard navigable; build passes.
 - **Dependencies:** Phase 1.
 - **Complexity:** L.
