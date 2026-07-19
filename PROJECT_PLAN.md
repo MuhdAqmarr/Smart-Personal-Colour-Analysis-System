@@ -74,15 +74,15 @@
 - **Complexity:** XL.
 
 ### Phase 6 — Colour engine (`feat/colour-analysis-engine`)
-- [ ] Landmark-relative ROI polygons: forehead, left cheek, right cheek
-- [ ] Pixel filtering: dark/bright/highlight/saturation rejection + MAD outliers
-- [ ] Robust aggregation: median, trimmed mean, std, usable-pixel %
-- [ ] Colour science: sRGB↔linear, XYZ (D65), CIE Lab, HSV/HSL, HEX, chroma, hue angle
-- [ ] CIEDE2000 with published test-pair verification
-- [ ] Undertone classifier (warm/cool public; warm/cool/neutral/uncertain internal)
-- [ ] Major-season + sub-season classifiers on 4 dimensions
-- [ ] Confidence system (separate from classification score)
-- [ ] Explainability generator (evidence, warnings, improvement tips)
+- [x] Landmark-relative ROI polygons: forehead, left cheek, right cheek
+- [x] Pixel filtering: dark/bright/highlight/saturation rejection + MAD outliers
+- [x] Robust aggregation: median, trimmed mean, std, usable-pixel %
+- [x] Colour science: sRGB↔linear, XYZ (D65), CIE Lab, HSV/HSL, HEX, chroma, hue angle
+- [x] CIEDE2000 with published test-pair verification (all 34 Sharma pairs)
+- [x] Undertone classifier (warm/cool public; warm/cool/neutral/uncertain internal)
+- [x] Major-season + sub-season classifiers on 4 dimensions
+- [x] Confidence system (separate from classification score)
+- [x] Explainability generator (evidence, warnings, improvement tips)
 - **Acceptance:** deterministic outputs; unit tests against reference colour values; classifier behaviour tests; config versioned as 1.0.0.
 - **Dependencies:** Phase 5.
 - **Complexity:** XL.
