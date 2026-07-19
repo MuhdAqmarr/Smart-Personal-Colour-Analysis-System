@@ -36,6 +36,14 @@ jobs:
       - name: Install dependencies
         run: uv sync --frozen
 
+      - name: Install MediaPipe system libraries
+        # MediaPipe's Linux build dlopens libGLESv2/libEGL even for CPU
+        # inference (same fix as the production Dockerfile).
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libgl1 libgles2 libegl1 libglib2.0-0
+
+
       - name: Ruff lint
         run: uv run ruff check .
 
