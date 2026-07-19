@@ -59,7 +59,7 @@ export function ResultsStep() {
     <div className="space-y-6">
       <div className="text-center">
         <p className="text-muted-foreground text-sm">Estimated undertone</p>
-        <h2 className="font-heading mt-1 text-3xl font-semibold capitalize tracking-tight">
+        <h2 className="mt-1 text-3xl font-semibold capitalize tracking-tight">
           {result.undertone.undertone} · {subSeason ? subSeason.replace(/-/g, " ") : seasonName}
         </h2>
         <div className="mt-3 flex items-center justify-center gap-2">
@@ -72,7 +72,7 @@ export function ResultsStep() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Why this result</CardTitle>
+          <CardTitle className="text-lg">Why this result</CardTitle>
           <CardDescription>{result.explanation.summary}</CardDescription>
         </CardHeader>
         <CardContent>
@@ -179,7 +179,7 @@ function PaletteSection({
   }
   return (
     <section aria-label="Your fashion and cosmetic palette" className="border-t pt-6">
-      <h3 className="font-heading mb-4 text-xl font-semibold tracking-tight">
+      <h3 className="mb-4 text-xl font-semibold tracking-tight">
         Your colours to explore
       </h3>
       <PaletteView

@@ -20,7 +20,7 @@ export function PreviewStep() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="font-heading text-2xl font-semibold tracking-tight">
+        <h2 className="text-[1.4rem] font-semibold tracking-[-0.015em]">
           Happy with this photo?
         </h2>
         <p className="text-muted-foreground mt-2 leading-relaxed">
@@ -36,7 +36,7 @@ export function PreviewStep() {
           alt="Preview of the photo selected for analysis"
           width={image.width}
           height={image.height}
-          className="w-full rounded-xl border object-contain"
+          className="ring-border w-full rounded-2xl object-contain ring-1"
         />
         <figcaption className="text-muted-foreground mt-2 text-center text-xs">
           {source === "camera" ? "Captured with camera" : "Uploaded photo"} · {image.width}×
