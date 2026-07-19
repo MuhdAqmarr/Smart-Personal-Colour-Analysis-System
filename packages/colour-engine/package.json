@@ -1,0 +1,21 @@
+{
+  "name": "@coloursense/colour-engine",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Versioned classifier configuration for the ColourSense rule-based colour-analysis engine. Consumed by apps/api (Python) at runtime and by apps/web for display metadata.",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./config/classifier-v1.json": "./config/classifier-v1.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "devDependencies": {
+    "typescript": "^5",
+    "vitest": "^3.2.4"
+  }
+}

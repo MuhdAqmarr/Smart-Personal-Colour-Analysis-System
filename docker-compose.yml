@@ -1,0 +1,37 @@
+name: coloursense
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: coloursense
+      POSTGRES_PASSWORD: coloursense
+      POSTGRES_DB: coloursense
+    ports:
+      - "54329:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U coloursense -d coloursense"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      APP_ENV: development
+      FRONTEND_URL: http://localhost:3000
+      DATABASE_URL: postgresql+asyncpg://coloursense:coloursense@db:5432/coloursense
+      LOG_LEVEL: INFO
+    ports:
+      - "8000:8000"
+
+volumes:
+  db-data:
