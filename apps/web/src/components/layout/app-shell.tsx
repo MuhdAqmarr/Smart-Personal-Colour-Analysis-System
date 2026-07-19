@@ -28,9 +28,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-svh flex-col">
       <SiteHeader />
-      <div className="mx-auto flex w-full max-w-6xl flex-1 gap-8 px-4 py-8 sm:px-6">
-        <aside className="hidden w-52 shrink-0 md:block">
-          <nav aria-label="Account navigation" className="sticky top-24 space-y-1">
+      <div className="mx-auto flex w-full max-w-6xl flex-1 gap-10 px-4 py-8 sm:px-6">
+        <aside className="hidden w-56 shrink-0 md:block">
+          <nav aria-label="Account navigation" className="sticky top-22 space-y-0.5">
             {nav.map((item) => {
               const active =
                 pathname === item.href ||
@@ -41,11 +41,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "text-muted-foreground hover:bg-muted hover:text-foreground flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                    active && "bg-muted text-foreground",
+                    "text-muted-foreground hover:text-foreground flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-(--motion-fast)",
+                    active
+                      ? "bg-card text-foreground ring-border shadow-xs ring-1"
+                      : "hover:bg-muted/60",
                   )}
                 >
-                  <item.icon className="size-4" aria-hidden="true" />
+                  <item.icon
+                    className={cn("size-4", active ? "text-foreground" : "text-muted-foreground")}
+                    aria-hidden="true"
+                  />
                   {item.title}
                 </Link>
               );
@@ -53,15 +58,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </nav>
         </aside>
 
-        <main id="main-content" className="min-w-0 flex-1">
+        <main id="main-content" className="min-w-0 flex-1 pb-20 md:pb-0">
           {children}
         </main>
       </div>
 
-      {/* Mobile bottom navigation */}
+      {/* Mobile bottom navigation — glass, safe-area aware */}
       <nav
         aria-label="Account navigation"
-        className="border-border/70 bg-background/95 sticky bottom-0 z-40 border-t backdrop-blur md:hidden"
+        className="glass-navigation fixed inset-x-0 bottom-0 z-40 border-t md:hidden"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
       >
         <ul className="grid grid-cols-5">
           {nav.slice(0, 5).map((item) => {
@@ -74,11 +80,18 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "text-muted-foreground flex min-h-14 flex-col items-center justify-center gap-1 text-[10px] font-medium",
-                    active && "text-primary",
+                    "text-muted-foreground flex min-h-14 flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors duration-(--motion-fast)",
+                    active && "text-foreground",
                   )}
                 >
-                  <item.icon className="size-5" aria-hidden="true" />
+                  <span
+                    className={cn(
+                      "flex h-7 w-12 items-center justify-center rounded-full transition-colors duration-(--motion-fast)",
+                      active && "bg-secondary",
+                    )}
+                  >
+                    <item.icon className="size-5" aria-hidden="true" />
+                  </span>
                   {item.title.split(" ")[0]}
                 </Link>
               </li>

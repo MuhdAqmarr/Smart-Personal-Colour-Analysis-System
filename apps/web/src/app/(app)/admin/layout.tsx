@@ -66,26 +66,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className="space-y-6">
-      <nav aria-label="Admin sections" className="flex flex-wrap gap-1 border-b pb-3">
-        {adminNav.map((item) => {
-          const active =
-            pathname === item.href ||
-            (item.href !== "/admin" && pathname.startsWith(`${item.href}/`));
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              aria-current={active ? "page" : undefined}
-              className={cn(
-                "text-muted-foreground hover:bg-muted hover:text-foreground rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
-                active && "bg-muted text-foreground",
-              )}
-            >
-              {item.title}
-            </Link>
-          );
-        })}
-      </nav>
+      <div className="space-y-3">
+        <p className="text-eyebrow text-muted-foreground">Administration</p>
+        <nav
+          aria-label="Admin sections"
+          className="bg-surface-strong scrollbar-none -mx-1 flex w-fit max-w-full items-center gap-0.5 overflow-x-auto rounded-lg p-[3px]"
+        >
+          {adminNav.map((item) => {
+            const active =
+              pathname === item.href ||
+              (item.href !== "/admin" && pathname.startsWith(`${item.href}/`));
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "text-muted-foreground hover:text-foreground whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-(--motion-fast)",
+                  active && "bg-card text-foreground shadow-xs",
+                )}
+              >
+                {item.title}
+              </Link>
+            );
+          })}
+        </nav>
+      </div>
       {children}
     </div>
   );

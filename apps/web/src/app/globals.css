@@ -281,6 +281,13 @@
       radial-gradient(52rem 30rem at 85% -12%, oklch(0.3 0.035 278 / 42%), transparent 68%),
       radial-gradient(40rem 26rem at -10% 8%, oklch(0.28 0.025 225 / 36%), transparent 66%);
   }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
   .wash-season {
     background-color: var(--card);
     background-image: radial-gradient(
