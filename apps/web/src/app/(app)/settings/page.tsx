@@ -1,50 +1,48 @@
 import type { Metadata } from "next";
-import { Lock, UserRound } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PageHeader } from "@/components/design-system/page-header";
+import { Separator } from "@/components/ui/separator";
 import { ProfileSettings } from "@/components/settings/profile-settings";
 
 export const metadata: Metadata = { title: "Settings" };
 
 export default function SettingsPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="font-heading text-3xl font-semibold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground mt-1">Profile, account, and privacy controls.</p>
-      </div>
+    <div className="space-y-8">
+      <PageHeader title="Settings" description="Profile, account, and privacy controls." />
 
-      <Card>
-        <CardHeader>
-          <span className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-lg">
-            <UserRound className="size-4.5" aria-hidden="true" />
-          </span>
-          <CardTitle className="font-heading text-lg">Profile</CardTitle>
-          <CardDescription>The display name used to greet you.</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <ProfileSettings />
-        </CardContent>
-      </Card>
+      <div className="bg-card ring-border shadow-xs rounded-2xl p-6 ring-1">
+        <section aria-labelledby="settings-profile">
+          <h2 id="settings-profile" className="text-base font-semibold">
+            Profile
+          </h2>
+          <p className="text-muted-foreground mt-1 text-sm">The display name used to greet you.</p>
+          <div className="mt-4 max-w-md">
+            <ProfileSettings />
+          </div>
+        </section>
 
-      <Card>
-        <CardHeader>
-          <span className="bg-primary/10 text-primary flex size-9 items-center justify-center rounded-lg">
-            <Lock className="size-4.5" aria-hidden="true" />
-          </span>
-          <CardTitle className="font-heading text-lg">Privacy</CardTitle>
-          <CardDescription>
+        <Separator className="my-6" />
+
+        <section aria-labelledby="settings-privacy">
+          <h2 id="settings-privacy" className="text-base font-semibold">
+            Privacy
+          </h2>
+          <p className="text-muted-foreground mt-1 text-sm">
             Image-storage preference, history deletion, and account deletion.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button variant="outline" render={<Link href="/settings/privacy" />}>
+          </p>
+          <Link
+            href="/settings/privacy"
+            className="text-foreground hover:bg-surface ring-border mt-4 inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium ring-1 transition-colors duration-(--motion-fast)"
+          >
+            <Lock className="size-4" aria-hidden="true" />
             Open privacy settings
-          </Button>
-        </CardContent>
-      </Card>
+            <ArrowRight className="size-4" aria-hidden="true" />
+          </Link>
+        </section>
+      </div>
     </div>
   );
 }

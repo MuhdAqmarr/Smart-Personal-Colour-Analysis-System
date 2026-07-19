@@ -17,7 +17,7 @@ export default function AdminAuditPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">Audit log</h1>
+        <h1 className="text-title-3">Audit log</h1>
         <p className="text-muted-foreground mt-1 text-sm">
           Append-only record of administrative changes. Entries can never be edited or removed from
           this interface.

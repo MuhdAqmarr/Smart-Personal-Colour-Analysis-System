@@ -193,7 +193,7 @@ export function PaletteView({
       </div>
 
       <div className="hidden print:block">
-        <h2 className="font-heading text-xl font-semibold">
+        <h2 className="text-xl font-semibold tracking-[-0.01em]">
           {palette.name} palette
           {palette.appliedSubseason ? ` — ${palette.appliedSubseason.replace(/-/g, " ")}` : ""}
         </h2>
@@ -209,7 +209,7 @@ export function PaletteView({
               {cautious ? (
                 <AlertTriangle className="text-warning size-4" aria-hidden="true" />
               ) : null}
-              <h3 id={`palette-${group}`} className="font-heading text-lg font-semibold">
+              <h3 id={`palette-${group}`} className="text-lg font-semibold tracking-[-0.01em]">
                 {meta.title}
               </h3>
             </div>
@@ -232,7 +232,7 @@ export function PaletteView({
 
       {palette.cosmetics.length > 0 ? (
         <section aria-labelledby="palette-cosmetics">
-          <h3 id="palette-cosmetics" className="font-heading mb-1 text-lg font-semibold">
+          <h3 id="palette-cosmetics" className="mb-1 text-lg font-semibold">
             Cosmetic directions
           </h3>
           <p className="text-muted-foreground mb-3 text-sm">

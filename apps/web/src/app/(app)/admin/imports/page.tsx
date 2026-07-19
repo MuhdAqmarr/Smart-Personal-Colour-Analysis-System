@@ -106,7 +106,7 @@ export default function AdminImportsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">Product CSV import</h1>
+        <h1 className="text-title-3">Product CSV import</h1>
         <p className="text-muted-foreground mt-1 text-sm">
           Always dry-run first: rows are validated and errors reported per row without writing
           anything. A sample file lives at{" "}
@@ -116,7 +116,7 @@ export default function AdminImportsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Upload</CardTitle>
+          <CardTitle className="text-lg">Upload</CardTitle>
           <CardDescription>UTF-8 CSV with the 17 documented columns, max 2 MB.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
@@ -154,7 +154,7 @@ export default function AdminImportsPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Import history</CardTitle>
+          <CardTitle className="text-lg">Import history</CardTitle>
         </CardHeader>
         <CardContent>
           {jobs.isPending ? (

@@ -45,17 +45,17 @@ export function AnalysisCard({ analysis, onDelete, deleting = false }: AnalysisC
   const headline = titleCase(analysis.subseasonSlug ?? analysis.seasonSlug);
 
   return (
-    <Card>
+    <Card variant="interactive">
       <CardContent className="flex items-center gap-4">
         <span
           aria-hidden="true"
-          className="size-12 shrink-0 rounded-xl border border-black/5"
+          className="size-12 shrink-0 rounded-xl shadow-[inset_0_0_0_1px_oklch(0.2_0.01_260/10%)]"
           style={{ backgroundColor: analysis.combinedHex ?? "#d4c5b5" }}
         />
         <div className="min-w-0 flex-1">
           <Link
             href={`/history/${analysis.id}`}
-            className="font-heading focus-visible:ring-ring/50 focus-visible:ring-3 rounded font-semibold underline-offset-4 outline-none hover:underline"
+            className="focus-visible:ring-ring/50 focus-visible:ring-3 rounded font-semibold tracking-[-0.01em] underline-offset-4 outline-none hover:underline"
           >
             {headline}
           </Link>

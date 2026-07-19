@@ -233,7 +233,7 @@ export default function AnalysisDetailPage() {
       {detail.imageUrl ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Saved photo</CardTitle>
+            <CardTitle className="text-lg">Saved photo</CardTitle>
             <CardDescription>
               Stored privately with your consent; the link below expires after a few minutes.
             </CardDescription>
@@ -264,7 +264,7 @@ export default function AnalysisDetailPage() {
       {classification?.evidence?.length ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Why this result</CardTitle>
+            <CardTitle className="text-lg">Why this result</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="text-muted-foreground list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
@@ -278,7 +278,7 @@ export default function AnalysisDetailPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Measured skin colours</CardTitle>
+          <CardTitle className="text-lg">Measured skin colours</CardTitle>
           <CardDescription>
             Median colour of each sampled region after filtering, in sRGB and CIE Lab.
           </CardDescription>
@@ -319,7 +319,7 @@ export default function AnalysisDetailPage() {
       {palette.isSuccess ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Fashion &amp; cosmetic palette</CardTitle>
+            <CardTitle className="text-lg">Fashion &amp; cosmetic palette</CardTitle>
             <CardDescription>
               The full palette for this result, including hijab-friendly tones and colours to use
               with care.
@@ -338,7 +338,7 @@ export default function AnalysisDetailPage() {
       {recommended.isSuccess && recommended.data.length > 0 ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Products for your palette</CardTitle>
+            <CardTitle className="text-lg">Products for your palette</CardTitle>
             <CardDescription>
               Ranked by CIEDE2000 colour distance to your recommended palette, plus season tags and
               availability. Purchases happen on the external stores.
@@ -364,7 +364,7 @@ export default function AnalysisDetailPage() {
       {classification ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Styling dimensions</CardTitle>
+            <CardTitle className="text-lg">Styling dimensions</CardTitle>
           </CardHeader>
           <CardContent>
             <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">

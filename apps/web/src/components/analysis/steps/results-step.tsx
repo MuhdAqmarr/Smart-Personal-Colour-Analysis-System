@@ -132,7 +132,7 @@ export function ResultsStep() {
           </CardContent>
         </Card>
       ) : configured && !session ? (
-        <Card className="border-dashed">
+        <Card variant="plain" className="border-border border border-dashed">
           <CardContent className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-muted-foreground text-sm">
               This guest result is not stored anywhere. Create an account to keep your analyses.

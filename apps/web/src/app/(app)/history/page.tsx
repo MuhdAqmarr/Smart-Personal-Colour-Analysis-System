@@ -7,6 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 import { AnalysisCard } from "@/components/history/analysis-card";
+import { PageHeader } from "@/components/design-system/page-header";
 import { Button } from "@/components/ui/button";
 import {
   Empty,
@@ -42,15 +43,11 @@ export default function HistoryPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h1 className="font-heading text-3xl font-semibold tracking-tight">Saved analyses</h1>
-          <p className="text-muted-foreground mt-1">
-            Every saved result, newest first. Deleting is immediate and permanent.
-          </p>
-        </div>
-        <Button render={<Link href="/analysis" />}>New analysis</Button>
-      </div>
+      <PageHeader
+        title="Saved analyses"
+        description="Every saved result, newest first. Deleting is immediate and permanent."
+        actions={<Button render={<Link href="/analysis" />}>New analysis</Button>}
+      />
 
       {query.isPending ? (
         <div className="space-y-3" aria-label="Loading analyses">

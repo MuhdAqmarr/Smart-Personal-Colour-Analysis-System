@@ -74,7 +74,7 @@ export function PrivacySettings() {
     <div className="space-y-6">
       <Card>
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Image storage default</CardTitle>
+          <CardTitle className="text-lg">Image storage default</CardTitle>
           <CardDescription>
             Controls how the “save my analysis image” option starts on the consent step. Even when
             on, each analysis still asks you explicitly.
@@ -105,7 +105,7 @@ export function PrivacySettings() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Delete analysis history</CardTitle>
+          <CardTitle className="text-lg">Delete analysis history</CardTitle>
           <CardDescription>
             Removes every saved analysis, all colour measurements, and any stored photos. Your
             account stays active.
@@ -136,9 +136,9 @@ export function PrivacySettings() {
         </CardContent>
       </Card>
 
-      <Card className="border-destructive/40">
+      <Card className="ring-destructive/40">
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Delete account</CardTitle>
+          <CardTitle className="text-lg">Delete account</CardTitle>
           <CardDescription>
             Permanently deletes your account together with every analysis, preference, consent
             record, favourite, and stored photo you own.

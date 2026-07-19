@@ -11,7 +11,7 @@ function Stat({ label, value }: { label: string; value: string | number }) {
   return (
     <div className="bg-card rounded-xl border p-4">
       <p className="text-muted-foreground text-xs font-medium">{label}</p>
-      <p className="font-heading mt-1 text-2xl font-semibold tabular-nums">{value}</p>
+      <p className="mt-1 text-2xl font-semibold tabular-nums">{value}</p>
     </div>
   );
 }
@@ -27,7 +27,7 @@ export default function AdminDashboardPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-3xl font-semibold tracking-tight">Admin dashboard</h1>
+        <h1 className="text-title-2">Admin dashboard</h1>
         <p className="text-muted-foreground mt-1">
           Anonymised usage aggregates and system health. Individual analyses and user images are
           never accessible here.
@@ -72,7 +72,7 @@ export default function AdminDashboardPage() {
           <div className="grid gap-4 lg:grid-cols-2">
             <Card>
               <CardHeader>
-                <CardTitle className="font-heading text-lg">Season distribution</CardTitle>
+                <CardTitle className="text-lg">Season distribution</CardTitle>
                 <CardDescription>Share of saved analyses per suggested season.</CardDescription>
               </CardHeader>
               <CardContent>
@@ -105,7 +105,7 @@ export default function AdminDashboardPage() {
 
             <Card>
               <CardHeader>
-                <CardTitle className="font-heading text-lg">System</CardTitle>
+                <CardTitle className="text-lg">System</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
                 <p className="flex items-center justify-between">
@@ -141,7 +141,7 @@ export default function AdminDashboardPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Recent admin activity</CardTitle>
+          <CardTitle className="text-lg">Recent admin activity</CardTitle>
         </CardHeader>
         <CardContent>
           {audit.isPending ? (
