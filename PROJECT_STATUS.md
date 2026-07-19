@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~76%** — Phases 0–9 complete.
+**~82%** — Phases 0–10 complete.
 
 ## Current phase
-Phase 9 — Products: **complete**. Next: Phase 10 — Admin portal.
+Phase 10 — Admin portal: **complete**. Next: Phase 11 — Testing and hardening.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -69,6 +69,11 @@ Phase 9 — Products: **complete**. Next: Phase 10 — Admin portal.
   - CSV import backend (`POST /api/v1/admin/products/import`): 17-column validation with per-row errors, javascript:-URL rejection, hex→Lab computed at parse time, duplicate detection, dry-run vs transactional upsert-by-URL commit, job + row-error records, audit log, import history endpoints. Sample CSV at `scripts/sample-products.csv`.
   - Frontend: public `/products` directory (filters/search/sort/pagination, favourite hearts when signed in), ProductCard with safe external links (new tab, noopener/noreferrer, store named, purchase notice, demo badge), recommended-products section on history detail with match scores, favourite products on `/favourites`, nav links.
 
+- **Phase 10 (`feat/admin-portal`):**
+  - Admin APIs (all behind DB-verified `require_admin`, mutations audit-logged): anonymised stats (user/analysis counts, season + confidence distributions, avg confidence/processing — zero user-identifiable data), audit-log listing, algorithm versions, system settings get/put, store create/update/deactivate, product list/create/update/activate, palette-colour create/update/delete, season text edits, cosmetic create/update/delete.
+  - Admin UI at `/admin`: role-gated layout (server enforcement remains authoritative), dashboard with stat cards + season distribution bars + system panel + recent activity, products table (search/pagination/active toggles/create dialog), stores table + create, palette manager per season/group with add/deactivate/delete, cosmetics manager, CSV import screen (choose file → dry-run preview with row errors → commit gated on a prior dry-run → history with downloadable error report), audit-log viewer, settings editor (JSON values).
+  - Conditional "Admin" nav entry for admin accounts.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -76,7 +81,7 @@ Phase 9 — Products: **complete**. Next: Phase 10 — Admin portal.
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- API unit: **184 passed** (adds ranking ×7, CSV import ×10). Integration: **39 passed** (adds directory filters/sort/detail, ranked recommendations with ownership, product favourites privacy, CSV dry-run/commit/errors/authz) (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
+- API unit: **184 passed** (adds ranking ×7, CSV import ×10). Integration: **56 passed** (adds admin 403/401 matrix across six endpoints, anonymised-stats assertion, settings update + audit trail, store lifecycle incl. public-visibility effects, product create/deactivate lifecycle, palette-colour and cosmetic lifecycles) (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
 - Web: **24 passed**; build clean with /history, /history/[id], /settings, /settings/privacy routes.
 - `mypy --strict` clean across 53 source files; ruff clean.
 
@@ -88,9 +93,9 @@ Phase 9 — Products: **complete**. Next: Phase 10 — Admin portal.
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/product-recommendations` (PR → `main`)
-- Commit: see `git log` — Phase 9 products commit.
+- Branch: `feat/admin-portal` (PR → `main`)
+- Commit: see `git log` — Phase 10 admin commit.
 
 ## Next actions
-1. Phase 10 (`feat/admin-portal`): admin dashboard with anonymised stats, CRUD for seasons/palettes/cosmetics/stores/products, CSV import screens, audit-log viewer, algorithm versions, system settings.
-2. Phase 11 (`test/system-hardening`): e2e journeys, a11y checks, security review.
+1. Phase 11 (`test/system-hardening`): Playwright e2e journeys, axe accessibility checks, responsive verification, security/privacy review docs, log-hygiene test.
+2. Phase 12 (`chore/production-deployment`): render.yaml, Vercel + Supabase production checklists, smoke tests.

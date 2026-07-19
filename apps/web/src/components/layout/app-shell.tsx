@@ -1,10 +1,12 @@
 "use client";
 
-import { Heart, History, LayoutDashboard, ScanFace, Settings } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { Heart, History, LayoutDashboard, ScanFace, Settings, ShieldCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { SiteHeader } from "@/components/layout/site-header";
+import { getMe } from "@/lib/api/admin";
 import { cn } from "@/lib/utils";
 
 const appNav = [
@@ -17,6 +19,11 @@ const appNav = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const me = useQuery({ queryKey: ["me"], queryFn: getMe, staleTime: 60_000, retry: false });
+  const nav =
+    me.data?.role === "admin"
+      ? [...appNav, { title: "Admin", href: "/admin", icon: ShieldCheck }]
+      : appNav;
 
   return (
     <div className="flex min-h-svh flex-col">
@@ -24,7 +31,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <div className="mx-auto flex w-full max-w-6xl flex-1 gap-8 px-4 py-8 sm:px-6">
         <aside className="hidden w-52 shrink-0 md:block">
           <nav aria-label="Account navigation" className="sticky top-24 space-y-1">
-            {appNav.map((item) => {
+            {nav.map((item) => {
               const active =
                 pathname === item.href ||
                 (item.href !== "/dashboard" && pathname.startsWith(`${item.href}/`));
@@ -57,7 +64,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         className="border-border/70 bg-background/95 sticky bottom-0 z-40 border-t backdrop-blur md:hidden"
       >
         <ul className="grid grid-cols-5">
-          {appNav.slice(0, 5).map((item) => {
+          {nav.slice(0, 5).map((item) => {
             const active =
               pathname === item.href ||
               (item.href !== "/dashboard" && pathname.startsWith(`${item.href}/`));
