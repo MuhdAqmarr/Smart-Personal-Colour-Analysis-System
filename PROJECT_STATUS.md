@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~82%** — Phases 0–10 complete.
+**~88%** — Phases 0–11 complete.
 
 ## Current phase
-Phase 10 — Admin portal: **complete**. Next: Phase 11 — Testing and hardening.
+Phase 11 — Testing and hardening: **complete**. Next: Phase 12 — Deployment preparation.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -74,6 +74,12 @@ Phase 10 — Admin portal: **complete**. Next: Phase 11 — Testing and hardenin
   - Admin UI at `/admin`: role-gated layout (server enforcement remains authoritative), dashboard with stat cards + season distribution bars + system panel + recent activity, products table (search/pagination/active toggles/create dialog), stores table + create, palette manager per season/group with add/deactivate/delete, cosmetics manager, CSV import screen (choose file → dry-run preview with row errors → commit gated on a prior dry-run → history with downloadable error report), audit-log viewer, settings editor (JSON values).
   - Conditional "Admin" nav entry for admin accounts.
 
+- **Phase 11 (`test/system-hardening`):**
+  - Playwright E2E (desktop chromium + mobile-chrome, **30 passing**): consent gate, full guest analysis against the live API (upload → quality → engine → palette render), no-face retake flow, camera-denial fallback (deterministic getUserMedia rejection), product directory with external-link attribute checks, seasons page, anonymous redirects away from /dashboard and /admin, plus **axe-core WCAG 2.1 A/AA checks on five key pages (serious/critical violations = 0)**.
+  - Hardening findings fixed as product improvements: in-text links now always underlined (link-in-text-block), season names are real h2 headings, CORS allows the dedicated e2e origin in dev only, and a React StrictMode + useMutation bug that froze the processing step in dev was eliminated (idle-guarded start).
+  - Backend hardening tests: rate-limit 429 envelope, log-hygiene (no tokens/image bytes/oversized lines in structured logs), error envelopes never leak stack traces, CORS allow/deny behaviour.
+  - New `e2e-ci.yml`: full-stack CI (Postgres service → migrations+seed → API → built web on port 3100 → Playwright) with failure artefacts.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -81,7 +87,7 @@ Phase 10 — Admin portal: **complete**. Next: Phase 11 — Testing and hardenin
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- API unit: **184 passed** (adds ranking ×7, CSV import ×10). Integration: **56 passed** (adds admin 403/401 matrix across six endpoints, anonymised-stats assertion, settings update + audit trail, store lifecycle incl. public-visibility effects, product create/deactivate lifecycle, palette-colour and cosmetic lifecycles) (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
+- API unit: **189 passed** (adds hardening ×5). E2E: **30 passed** across two device projects. Integration: **56 passed** (adds admin 403/401 matrix across six endpoints, anonymised-stats assertion, settings update + audit trail, store lifecycle incl. public-visibility effects, product create/deactivate lifecycle, palette-colour and cosmetic lifecycles) (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
 - Web: **24 passed**; build clean with /history, /history/[id], /settings, /settings/privacy routes.
 - `mypy --strict` clean across 53 source files; ruff clean.
 
@@ -93,9 +99,9 @@ Phase 10 — Admin portal: **complete**. Next: Phase 11 — Testing and hardenin
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/admin-portal` (PR → `main`)
-- Commit: see `git log` — Phase 10 admin commit.
+- Branch: `test/system-hardening` (PR → `main`)
+- Commit: see `git log` — Phase 11 hardening commit.
 
 ## Next actions
-1. Phase 11 (`test/system-hardening`): Playwright e2e journeys, axe accessibility checks, responsive verification, security/privacy review docs, log-hygiene test.
-2. Phase 12 (`chore/production-deployment`): render.yaml, Vercel + Supabase production checklists, smoke tests.
+1. Phase 12 (`chore/production-deployment`): render.yaml, Vercel configuration, Supabase production checklist, smoke-test script, owner manual-action list.
+2. Phase 13 (`docs/fyp-documentation`): full docs/ tree, FYP methodology, manuals, demo script.

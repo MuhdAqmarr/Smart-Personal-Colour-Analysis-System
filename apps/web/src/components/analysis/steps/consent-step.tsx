@@ -85,7 +85,7 @@ export function ConsentStep() {
             <Label htmlFor="consent-agree" className="leading-snug">
               I agree to the analysis of my facial image for personal colour recommendations, as
               described above and in the{" "}
-              <Link href="/privacy" className="text-primary underline-offset-4 hover:underline">
+              <Link href="/privacy" className="text-primary underline underline-offset-4">
                 privacy policy
               </Link>
               .

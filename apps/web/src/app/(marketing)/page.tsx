@@ -354,7 +354,7 @@ export default function HomePage() {
           </Accordion>
           <p className="text-muted-foreground mt-6 text-center text-sm">
             More questions answered on the{" "}
-            <Link href="/faq" className="text-primary underline-offset-4 hover:underline">
+            <Link href="/faq" className="text-primary underline underline-offset-4">
               full FAQ page
             </Link>
             .

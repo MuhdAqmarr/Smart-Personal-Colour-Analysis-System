@@ -83,10 +83,7 @@ export default async function DashboardPage() {
             <CardDescription className="mt-1 leading-relaxed">
               Analyses store only derived colour values — never your photo, unless you explicitly
               opted to save it. Everything can be deleted from{" "}
-              <Link
-                href="/settings/privacy"
-                className="text-primary underline-offset-4 hover:underline"
-              >
+              <Link href="/settings/privacy" className="text-primary underline underline-offset-4">
                 privacy settings
               </Link>
               .

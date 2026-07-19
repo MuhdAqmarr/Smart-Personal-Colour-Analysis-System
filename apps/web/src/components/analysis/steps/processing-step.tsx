@@ -2,7 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 import { AlertTriangle, RefreshCcw } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 
 import { useWizard } from "@/components/analysis/wizard-context";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -32,16 +32,11 @@ const RETAKE_CODES = new Set([
 
 export function ProcessingStep() {
   const { image, consent, setResult, clearImage, go } = useWizard();
-  const abortRef = useRef<AbortController | null>(null);
 
   const mutation = useMutation({
     mutationFn: async () => {
       if (!image) throw new Error("No image selected.");
-      abortRef.current = new AbortController();
-      return runAnalysis(image.blob, {
-        saveImage: consent.saveImage,
-        signal: abortRef.current.signal,
-      });
+      return runAnalysis(image.blob, { saveImage: consent.saveImage });
     },
     onSuccess: (result) => {
       setResult(result);
@@ -49,14 +44,14 @@ export function ProcessingStep() {
     },
   });
 
-  // Kick off exactly once when the step mounts; cancel if the user leaves.
-  const startedRef = useRef(false);
+  // Start when this observer is idle. Guarding on `isIdle` (instead of a
+  // ref) keeps this correct under React StrictMode's double-invocation:
+  // a mutation fired on a discarded observer never updates the live one,
+  // which would otherwise sit on the spinner forever.
   useEffect(() => {
-    if (!startedRef.current) {
-      startedRef.current = true;
+    if (mutation.isIdle) {
       mutation.mutate();
     }
-    return () => abortRef.current?.abort();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
