@@ -142,3 +142,19 @@
     }
   }
 }
+
+/* Print styles: only the palette card area prints. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  [data-print-root],
+  [data-print-root] * {
+    visibility: visible;
+  }
+  [data-print-root] {
+    position: absolute;
+    inset: 0;
+    padding: 1rem;
+  }
+}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { Camera, CheckCircle2, History, LogIn, RefreshCcw } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
@@ -9,9 +9,12 @@ import { useWizard } from "@/components/analysis/wizard-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { PaletteView } from "@/components/palette/palette-view";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/hooks/use-session";
 import { saveAnalysisImage } from "@/lib/api/analyses";
 import { ApiError } from "@/lib/api/client";
+import { getSeasonDetail } from "@/lib/api/palettes";
 
 const CONFIDENCE_STYLE: Record<string, string> = {
   high: "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200",
@@ -128,7 +131,9 @@ export function ResultsStep() {
         </Card>
       ) : null}
 
-      <div className="flex flex-wrap justify-center gap-3">
+      <PaletteSection season={seasonName} subSeason={subSeason} interactive={Boolean(session)} />
+
+      <div className="flex flex-wrap justify-center gap-3 print:hidden">
         <Button variant="outline" onClick={reset}>
           <RefreshCcw aria-hidden="true" data-icon="inline-start" />
           Analyse another photo
@@ -140,5 +145,48 @@ export function ResultsStep() {
         conditions. Classifier v{result.classifierVersion}.
       </p>
     </div>
+  );
+}
+
+function PaletteSection({
+  season,
+  subSeason,
+  interactive,
+}: {
+  season: string;
+  subSeason: string | null;
+  interactive: boolean;
+}) {
+  const palette = useQuery({
+    queryKey: ["season-palette", season, subSeason],
+    queryFn: () => getSeasonDetail(season, subSeason),
+  });
+
+  if (palette.isPending) {
+    return (
+      <div className="space-y-3" aria-label="Loading palette">
+        <Skeleton className="h-6 w-40" />
+        <Skeleton className="h-40 w-full rounded-xl" />
+      </div>
+    );
+  }
+  if (palette.isError) {
+    return (
+      <p className="text-muted-foreground text-center text-sm">
+        The palette could not be loaded right now — your result above is unaffected.
+      </p>
+    );
+  }
+  return (
+    <section aria-label="Your fashion and cosmetic palette" className="border-t pt-6">
+      <h3 className="font-heading mb-4 text-xl font-semibold tracking-tight">
+        Your colours to explore
+      </h3>
+      <PaletteView
+        palette={palette.data}
+        interactive={interactive}
+        invalidateKeys={[["season-palette", season, subSeason]]}
+      />
+    </section>
   );
 }

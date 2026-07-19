@@ -40,6 +40,7 @@ async def app_client(
 ) -> AsyncIterator[httpx.AsyncClient]:
     """App wired to the integration database with a known JWT secret."""
     monkeypatch.setenv("APP_ENV", "test")
+    monkeypatch.setenv("RATE_LIMIT", "1000/minute")
     monkeypatch.setenv("DATABASE_URL", INTEGRATION_DATABASE_URL)
     monkeypatch.setenv("SUPABASE_JWT_SECRET", TEST_JWT_SECRET)
 

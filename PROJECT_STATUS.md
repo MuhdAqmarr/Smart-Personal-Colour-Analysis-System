@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~64%** — Phases 0–7 complete.
+**~70%** — Phases 0–8 complete.
 
 ## Current phase
-Phase 7 — Results and persistence: **complete**. Next: Phase 8 — Palettes and cosmetics.
+Phase 8 — Palettes and cosmetics: **complete**. Next: Phase 9 — Products.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -59,6 +59,11 @@ Phase 7 — Results and persistence: **complete**. Next: Phase 8 — Palettes an
   - Supabase Storage service (httpx, service-role, private bucket): upload/signed-URL/delete/list with graceful degradation when unconfigured.
   - Frontend: history list with delete confirms + pagination, analysis detail (samples table, dimension meters, evidence, stored-photo view/delete), settings + privacy pages (storage default toggle, wipe history, delete account), results step save actions (view details / save photo / guest sign-up CTA), session hook.
 
+- **Phase 8 (`feat/palette-recommendations`):**
+  - Palette APIs: `GET /seasons` (4 seasons + 12 sub-seasons), `GET /seasons/{slug}?subseason=` (grouped colours with sub-season signatures merged, cosmetics by type, favourite flags when authenticated), `GET /analyses/{id}/palette` (owner-resolved), favourite-colour add/remove/list.
+  - PaletteView UI: eight ordered groups incl. hijab/headwear and gently-worded “use with care”, copy-HEX swatch cards, favourite hearts, cosmetics grouped by product type with intensity/occasion notes, print-only palette card via print stylesheet.
+  - Wired into: wizard results step (public season endpoint → works for guests), history detail (owner palette with favourites), new `/favourites` page, nav restored.
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -66,7 +71,7 @@ Phase 7 — Results and persistence: **complete**. Next: Phase 8 — Palettes an
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- API unit: **167 passed**. Integration: **16 passed** (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
+- API unit: **167 passed**. Integration: **25 passed** (adds catalogue shape, sub-season merge, cautious wording check, analysis-palette ownership, favourite round-trip/privacy/auth) (persistence completeness, guest non-persistence, cross-user 404s, owner delete, preferences round-trip, consent log, history wipe, account-deletion cascade) + prior 5 auth tests.
 - Web: **24 passed**; build clean with /history, /history/[id], /settings, /settings/privacy routes.
 - `mypy --strict` clean across 53 source files; ruff clean.
 
@@ -78,9 +83,9 @@ Phase 7 — Results and persistence: **complete**. Next: Phase 8 — Palettes an
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/analysis-results` (PR → `main`)
-- Commit: see `git log` — Phase 7 results/persistence commit.
+- Branch: `feat/palette-recommendations` (PR → `main`)
+- Commit: see `git log` — Phase 8 palettes commit.
 
 ## Next actions
-1. Phase 8 (`feat/palette-recommendations`): seasons/palette/cosmetics APIs from seeded data, palette UI with groups + copy HEX + cautious wording, favourite colours, printable palette card, analysis palette tab.
-2. Phase 9 (`feat/product-recommendations`): products, CIEDE2000 ranking, CSV import.
+1. Phase 9 (`feat/product-recommendations`): product/store APIs with filters + pagination, CIEDE2000 palette-match ranking, recommended products for an analysis, product favourites, external-link safety, CSV import backend.
+2. Phase 10 (`feat/admin-portal`): admin CRUD + imports + audit logs.
