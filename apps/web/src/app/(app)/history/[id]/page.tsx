@@ -202,20 +202,31 @@ export default function AnalysisDetailPage() {
         </AlertDialog>
       </div>
 
-      <div className="text-center">
+      <div
+        className="wash-season ring-border rounded-3xl px-6 py-10 text-center ring-1"
+        style={
+          {
+            "--season-tint": `var(--season-${detail.seasonSlug}, var(--accent))`,
+          } as React.CSSProperties
+        }
+      >
         <p className="text-muted-foreground text-sm">
           {new Date(detail.createdAt).toLocaleString()}
         </p>
-        <h1 className="font-heading mt-1 text-3xl font-semibold tracking-tight">{headline}</h1>
+        <h1 className="text-title-1 mt-2">{headline}</h1>
         <p className="text-muted-foreground mt-1 capitalize">{detail.undertone} undertone</p>
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-          <Badge className="capitalize">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <Badge className="bg-card/60 text-foreground capitalize">
             {detail.confidenceLabel} confidence · {(detail.confidence * 100).toFixed(0)}%
           </Badge>
           {quality?.overall_score != null ? (
-            <Badge variant="outline">Quality {Number(quality.overall_score).toFixed(0)}/100</Badge>
+            <Badge variant="outline" className="bg-card/60">
+              Quality {Number(quality.overall_score).toFixed(0)}/100
+            </Badge>
           ) : null}
-          <Badge variant="outline">Classifier v{detail.classifierVersion}</Badge>
+          <Badge variant="outline" className="bg-card/60">
+            Classifier v{detail.classifierVersion}
+          </Badge>
         </div>
       </div>
 

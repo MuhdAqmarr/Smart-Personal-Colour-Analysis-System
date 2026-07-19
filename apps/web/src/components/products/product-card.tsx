@@ -34,11 +34,11 @@ export function ProductCard({
   const price = formatPrice(product);
 
   return (
-    <Card className="h-full">
+    <Card variant="interactive" className="h-full">
       <CardContent className="flex h-full flex-col gap-3">
         <div
           aria-hidden="true"
-          className="relative h-28 rounded-lg border border-black/5"
+          className="relative h-36 rounded-xl shadow-[inset_0_0_0_1px_oklch(0.2_0.01_260/8%)]"
           style={{ backgroundColor: primaryColour?.hex ?? "#d8d2c8" }}
         >
           {product.isDemo ? (

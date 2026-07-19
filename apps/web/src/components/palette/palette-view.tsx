@@ -207,7 +207,7 @@ export function PaletteView({
           <section key={group} aria-labelledby={`palette-${group}`}>
             <div className="mb-3 flex items-center gap-2">
               {cautious ? (
-                <AlertTriangle className="size-4 text-amber-600" aria-hidden="true" />
+                <AlertTriangle className="text-warning size-4" aria-hidden="true" />
               ) : null}
               <h3 id={`palette-${group}`} className="font-heading text-lg font-semibold">
                 {meta.title}
