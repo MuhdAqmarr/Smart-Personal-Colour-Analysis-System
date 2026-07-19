@@ -249,10 +249,10 @@ export default function AdminProductsPage() {
         <p className="text-muted-foreground">Products could not be loaded.</p>
       ) : (
         <>
-          <div className="overflow-x-auto rounded-xl border">
+          <div className="bg-card ring-border overflow-x-auto rounded-xl ring-1">
             <table className="w-full min-w-[720px] text-sm">
               <thead>
-                <tr className="text-muted-foreground border-b text-left text-xs">
+                <tr className="text-muted-foreground bg-surface border-b text-left text-xs">
                   <th scope="col" className="p-3 font-medium">
                     Product
                   </th>

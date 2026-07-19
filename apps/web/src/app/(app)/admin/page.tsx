@@ -2,18 +2,14 @@
 
 import { useQuery } from "@tanstack/react-query";
 
+import { MetricCard } from "@/components/design-system/metric-card";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getAdminStats, listAlgorithmVersions, listAuditLogs } from "@/lib/api/admin";
 
 function Stat({ label, value }: { label: string; value: string | number }) {
-  return (
-    <div className="bg-card rounded-xl border p-4">
-      <p className="text-muted-foreground text-xs font-medium">{label}</p>
-      <p className="mt-1 text-2xl font-semibold tabular-nums">{value}</p>
-    </div>
-  );
+  return <MetricCard label={label} value={value} />;
 }
 
 export default function AdminDashboardPage() {
@@ -86,10 +82,13 @@ export default function AdminDashboardPage() {
                       return (
                         <li key={season} className="flex items-center gap-3">
                           <span className="w-16 text-sm capitalize">{season}</span>
-                          <div className="bg-muted h-2.5 flex-1 overflow-hidden rounded-full">
+                          <div className="bg-surface-strong h-2.5 flex-1 overflow-hidden rounded-full">
                             <div
-                              className="bg-primary h-full rounded-full"
-                              style={{ width: `${share}%` }}
+                              className="h-full rounded-full"
+                              style={{
+                                width: `${share}%`,
+                                backgroundColor: `var(--season-${season}, var(--primary))`,
+                              }}
                             />
                           </div>
                           <span className="text-muted-foreground w-10 text-right text-xs tabular-nums">

@@ -121,10 +121,10 @@ export default function AdminStoresPage() {
       ) : stores.isError ? (
         <p className="text-muted-foreground">Stores could not be loaded.</p>
       ) : (
-        <div className="overflow-x-auto rounded-xl border">
+        <div className="bg-card ring-border overflow-x-auto rounded-xl ring-1">
           <table className="w-full min-w-[560px] text-sm">
             <thead>
-              <tr className="text-muted-foreground border-b text-left text-xs">
+              <tr className="text-muted-foreground bg-surface border-b text-left text-xs">
                 <th scope="col" className="p-3 font-medium">
                   Store
                 </th>

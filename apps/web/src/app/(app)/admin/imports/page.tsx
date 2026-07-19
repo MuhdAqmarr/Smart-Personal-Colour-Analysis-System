@@ -40,7 +40,7 @@ function ResultSummary({ result }: { result: ImportResult }) {
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full min-w-[480px] text-sm">
             <thead>
-              <tr className="text-muted-foreground border-b text-left text-xs">
+              <tr className="text-muted-foreground bg-surface border-b text-left text-xs">
                 <th scope="col" className="p-2 font-medium">
                   Row
                 </th>
@@ -165,7 +165,7 @@ export default function AdminImportsPage() {
             <div className="overflow-x-auto rounded-lg border">
               <table className="w-full min-w-[640px] text-sm">
                 <thead>
-                  <tr className="text-muted-foreground border-b text-left text-xs">
+                  <tr className="text-muted-foreground bg-surface border-b text-left text-xs">
                     <th scope="col" className="p-2 font-medium">
                       File
                     </th>

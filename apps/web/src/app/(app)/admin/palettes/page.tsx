@@ -188,7 +188,7 @@ export default function AdminPalettesPage() {
           {GROUPS.filter((group) => palette.data.groups[group]?.length).map((group) => (
             <section key={group} aria-label={`${group} colours`}>
               <h2 className="mb-2 text-lg font-semibold capitalize">{group}</h2>
-              <div className="overflow-x-auto rounded-xl border">
+              <div className="bg-card ring-border overflow-x-auto rounded-xl ring-1">
                 <table className="w-full min-w-[560px] text-sm">
                   <tbody>
                     {palette.data.groups[group].map((colour) => (
