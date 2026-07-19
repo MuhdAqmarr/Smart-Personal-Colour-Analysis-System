@@ -117,11 +117,11 @@
 - **Complexity:** L.
 
 ### Phase 10 — Administration (`feat/admin-portal`)
-- [ ] Admin dashboard with anonymised stats and system health
-- [ ] CRUD UIs: seasons, sub-seasons, palettes, cosmetics, stores, products
-- [ ] CSV import screens (upload → preview → commit → history)
-- [ ] Audit logs viewer; algorithm versions; system settings
-- [ ] Server-side admin enforcement on every admin endpoint
+- [x] Admin dashboard with anonymised stats and system health
+- [x] CRUD UIs: palettes, cosmetics, stores, products (season text edits via API)
+- [x] CSV import screens (upload → preview → commit → history)
+- [x] Audit logs viewer; algorithm versions; system settings
+- [x] Server-side admin enforcement on every admin endpoint
 - **Acceptance:** non-admin blocked at API level (tested); admin actions audit-logged.
 - **Dependencies:** Phase 9.
 - **Complexity:** L.
