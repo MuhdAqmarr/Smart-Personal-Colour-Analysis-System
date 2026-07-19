@@ -4,7 +4,11 @@
   "description": "Versioned thresholds and weights for the ColourSense deterministic colour-analysis engine. Every number used by the pipeline lives here. See packages/colour-engine/README.md for field-by-field documentation and rationale.",
   "image": {
     "maxUploadMb": 10,
-    "allowedFormats": ["jpeg", "png", "webp"],
+    "allowedFormats": [
+      "jpeg",
+      "png",
+      "webp"
+    ],
     "maxAnalysisEdgePixels": 1600,
     "maxDecodedPixels": 50000000,
     "minEdgePixels": 320
@@ -61,8 +65,8 @@
     "colourCast": {
       "grayWorldWeight": 0.6,
       "faceConsistencyWeight": 0.4,
-      "warnAbShift": 5.0,
-      "maxAbShift": 10.0
+      "warnAbShift": 12.0,
+      "maxAbShift": 22.0
     },
     "skinArea": {
       "minUsablePixelRatio": 0.35,
@@ -141,10 +145,30 @@
       "contrast": 0.15
     },
     "prototypes": {
-      "spring": { "temperature": 0.75, "value": 0.7, "chroma": 0.7, "contrast": 0.55 },
-      "summer": { "temperature": 0.25, "value": 0.65, "chroma": 0.35, "contrast": 0.35 },
-      "autumn": { "temperature": 0.75, "value": 0.35, "chroma": 0.4, "contrast": 0.5 },
-      "winter": { "temperature": 0.25, "value": 0.35, "chroma": 0.75, "contrast": 0.75 }
+      "spring": {
+        "temperature": 0.75,
+        "value": 0.7,
+        "chroma": 0.7,
+        "contrast": 0.55
+      },
+      "summer": {
+        "temperature": 0.25,
+        "value": 0.65,
+        "chroma": 0.35,
+        "contrast": 0.35
+      },
+      "autumn": {
+        "temperature": 0.75,
+        "value": 0.35,
+        "chroma": 0.4,
+        "contrast": 0.5
+      },
+      "winter": {
+        "temperature": 0.25,
+        "value": 0.35,
+        "chroma": 0.75,
+        "contrast": 0.75
+      }
     }
   },
   "subSeasons": {
@@ -158,10 +182,26 @@
       "strongTemperatureMaxCool": 0.3
     },
     "priority": {
-      "spring": ["bright-spring", "light-spring", "warm-spring"],
-      "summer": ["soft-summer", "light-summer", "cool-summer"],
-      "autumn": ["deep-autumn", "soft-autumn", "warm-autumn"],
-      "winter": ["bright-winter", "deep-winter", "cool-winter"]
+      "spring": [
+        "bright-spring",
+        "light-spring",
+        "warm-spring"
+      ],
+      "summer": [
+        "soft-summer",
+        "light-summer",
+        "cool-summer"
+      ],
+      "autumn": [
+        "deep-autumn",
+        "soft-autumn",
+        "warm-autumn"
+      ],
+      "winter": [
+        "bright-winter",
+        "deep-winter",
+        "cool-winter"
+      ]
     }
   },
   "confidence": {

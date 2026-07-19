@@ -61,14 +61,14 @@
 - **Complexity:** M.
 
 ### Phase 5 — Image-quality engine (`feat/image-quality-engine`)
-- [ ] Upload security validation (extension, MIME sniff, decode, bomb protection, size)
-- [ ] EXIF orientation correction + bounded resize (1600 px)
-- [ ] MediaPipe face detection + landmarks; face count/size checks
-- [ ] Pose estimation (yaw/pitch/roll) from facial transformation matrix
-- [ ] Blur (variance of Laplacian, scale-normalised), exposure, lighting consistency
-- [ ] Colour-cast estimation (gray-world + channel balance + face-region consistency)
-- [ ] Composite quality score (0–100) with component scores in versioned config
-- [ ] `POST /api/v1/analyses/preview-quality` + wizard quality UI
+- [x] Upload security validation (extension, MIME sniff, decode, bomb protection, size)
+- [x] EXIF orientation correction + bounded resize (1600 px)
+- [x] MediaPipe face detection + landmarks; face count/size checks
+- [x] Pose estimation (yaw/pitch/roll) from facial transformation matrix
+- [x] Blur (variance of Laplacian, scale-normalised), exposure, lighting consistency
+- [x] Colour-cast estimation (gray-world + channel balance + face-region consistency)
+- [x] Composite quality score (0–100) with component scores in versioned config
+- [x] `POST /api/v1/analyses/preview-quality` + wizard quality UI (wizard wired in Phase 4)
 - **Acceptance:** unit tests for every metric on synthetic fixtures; integration tests for dark/blurred/no-face/multi-face images.
 - **Dependencies:** Phase 1 (api), Phase 4 (ui).
 - **Complexity:** XL.

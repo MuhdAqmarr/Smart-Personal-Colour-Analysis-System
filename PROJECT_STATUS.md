@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~34%** — Phases 0–4 complete.
+**~45%** — Phases 0–5 complete.
 
 ## Current phase
-Phase 4 — Image acquisition: **complete**. Next: Phase 5 — Image-quality engine.
+Phase 5 — Image-quality engine: **complete**. Next: Phase 6 — Colour engine.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -34,6 +34,15 @@ Phase 4 — Image acquisition: **complete**. Next: Phase 5 — Image-quality eng
   - Upload dropzone: drag-drop + keyboard accessible, extension/MIME/size/empty checks, real decode via createImageBitmap with EXIF orientation baked in, client-side downscale to ≤1600px JPEG.
   - Preview step with retake; object URLs revoked on replace/unmount. Processing step wired to `POST /api/v1/analyses` (TanStack mutation, retake-vs-retry error branching by error code); in-wizard results summary renders undertone/season/confidence/evidence.
 
+- **Phase 5 (`feat/image-quality-engine`):**
+  - Upload hardening: byte-size cap, magic-byte sniffing (JPEG/PNG/WebP) cross-checked against declared MIME + extension, header-only dimension check before decode (explicit decompression-bomb ceiling), EXIF orientation, RGB conversion, LANCZOS resize to ≤1600px — all in memory, nothing written to disk.
+  - MediaPipe FaceLandmarker wrapper (vendored model, lazy thread-safe singleton, num_faces=4) with 478-landmark pixel mapping and facial transformation matrices; documented anchor indices; yaw/pitch/roll decomposition.
+  - Metrics: scale-normalised variance-of-Laplacian blur; exposure (mean luma, dark/highlight/shadow ratios, local contrast, categorical status); lighting left/right + top/bottom deltas; colour cast via luminance-normalised gray-world (a*,b*) shift blended with face-half asymmetry, classified yellow/blue/red/green.
+  - Composite 0–100 quality report with per-component scores, blocking/warning issues, and retake tips; structural failures raise typed codes (NO_FACE_DETECTED, MULTIPLE_FACES_DETECTED, FACE_TOO_SMALL, FACE_OUT_OF_FRAME, POSE_TOO_EXTREME, IMAGE_TOO_LARGE/SMALL, IMAGE_DECODE_FAILED, UNSUPPORTED_MEDIA_TYPE, PAYLOAD_TOO_LARGE).
+  - Colour-science core: exact sRGB↔linear, XYZ (D65), CIE Lab, HSV, HEX, chroma, hue angle — verified against canonical reference values.
+  - `POST /api/v1/analyses/preview-quality` (rate-limited, CPU work off the event loop): 200 + report for gradable photos (acceptable true/false), error envelope for structural failures.
+  - Hermetic fixtures from the public-domain astronaut photo + synthetic derivatives (documented in test-assets/README.md); cast thresholds tuned against real-photo gray-world behaviour (warn 12 / max 22 ΔE_ab).
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -41,9 +50,9 @@ Phase 4 — Image acquisition: **complete**. Next: Phase 5 — Image-quality eng
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- Web: `vitest` → **24 passed** (adds image validation ×6, consent gating ×4, camera permission/hardware/HTTPS fallbacks ×4).
-- Contracts: **7 passed**. API unit: **30 passed**; integration: **5 passed**; RLS proof: **21/21**.
-- `pnpm --filter web build` → success (15 routes incl. /analysis + proxy).
+- API: `uv run pytest` → **95 passed** (adds preprocessing ×12, colour conversions ×16, quality metrics ×17, face pipeline ×13, preview-quality endpoint ×6) — includes real MediaPipe detection on fixtures.
+- Web: **24 passed**. Contracts: **7 passed**. Integration: **5 passed**. RLS proof: **21/21**.
+- `mypy --strict` clean across 37 source files; ruff clean.
 
 ## Latest test results
 - All green (2026-07-19).
@@ -53,9 +62,9 @@ Phase 4 — Image acquisition: **complete**. Next: Phase 5 — Image-quality eng
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/image-acquisition` (PR → `main`)
-- Commit: see `git log` — Phase 4 image acquisition commit.
+- Branch: `feat/image-quality-engine` (PR → `main`)
+- Commit: see `git log` — Phase 5 quality engine commit.
 
 ## Next actions
-1. Phase 5 (`feat/image-quality-engine`): backend upload hardening (magic bytes, decode, bomb guard), MediaPipe face detection + landmarks, pose/blur/exposure/lighting/cast metrics, composite quality score, `POST /api/v1/analyses/preview-quality`.
-2. Phase 6 (`feat/colour-analysis-engine`): ROIs, colour science, undertone/season classifiers, confidence, explainability.
+1. Phase 6 (`feat/colour-analysis-engine`): landmark-anchored forehead/cheek ROIs, pixel filtering + robust aggregation, CIEDE2000, undertone + season + sub-season classifiers, confidence, explainability.
+2. Phase 7 (`feat/analysis-results`): full `POST /api/v1/analyses`, persistence, results UI, history.
