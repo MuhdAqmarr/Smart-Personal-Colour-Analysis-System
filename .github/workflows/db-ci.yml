@@ -56,6 +56,14 @@ jobs:
         working-directory: apps/api
         run: uv sync --frozen
 
+      - name: Install MediaPipe system libraries
+        # MediaPipe's Linux build dlopens libGLESv2/libEGL even for CPU
+        # inference (same fix as the production Dockerfile).
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends libgl1 libgles2 libegl1 libglib2.0-0
+
+
       - name: Verify seed.sql is up to date with its generator
         run: |
           python3 scripts/generate_seed.py
