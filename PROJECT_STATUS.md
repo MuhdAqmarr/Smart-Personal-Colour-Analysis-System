@@ -3,10 +3,10 @@
 > Updated after every major phase. See `PROJECT_PLAN.md` for the full plan.
 
 ## Overall completion
-**~20%** — Phases 0–2 complete.
+**~28%** — Phases 0–3 complete.
 
 ## Current phase
-Phase 2 — Database and authentication: **complete**. Next: Phase 3 — UI foundation.
+Phase 3 — UI foundation: **complete**. Next: Phase 4 — Image acquisition.
 
 ## Completed work
 - **Phase 0:** repository audit, git init, planning documents, first push.
@@ -17,6 +17,15 @@ Phase 2 — Database and authentication: **complete**. Next: Phase 3 — UI foun
   - Local/CI infrastructure: Supabase `auth` shim, `scripts/db-reset.sh`, **`scripts/verify_rls.py` proving 21 isolation/authz checks**, `db-ci.yml` (postgres service; migrations + seed-freshness + RLS proof + integration tests).
   - Backend auth: JWT verification (HS256 secret + JWKS for RS256/ES256; audience/expiry/subject enforced), `get_optional_user`/`require_user`/`require_admin` (DB role check), async SQLAlchemy engine wiring with readiness check, `GET /api/v1/me`.
 
+- **Phase 3 (`feat/design-system`):**
+  - shadcn/ui (Base UI, nova preset, 27 components) with a custom warm-porcelain + clay/terracotta theme (light + dark), Fraunces display font, reduced-motion support.
+  - Global chrome: sticky header with mobile sheet nav + auth-aware actions, footer with honest disclaimers, skip link, TanStack Query + Sonner providers.
+  - Landing page with all 11 mandated sections (hero, how-it-works, four seasons with live swatches, fashion/cosmetics/product explanations, privacy statement, FAQ, CTA, footer).
+  - Info pages: how-it-works (8-stage pipeline), seasons (4 seasons + 12 sub-seasons with swatch grids), FAQ (13 questions), privacy policy, terms, disclaimer — all real content, no placeholders.
+  - Auth: sign-in / register / forgot / reset forms (RHF + zod v4 via standardSchemaResolver, accessible errors), Supabase browser/server clients, auth callback route, Next 16 `proxy.ts` session refresh + route guards, graceful no-Supabase degradation.
+  - App shell: sidebar + mobile bottom nav, server-gated dashboard with real action cards and privacy note.
+  - Accessible SwatchGrid (copy-HEX buttons, names + hex, never colour-only).
+
 ## In progress
 - Nothing — phase boundary.
 
@@ -24,11 +33,9 @@ Phase 2 — Database and authentication: **complete**. Next: Phase 3 — UI foun
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
 
 ## Tests executed
-- `uv run pytest` (unit) → **30 passed** (adds 10 JWT verification tests incl. ES256/JWKS path).
-- `uv run pytest -m integration` → **5 passed** against dockerised Postgres (trigger-created profiles, /me auth flows, readiness DB check).
-- `uv run --project apps/api python scripts/verify_rls.py` → **21/21 PASS**.
-- Migrations + seed apply cleanly to fresh postgres:16 via `scripts/db-reset.sh`.
-- Web/contracts suites unchanged: 7 + 1 passed.
+- Web: `vitest` → **10 passed** (landing page, swatch grid incl. clipboard, sign-in form validation/redirect/failure).
+- Contracts: **7 passed**. API unit: **30 passed**; integration: **5 passed**; RLS proof: **21/21**.
+- `pnpm --filter web build` → success (14 routes + proxy).
 
 ## Latest test results
 - All green (2026-07-19).
@@ -38,9 +45,9 @@ Phase 2 — Database and authentication: **complete**. Next: Phase 3 — UI foun
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `feat/database-authentication` (PR → `main`)
-- Commit: see `git log` — Phase 2 database/auth commit.
+- Branch: `feat/design-system` (PR → `main`)
+- Commit: see `git log` — Phase 3 UI foundation commit.
 
 ## Next actions
-1. Phase 3 (`feat/design-system`): global layout, navigation, landing page, auth pages (Supabase), legal/info pages, dashboard shell, accessibility baseline.
-2. Phase 4 (`feat/image-acquisition`): consent → camera/upload → preview wizard steps.
+1. Phase 4 (`feat/image-acquisition`): analysis wizard — consent step (opt-in storage off by default), photography guidance, camera capture with MediaDevices + fallback, upload with client-side validation, preview/retake.
+2. Phase 5 (`feat/image-quality-engine`): backend upload hardening + quality metrics + preview-quality endpoint.
