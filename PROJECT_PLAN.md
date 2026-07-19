@@ -98,10 +98,10 @@
 - **Complexity:** L.
 
 ### Phase 8 — Palettes and cosmetics (`feat/palette-recommendations`)
-- [ ] Palette API (`/seasons`, `/seasons/{slug}`, `/analyses/{id}/palette`)
-- [ ] Palette UI: swatch grids, groups, copy HEX, cautious colours wording
-- [ ] Cosmetic recommendations UI
-- [ ] Favourite colours; printable palette card
+- [x] Palette API (`/seasons`, `/seasons/{slug}`, `/analyses/{id}/palette`)
+- [x] Palette UI: swatch grids, groups, copy HEX, cautious colours wording
+- [x] Cosmetic recommendations UI
+- [x] Favourite colours; printable palette card
 - **Acceptance:** all four seasons + 12 sub-seasons render seeded data; favourites persist.
 - **Dependencies:** Phase 2 (seed), Phase 7.
 - **Complexity:** M.

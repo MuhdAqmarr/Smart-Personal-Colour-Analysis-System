@@ -21,6 +21,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { PaletteView } from "@/components/palette/palette-view";
 import {
   deleteAnalysis,
   deleteAnalysisImage,
@@ -28,6 +29,7 @@ import {
   type StoredSample,
 } from "@/lib/api/analyses";
 import { ApiError } from "@/lib/api/client";
+import { getAnalysisPalette } from "@/lib/api/palettes";
 
 function titleCase(slug: string | null): string {
   if (!slug) return "";
@@ -70,6 +72,12 @@ export default function AnalysisDetailPage() {
   const query = useQuery({
     queryKey: ["analyses", "detail", analysisId],
     queryFn: () => getAnalysis(analysisId),
+  });
+
+  const palette = useQuery({
+    queryKey: ["analysis-palette", analysisId],
+    queryFn: () => getAnalysisPalette(analysisId),
+    enabled: query.isSuccess,
   });
 
   const removeAnalysis = useMutation({
@@ -270,6 +278,25 @@ export default function AnalysisDetailPage() {
           </table>
         </CardContent>
       </Card>
+
+      {palette.isSuccess ? (
+        <Card>
+          <CardHeader>
+            <CardTitle className="font-heading text-lg">Fashion &amp; cosmetic palette</CardTitle>
+            <CardDescription>
+              The full palette for this result, including hijab-friendly tones and colours to use
+              with care.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <PaletteView
+              palette={palette.data}
+              interactive
+              invalidateKeys={[["analysis-palette", analysisId]]}
+            />
+          </CardContent>
+        </Card>
+      ) : null}
 
       {classification ? (
         <Card>

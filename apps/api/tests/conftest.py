@@ -8,6 +8,9 @@ import pytest
 
 os.environ.setdefault("APP_ENV", "test")
 os.environ.setdefault("DATABASE_URL", "")
+# The slowapi limiter is a module-level singleton shared across app
+# instances; keep tests far away from the per-IP cap.
+os.environ.setdefault("RATE_LIMIT", "1000/minute")
 
 
 @pytest.fixture(autouse=True)

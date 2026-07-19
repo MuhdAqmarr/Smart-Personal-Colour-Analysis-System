@@ -1,17 +1,17 @@
 "use client";
 
-import { History, LayoutDashboard, ScanFace, Settings } from "lucide-react";
+import { Heart, History, LayoutDashboard, ScanFace, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { SiteHeader } from "@/components/layout/site-header";
 import { cn } from "@/lib/utils";
 
-// Favourites and saved palettes join this list with the palette phase.
 const appNav = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "New analysis", href: "/analysis", icon: ScanFace },
   { title: "Saved analyses", href: "/history", icon: History },
+  { title: "Favourites", href: "/favourites", icon: Heart },
   { title: "Settings", href: "/settings", icon: Settings },
 ];
 
