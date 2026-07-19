@@ -22,10 +22,10 @@ interface AuthFormShellProps {
  * Supabase environment is not configured (guest analysis still works). */
 export function AuthFormShell({ title, description, children, footer }: AuthFormShellProps) {
   return (
-    <Card>
-      <CardHeader className="text-center">
-        <CardTitle className="font-heading text-2xl">{title}</CardTitle>
-        <CardDescription>{description}</CardDescription>
+    <Card variant="elevated" className="rounded-2xl [--card-spacing:--spacing(6)]">
+      <CardHeader>
+        <CardTitle className="text-title-3">{title}</CardTitle>
+        <CardDescription className="text-sm leading-relaxed">{description}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {!isSupabaseConfigured() ? (
