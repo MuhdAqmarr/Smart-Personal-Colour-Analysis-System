@@ -1,4 +1,6 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -42,19 +44,33 @@ const buttonVariants = cva(
   },
 );
 
-function Button({
-  className,
-  variant = "default",
-  size = "default",
-  ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
-  return (
-    <ButtonPrimitive
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
+type ButtonProps = ButtonPrimitive.Props & VariantProps<typeof buttonVariants>;
+
+function Button({ className, variant = "default", size = "default", ...props }: ButtonProps) {
+  const classes = cn(buttonVariants({ variant, size, className }));
+
+  // A `render` prop swaps the button for another element — always a Link
+  // (anchor) in this app. Routing that through the button primitive makes
+  // Base UI warn about non-native buttons and, if told `nativeButton:false`,
+  // it forces role="button" onto a genuine navigation link. Render such
+  // elements directly instead so an anchor keeps its native link semantics.
+  if (props.render != null) {
+    // `props` is narrowed to the anchor/element case; its render + className
+    // (Base UI's state-function forms) map cleanly onto useRender's element
+    // form because callers only ever pass a plain element + string classes.
+    return <RenderedButton className={classes} {...(props as RenderedButtonProps)} />;
+  }
+
+  return <ButtonPrimitive data-slot="button" className={classes} {...props} />;
+}
+
+type RenderedButtonProps = useRender.ComponentProps<"button">;
+
+function RenderedButton({ className, render, ...props }: RenderedButtonProps) {
+  return useRender({
+    render: render!,
+    props: mergeProps<"button">({ className, "data-slot": "button" } as Record<string, string>, props),
+  });
 }
 
 export { Button, buttonVariants };
