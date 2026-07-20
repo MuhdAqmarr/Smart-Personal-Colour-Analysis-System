@@ -1,15 +1,15 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { Heart, History, LayoutDashboard, ScanFace, Settings, ShieldCheck } from "lucide-react";
+import { Heart, History, LayoutDashboard, ScanFace, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { SiteHeader } from "@/components/layout/site-header";
-import { getMe } from "@/lib/api/admin";
 import { cn } from "@/lib/utils";
 
-const appNav = [
+// Administration lives in its own console (see AdminShell); the member
+// shell intentionally carries member navigation only.
+const nav = [
   { title: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { title: "New analysis", href: "/analysis", icon: ScanFace },
   { title: "Saved analyses", href: "/history", icon: History },
@@ -19,11 +19,6 @@ const appNav = [
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const me = useQuery({ queryKey: ["me"], queryFn: getMe, staleTime: 60_000, retry: false });
-  const nav =
-    me.data?.role === "admin"
-      ? [...appNav, { title: "Admin", href: "/admin", icon: ShieldCheck }]
-      : appNav;
 
   return (
     <div className="flex min-h-svh flex-col">
