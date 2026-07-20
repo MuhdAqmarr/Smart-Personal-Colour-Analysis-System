@@ -50,7 +50,7 @@ export function ConsentStep() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="font-heading text-2xl font-semibold tracking-tight">
+        <h2 className="text-[1.4rem] font-semibold tracking-[-0.015em]">
           Before we start: your consent
         </h2>
         <p className="text-muted-foreground mt-2 leading-relaxed">
@@ -58,19 +58,22 @@ export function ConsentStep() {
         </p>
       </div>
 
-      <ul className="grid gap-4 sm:grid-cols-2">
+      <ul className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
         {consentPoints.map((point) => (
-          <li key={point.title} className="bg-card rounded-xl border p-4">
-            <span className="bg-primary/10 text-primary mb-3 flex size-9 items-center justify-center rounded-lg">
-              <point.icon className="size-4.5" aria-hidden="true" />
-            </span>
-            <h3 className="text-sm font-semibold">{point.title}</h3>
-            <p className="text-muted-foreground mt-1 text-sm leading-relaxed">{point.body}</p>
+          <li key={point.title} className="flex gap-3">
+            <point.icon
+              className="text-muted-foreground size-4.5 mt-0.5 shrink-0"
+              aria-hidden="true"
+            />
+            <div>
+              <h3 className="text-sm font-semibold">{point.title}</h3>
+              <p className="text-muted-foreground mt-1 text-sm leading-relaxed">{point.body}</p>
+            </div>
           </li>
         ))}
       </ul>
 
-      <div className="space-y-4 rounded-xl border p-4">
+      <div className="bg-surface ring-border space-y-4 rounded-xl p-4 ring-1 sm:p-5">
         <div className="flex items-start gap-3">
           <Checkbox
             id="consent-agree"

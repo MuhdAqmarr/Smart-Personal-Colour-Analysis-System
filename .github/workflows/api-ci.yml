@@ -43,7 +43,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libgl1 libgles2 libegl1 libglib2.0-0
 
-
       - name: Ruff lint
         run: uv run ruff check .
 

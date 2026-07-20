@@ -194,7 +194,7 @@ export function CameraCapture({ onCapture, onUnavailable }: CameraCaptureProps) 
 
   return (
     <div className="space-y-4">
-      <div className="bg-muted relative overflow-hidden rounded-xl border">
+      <div className="bg-surface-strong ring-border relative overflow-hidden rounded-2xl ring-1">
         <video
           ref={videoRef}
           playsInline
@@ -256,32 +256,48 @@ export function CameraCapture({ onCapture, onUnavailable }: CameraCaptureProps) 
             )}
           </div>
         ) : null}
-      </div>
 
-      {state.status === "streaming" ? (
-        <div className="flex flex-wrap items-center justify-center gap-3">
-          <Button size="lg" onClick={handleCapture} disabled={capturing}>
-            {capturing ? <Spinner /> : <Camera aria-hidden="true" data-icon="inline-start" />}
-            Take photo
-          </Button>
-          {devices.length > 1 ? (
-            <Button variant="outline" onClick={handleSwitchCamera}>
-              <SwitchCamera aria-hidden="true" data-icon="inline-start" />
-              Switch camera
-            </Button>
-          ) : null}
-          <Button
-            variant="ghost"
-            onClick={() => {
-              stopStream();
-              setState({ status: "idle" });
-            }}
-          >
-            <RefreshCcw aria-hidden="true" data-icon="inline-start" />
-            Stop camera
-          </Button>
-        </div>
-      ) : null}
+        {/* Native-style floating capture controls over the viewfinder. */}
+        {state.status === "streaming" ? (
+          <div className="absolute inset-x-0 bottom-0 flex justify-center p-4">
+            <div className="glass-subtle flex items-center gap-6 rounded-full px-6 py-2.5">
+              <button
+                type="button"
+                aria-label="Stop camera"
+                onClick={() => {
+                  stopStream();
+                  setState({ status: "idle" });
+                }}
+                className="text-foreground/80 hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-3 flex size-9 items-center justify-center rounded-full outline-none transition-colors"
+              >
+                <RefreshCcw className="size-4.5" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                aria-label="Take photo"
+                onClick={handleCapture}
+                disabled={capturing}
+                className="border-foreground/85 bg-card focus-visible:ring-ring/50 focus-visible:ring-3 flex size-14 items-center justify-center rounded-full border-[3px] outline-none transition-transform disabled:opacity-60 motion-safe:active:scale-95"
+              >
+                {capturing ? (
+                  <Spinner className="size-5" />
+                ) : (
+                  <span aria-hidden="true" className="bg-foreground size-10 rounded-full" />
+                )}
+              </button>
+              <button
+                type="button"
+                aria-label="Switch camera"
+                onClick={handleSwitchCamera}
+                disabled={devices.length < 2}
+                className="text-foreground/80 hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-3 flex size-9 items-center justify-center rounded-full outline-none transition-colors disabled:invisible"
+              >
+                <SwitchCamera className="size-4.5" aria-hidden="true" />
+              </button>
+            </div>
+          </div>
+        ) : null}
+      </div>
 
       <p className="text-muted-foreground text-center text-xs">
         Position your face inside the oval guide, then take the photo.

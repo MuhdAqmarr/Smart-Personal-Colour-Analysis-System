@@ -77,9 +77,7 @@ export default function AdminCosmeticsPage() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">
-          Cosmetic recommendations
-        </h1>
+        <h1 className="text-title-3">Cosmetic recommendations</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button size="sm" />}>
             <Plus aria-hidden="true" data-icon="inline-start" />
@@ -163,10 +161,10 @@ export default function AdminCosmeticsPage() {
       ) : palette.isError ? (
         <p className="text-muted-foreground">Cosmetics could not be loaded.</p>
       ) : (
-        <div className="overflow-x-auto rounded-xl border">
+        <div className="bg-card ring-border overflow-x-auto rounded-xl ring-1">
           <table className="w-full min-w-[560px] text-sm">
             <thead>
-              <tr className="text-muted-foreground border-b text-left text-xs">
+              <tr className="text-muted-foreground bg-surface border-b text-left text-xs">
                 <th scope="col" className="p-2.5 font-medium" aria-label="Swatch" />
                 <th scope="col" className="p-2.5 font-medium">
                   Name

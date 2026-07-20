@@ -74,7 +74,7 @@ export default function AdminSettingsPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">System settings</h1>
+        <h1 className="text-title-3">System settings</h1>
         <p className="text-muted-foreground mt-1 text-sm">
           Runtime configuration stored in the database. Every change is audit-logged.
         </p>

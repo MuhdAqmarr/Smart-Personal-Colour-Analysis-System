@@ -17,7 +17,7 @@ export default function AdminAuditPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">Audit log</h1>
+        <h1 className="text-title-3">Audit log</h1>
         <p className="text-muted-foreground mt-1 text-sm">
           Append-only record of administrative changes. Entries can never be edited or removed from
           this interface.
@@ -32,10 +32,10 @@ export default function AdminAuditPage() {
         <p className="text-muted-foreground text-sm">No entries yet.</p>
       ) : (
         <>
-          <div className="overflow-x-auto rounded-xl border">
+          <div className="bg-card ring-border overflow-x-auto rounded-xl ring-1">
             <table className="w-full min-w-[720px] text-sm">
               <thead>
-                <tr className="text-muted-foreground border-b text-left text-xs">
+                <tr className="text-muted-foreground bg-surface border-b text-left text-xs">
                   <th scope="col" className="p-3 font-medium">
                     When
                   </th>

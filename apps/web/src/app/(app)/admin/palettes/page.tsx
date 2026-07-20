@@ -100,7 +100,7 @@ export default function AdminPalettesPage() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="font-heading text-2xl font-semibold tracking-tight">Palette colours</h1>
+        <h1 className="text-title-3">Palette colours</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button size="sm" />}>
             <Plus aria-hidden="true" data-icon="inline-start" />
@@ -187,8 +187,8 @@ export default function AdminPalettesPage() {
         <div className="space-y-6">
           {GROUPS.filter((group) => palette.data.groups[group]?.length).map((group) => (
             <section key={group} aria-label={`${group} colours`}>
-              <h2 className="font-heading mb-2 text-lg font-semibold capitalize">{group}</h2>
-              <div className="overflow-x-auto rounded-xl border">
+              <h2 className="mb-2 text-lg font-semibold capitalize">{group}</h2>
+              <div className="bg-card ring-border overflow-x-auto rounded-xl ring-1">
                 <table className="w-full min-w-[560px] text-sm">
                   <tbody>
                     {palette.data.groups[group].map((colour) => (

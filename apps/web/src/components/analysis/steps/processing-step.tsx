@@ -105,7 +105,7 @@ export function ProcessingStep() {
     <div className="flex flex-col items-center gap-6 py-10 text-center" role="status">
       <Spinner className="size-8" />
       <div className="space-y-2">
-        <h2 className="font-heading text-xl font-semibold">Analysing your photo…</h2>
+        <h2 className="text-xl font-semibold tracking-[-0.01em]">Analysing your photo…</h2>
         <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
           Checking image quality, locating skin regions, and measuring colours. This usually takes a
           few seconds.

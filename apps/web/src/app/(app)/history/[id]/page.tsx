@@ -202,27 +202,38 @@ export default function AnalysisDetailPage() {
         </AlertDialog>
       </div>
 
-      <div className="text-center">
+      <div
+        className="wash-season ring-border rounded-3xl px-6 py-10 text-center ring-1"
+        style={
+          {
+            "--season-tint": `var(--season-${detail.seasonSlug}, var(--accent))`,
+          } as React.CSSProperties
+        }
+      >
         <p className="text-muted-foreground text-sm">
           {new Date(detail.createdAt).toLocaleString()}
         </p>
-        <h1 className="font-heading mt-1 text-3xl font-semibold tracking-tight">{headline}</h1>
+        <h1 className="text-title-1 mt-2">{headline}</h1>
         <p className="text-muted-foreground mt-1 capitalize">{detail.undertone} undertone</p>
-        <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-          <Badge className="capitalize">
+        <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+          <Badge className="bg-card/60 text-foreground capitalize">
             {detail.confidenceLabel} confidence · {(detail.confidence * 100).toFixed(0)}%
           </Badge>
           {quality?.overall_score != null ? (
-            <Badge variant="outline">Quality {Number(quality.overall_score).toFixed(0)}/100</Badge>
+            <Badge variant="outline" className="bg-card/60">
+              Quality {Number(quality.overall_score).toFixed(0)}/100
+            </Badge>
           ) : null}
-          <Badge variant="outline">Classifier v{detail.classifierVersion}</Badge>
+          <Badge variant="outline" className="bg-card/60">
+            Classifier v{detail.classifierVersion}
+          </Badge>
         </div>
       </div>
 
       {detail.imageUrl ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Saved photo</CardTitle>
+            <CardTitle className="text-lg">Saved photo</CardTitle>
             <CardDescription>
               Stored privately with your consent; the link below expires after a few minutes.
             </CardDescription>
@@ -253,7 +264,7 @@ export default function AnalysisDetailPage() {
       {classification?.evidence?.length ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Why this result</CardTitle>
+            <CardTitle className="text-lg">Why this result</CardTitle>
           </CardHeader>
           <CardContent>
             <ul className="text-muted-foreground list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
@@ -267,7 +278,7 @@ export default function AnalysisDetailPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Measured skin colours</CardTitle>
+          <CardTitle className="text-lg">Measured skin colours</CardTitle>
           <CardDescription>
             Median colour of each sampled region after filtering, in sRGB and CIE Lab.
           </CardDescription>
@@ -308,7 +319,7 @@ export default function AnalysisDetailPage() {
       {palette.isSuccess ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Fashion &amp; cosmetic palette</CardTitle>
+            <CardTitle className="text-lg">Fashion &amp; cosmetic palette</CardTitle>
             <CardDescription>
               The full palette for this result, including hijab-friendly tones and colours to use
               with care.
@@ -327,7 +338,7 @@ export default function AnalysisDetailPage() {
       {recommended.isSuccess && recommended.data.length > 0 ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Products for your palette</CardTitle>
+            <CardTitle className="text-lg">Products for your palette</CardTitle>
             <CardDescription>
               Ranked by CIEDE2000 colour distance to your recommended palette, plus season tags and
               availability. Purchases happen on the external stores.
@@ -353,7 +364,7 @@ export default function AnalysisDetailPage() {
       {classification ? (
         <Card>
           <CardHeader>
-            <CardTitle className="font-heading text-lg">Styling dimensions</CardTitle>
+            <CardTitle className="text-lg">Styling dimensions</CardTitle>
           </CardHeader>
           <CardContent>
             <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">

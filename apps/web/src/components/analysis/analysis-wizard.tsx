@@ -31,14 +31,14 @@ function StepIndicator() {
         const state =
           index < currentIndex ? "done" : index === currentIndex ? "current" : "upcoming";
         return (
-          <li key={item.step} className="flex flex-1 flex-col items-center gap-1.5">
+          <li key={item.step} className="flex flex-1 flex-col items-center gap-2">
             <span
               aria-hidden="true"
               className={cn(
-                "h-1.5 w-full rounded-full transition-colors",
-                state === "done" && "bg-primary",
-                state === "current" && "bg-primary/60",
-                state === "upcoming" && "bg-border",
+                "duration-(--motion-medium) h-1 w-full rounded-full transition-colors",
+                state === "done" && "bg-foreground/75",
+                state === "current" && "bg-foreground/35",
+                state === "upcoming" && "bg-surface-strong",
               )}
             />
             <span
@@ -78,7 +78,7 @@ function WizardBody() {
 export function AnalysisWizard() {
   return (
     <WizardProvider>
-      <div className="bg-card shadow-xs rounded-2xl border p-5 sm:p-8">
+      <div className="bg-card ring-border shadow-xs rounded-3xl p-5 ring-1 sm:p-8">
         <StepIndicator />
         <WizardBody />
       </div>

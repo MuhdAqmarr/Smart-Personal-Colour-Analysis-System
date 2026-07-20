@@ -58,7 +58,7 @@ export default function FavouritesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-heading text-3xl font-semibold tracking-tight">Favourite colours</h1>
+        <h1 className="text-title-2">Favourite colours</h1>
         <p className="text-muted-foreground mt-1">
           Colours and products you hearted while exploring palettes and the directory.
         </p>
@@ -134,7 +134,7 @@ export default function FavouritesPage() {
       )}
 
       <section aria-labelledby="favourite-products-heading" className="border-t pt-6">
-        <h2 id="favourite-products-heading" className="font-heading text-2xl font-semibold">
+        <h2 id="favourite-products-heading" className="text-title-3">
           Favourite products
         </h2>
         {favouriteProducts.isPending ? (

@@ -91,8 +91,14 @@ Phase 13 — Documentation and handover: **complete**. The project meets the Def
   - README overhauled (features → architecture → install → commands → deployment → doc index → privacy/limitations).
   - Complete `docs/` tree per spec §43: architecture (user-flow + auth-flow Mermaid), database schema/ERD, API reference, colour-analysis methodology (formulas + pipeline diagram), classifier configuration guide with tuning history, privacy & consent, threat model (13 threats + accepted risks), security review (§50.4 checklist with evidence + findings fixed), testing report (suite inventory + counts + gaps stated honestly), deployment guide, user manual, administrator manual, 14-beat demo script with Q&A safety notes, FYP methodology summary (§44 complete), evaluation templates (§44.5 instruments incl. repeatability + fairness protocol), future work.
 
+- **UI redesign (`feat/modern-glass-ui-redesign`):**
+  - Full frontend redesign to a modern Apple-inspired glass direction: Geist-only typography with a clamp() display scale, cool neutral OKLCH tokens (terracotta/Fraunces removed), surface/elevation/motion/seasonal-accent token systems, six reusable glass materials with solid + reduced-transparency fallbacks, and a designed (not inverted) dark mode wired via next-themes with a header toggle.
+  - Every route restyled: public pages, auth (incl. accessible password-visibility toggle), the six-step analysis wizard (native-style camera viewfinder with floating glass capture bar), season-tinted result hero, dashboard with latest-result panel + quick links, history/favourites/settings, and all eight admin pages (metric tiles, solid tables with header bands).
+  - New `components/design-system/` layer (glass-surface, page-container, page-header, section-heading, metric-card, empty-state, status-indicator, colour-chip, theme-toggle); Card/button/input/tabs/dialog/sheet/alert primitives re-variants. Fixed a latent circular `--font-sans` reference that dropped body text to the platform serif.
+  - Verified: lint/typecheck clean, 24/24 web unit, 30/30 Playwright e2e incl. axe (serious/critical = 0), zero horizontal overflow across 9 viewports × 9 routes, production build green. Documented in `docs/design-system.md`, `docs/ui-redesign-audit.md`, `docs/ui-redesign-plan.md`, `docs/ui-redesign-report.md`.
+
 ## In progress
-- Nothing — phase boundary.
+- UI redesign branch ready for PR review.
 
 ## Blockers
 - None for local development. Supabase/Render/Vercel credentials needed only at Phase 12.
@@ -103,15 +109,15 @@ Phase 13 — Documentation and handover: **complete**. The project meets the Def
 - `mypy --strict` clean across 53 source files; ruff clean.
 
 ## Latest test results
-- All green (2026-07-19).
+- All green (2026-07-20): web lint/typecheck clean, 24/24 unit, 30/30 e2e (axe serious/critical = 0), production build passing on the redesign branch.
 
 ## Build results
 - `ruff check` clean, `ruff format --check` clean, `mypy app` clean (strict).
 - `pnpm -r typecheck` unchanged/green.
 
 ## Latest Git state
-- Branch: `docs/fyp-documentation` (PR → `main`)
-- Commit: see `git log` — Phase 13 documentation commit.
+- Branch: `feat/modern-glass-ui-redesign` (PR → `main`)
+- Commit: see `git log` — UI redesign phases 0–10.
 
 ## Next actions (owner)
 1. Go-live: the 5-step owner list in `docs/deployment-guide.md` §5 (Supabase project + migrations/seed, Render Blueprint, Vercel project, admin promotion, smoke tests).

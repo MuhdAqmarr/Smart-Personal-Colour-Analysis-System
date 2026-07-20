@@ -19,6 +19,13 @@
 
 *Screenshots: see `docs/demo-script.md` for the guided tour; capture screenshots during the demo run for the report.*
 
+### Design system
+The frontend uses a modern, Apple-inspired glass design language — Geist
+typography, a cool neutral OKLCH token system, restrained glass materials,
+muted seasonal accents, and a fully designed dark mode (toggle in the
+header). The system is documented in `docs/design-system.md`; the redesign
+itself is summarised in `docs/ui-redesign-report.md`.
+
 ## Architecture
 
 Monorepo: **Next.js 16** (App Router, TS strict, Tailwind, shadcn/ui, TanStack Query) on Vercel · **FastAPI** (Python 3.12, OpenCV, MediaPipe, NumPy, SQLAlchemy async) in Docker on Render · **Supabase** (PostgreSQL + RLS, Auth, private Storage). Full details: [`ARCHITECTURE.md`](./ARCHITECTURE.md) · [`docs/architecture.md`](./docs/architecture.md) (flows) · [`docs/database-schema.md`](./docs/database-schema.md) (ERD).

@@ -5,15 +5,17 @@ import { footerNav, siteConfig } from "@/lib/site";
 
 export function SiteFooter() {
   return (
-    <footer className="border-border/70 bg-secondary/40 border-t">
-      <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
+    <footer className="border-separator bg-surface border-t">
+      <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3 sm:col-span-2">
-            <div className="flex items-center gap-2">
-              <span className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-lg">
+            <div className="flex items-center gap-2.5">
+              <span className="bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-[10px]">
                 <Palette className="size-4" aria-hidden="true" />
               </span>
-              <span className="font-heading text-lg font-semibold">{siteConfig.name}</span>
+              <span className="text-[1.0625rem] font-semibold tracking-[-0.01em]">
+                {siteConfig.name}
+              </span>
             </div>
             <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
               A personal styling and educational tool built as a Final Year Project. Results are
@@ -23,13 +25,13 @@ export function SiteFooter() {
           </div>
 
           <nav aria-label="Product links">
-            <h2 className="mb-3 text-sm font-semibold">Product</h2>
-            <ul className="space-y-2">
+            <h2 className="text-foreground/80 mb-3 text-[0.8125rem] font-semibold">Product</h2>
+            <ul className="space-y-2.5">
               {footerNav.product.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                    className="text-muted-foreground hover:text-foreground duration-(--motion-fast) text-sm transition-colors"
                   >
                     {item.title}
                   </Link>
@@ -39,13 +41,13 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-label="Legal links">
-            <h2 className="mb-3 text-sm font-semibold">Legal</h2>
-            <ul className="space-y-2">
+            <h2 className="text-foreground/80 mb-3 text-[0.8125rem] font-semibold">Legal</h2>
+            <ul className="space-y-2.5">
               {footerNav.legal.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+                    className="text-muted-foreground hover:text-foreground duration-(--motion-fast) text-sm transition-colors"
                   >
                     {item.title}
                   </Link>
@@ -55,7 +57,7 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="border-border/70 text-muted-foreground mt-10 border-t pt-6 text-xs leading-relaxed">
+        <div className="border-separator text-muted-foreground mt-12 border-t pt-6 text-xs leading-relaxed">
           <p>
             {siteConfig.name} is not a medical, dermatological, or biometric identification system.
             It never performs identity recognition, and facial images are not stored unless you

@@ -1,4 +1,6 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
+import { mergeProps } from "@base-ui/react/merge-props";
+import { useRender } from "@base-ui/react/use-render";
 import { cva, type VariantProps } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
@@ -8,7 +10,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        default: "bg-primary text-primary-foreground hover:bg-primary-hover shadow-xs",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
@@ -17,20 +19,22 @@ const buttonVariants = cva(
           "hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
+        glass:
+          "glass-subtle text-foreground hover:bg-[color-mix(in_oklab,var(--glass-base)_78%,transparent)] aria-expanded:bg-[color-mix(in_oklab,var(--glass-base)_78%,transparent)]",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default:
-          "h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
+          "h-9 gap-1.5 px-3.5 has-data-[icon=inline-end]:pr-2.5 has-data-[icon=inline-start]:pl-2.5",
         xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: "h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",
-        icon: "size-8",
+        sm: "h-8 gap-1 rounded-[min(var(--radius-md),12px)] px-3 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2 [&_svg:not([class*='size-'])]:size-3.5",
+        lg: "h-11 gap-2 rounded-xl px-5 text-[0.9375rem] has-data-[icon=inline-end]:pr-3.5 has-data-[icon=inline-start]:pl-3.5",
+        icon: "size-9",
         "icon-xs":
           "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
         "icon-sm":
-          "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
-        "icon-lg": "size-9",
+          "size-8 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
+        "icon-lg": "size-11 rounded-xl",
       },
     },
     defaultVariants: {
@@ -40,19 +44,36 @@ const buttonVariants = cva(
   },
 );
 
-function Button({
-  className,
-  variant = "default",
-  size = "default",
-  ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
-  return (
-    <ButtonPrimitive
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
-  );
+type ButtonProps = ButtonPrimitive.Props & VariantProps<typeof buttonVariants>;
+
+function Button({ className, variant = "default", size = "default", ...props }: ButtonProps) {
+  const classes = cn(buttonVariants({ variant, size, className }));
+
+  // A `render` prop swaps the button for another element — always a Link
+  // (anchor) in this app. Routing that through the button primitive makes
+  // Base UI warn about non-native buttons and, if told `nativeButton:false`,
+  // it forces role="button" onto a genuine navigation link. Render such
+  // elements directly instead so an anchor keeps its native link semantics.
+  if (props.render != null) {
+    // `props` is narrowed to the anchor/element case; its render + className
+    // (Base UI's state-function forms) map cleanly onto useRender's element
+    // form because callers only ever pass a plain element + string classes.
+    return <RenderedButton className={classes} {...(props as RenderedButtonProps)} />;
+  }
+
+  return <ButtonPrimitive data-slot="button" className={classes} {...props} />;
+}
+
+type RenderedButtonProps = useRender.ComponentProps<"button">;
+
+function RenderedButton({ className, render, ...props }: RenderedButtonProps) {
+  return useRender({
+    render: render!,
+    props: mergeProps<"button">(
+      { className, "data-slot": "button" } as Record<string, string>,
+      props,
+    ),
+  });
 }
 
 export { Button, buttonVariants };

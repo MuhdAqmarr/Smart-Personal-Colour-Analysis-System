@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { useWizard } from "@/components/analysis/wizard-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PaletteView } from "@/components/palette/palette-view";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/hooks/use-session";
@@ -17,9 +17,16 @@ import { ApiError } from "@/lib/api/client";
 import { getSeasonDetail } from "@/lib/api/palettes";
 
 const CONFIDENCE_STYLE: Record<string, string> = {
-  high: "bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-200",
-  medium: "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-200",
-  low: "bg-red-100 text-red-900 dark:bg-red-950 dark:text-red-200",
+  high: "bg-success/10 text-success",
+  medium: "bg-warning/10 text-warning",
+  low: "bg-secondary text-secondary-foreground",
+};
+
+const SEASON_TINT: Record<string, string> = {
+  spring: "var(--season-spring)",
+  summer: "var(--season-summer)",
+  autumn: "var(--season-autumn)",
+  winter: "var(--season-winter)",
 };
 
 /**
@@ -57,23 +64,30 @@ export function ResultsStep() {
 
   return (
     <div className="space-y-6">
-      <div className="text-center">
-        <p className="text-muted-foreground text-sm">Estimated undertone</p>
-        <h2 className="font-heading mt-1 text-3xl font-semibold capitalize tracking-tight">
+      <div
+        className="wash-season ring-border rounded-3xl px-6 py-10 text-center ring-1"
+        style={{ "--season-tint": SEASON_TINT[seasonName] } as React.CSSProperties}
+      >
+        <p className="text-eyebrow text-muted-foreground">Estimated undertone &amp; season</p>
+        <h2 className="text-title-1 mt-3 capitalize">
           {result.undertone.undertone} · {subSeason ? subSeason.replace(/-/g, " ") : seasonName}
         </h2>
-        <div className="mt-3 flex items-center justify-center gap-2">
+        <div className="mt-4 flex items-center justify-center gap-2">
           <Badge className={CONFIDENCE_STYLE[result.confidenceLabel] ?? ""}>
             {result.confidenceLabel} confidence · {(result.confidence * 100).toFixed(0)}%
           </Badge>
-          <Badge variant="outline">Quality {result.quality.overallScore.toFixed(0)}/100</Badge>
+          <Badge variant="outline" className="bg-card/60">
+            Quality {result.quality.overallScore.toFixed(0)}/100
+          </Badge>
         </div>
+        <p className="text-muted-foreground mx-auto mt-4 max-w-md text-sm leading-relaxed">
+          {result.explanation.summary}
+        </p>
       </div>
 
-      <Card>
+      <Card variant="tinted">
         <CardHeader>
-          <CardTitle className="font-heading text-lg">Why this result</CardTitle>
-          <CardDescription>{result.explanation.summary}</CardDescription>
+          <CardTitle className="text-base">Why this result</CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="text-muted-foreground list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
@@ -86,10 +100,10 @@ export function ResultsStep() {
 
       {/* Save state ---------------------------------------------------- */}
       {result.persisted && result.analysisId ? (
-        <Card className="border-emerald-300/60 dark:border-emerald-900">
+        <Card className="ring-success/30">
           <CardContent className="flex flex-wrap items-center justify-between gap-3">
             <p className="flex items-center gap-2 text-sm font-medium">
-              <CheckCircle2 className="size-4 text-emerald-600" aria-hidden="true" />
+              <CheckCircle2 className="text-success size-4" aria-hidden="true" />
               Saved to your history
             </p>
             <div className="flex flex-wrap gap-2">
@@ -118,7 +132,7 @@ export function ResultsStep() {
           </CardContent>
         </Card>
       ) : configured && !session ? (
-        <Card className="border-dashed">
+        <Card variant="plain" className="border-border border border-dashed">
           <CardContent className="flex flex-wrap items-center justify-between gap-3">
             <p className="text-muted-foreground text-sm">
               This guest result is not stored anywhere. Create an account to keep your analyses.
@@ -179,9 +193,7 @@ function PaletteSection({
   }
   return (
     <section aria-label="Your fashion and cosmetic palette" className="border-t pt-6">
-      <h3 className="font-heading mb-4 text-xl font-semibold tracking-tight">
-        Your colours to explore
-      </h3>
+      <h3 className="mb-4 text-xl font-semibold tracking-tight">Your colours to explore</h3>
       <PaletteView
         palette={palette.data}
         interactive={interactive}
