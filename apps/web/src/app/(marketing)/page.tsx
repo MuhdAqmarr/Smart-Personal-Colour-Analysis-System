@@ -99,7 +99,7 @@ export default function HomePage() {
           {/* Product demonstration: an example result card with layered
               palette panels — real UI abstraction, no stock imagery. */}
           <div className="relative mx-auto hidden w-full max-w-sm md:block" aria-hidden="true">
-            <div className="bg-card ring-border absolute -left-10 top-6 w-52 -rotate-6 rounded-2xl p-4 opacity-80 shadow-xs ring-1">
+            <div className="bg-card ring-border absolute -left-10 top-6 w-52 -rotate-6 rounded-2xl p-4 shadow-xs ring-1">
               <p className="text-muted-foreground mb-2.5 text-xs font-medium">Summer</p>
               <div className="grid grid-cols-4 gap-1.5">
                 {seasonPreviews
@@ -110,7 +110,7 @@ export default function HomePage() {
                   ))}
               </div>
             </div>
-            <div className="bg-card ring-border absolute -right-6 bottom-2 w-48 rotate-3 rounded-2xl p-4 opacity-80 shadow-xs ring-1">
+            <div className="bg-card ring-border absolute -right-6 bottom-2 w-48 rotate-3 rounded-2xl p-4 shadow-xs ring-1">
               <p className="text-muted-foreground mb-2.5 text-xs font-medium">Spring</p>
               <div className="grid grid-cols-4 gap-1.5">
                 {seasonPreviews
@@ -205,12 +205,12 @@ export default function HomePage() {
                   <h3 className="text-title-3">{season.name}</h3>
                   <p className="text-muted-foreground text-sm">{season.tagline}</p>
                 </div>
-                <div className="mt-5 flex gap-2">
+                <div className="mt-5 grid max-w-xs grid-cols-6 gap-2">
                   {season.swatches.slice(0, 6).map((swatch) => (
                     <ColourChip
                       key={swatch.hex}
                       hex={swatch.hex}
-                      className="aspect-square w-full max-w-12"
+                      className="aspect-square w-full"
                     />
                   ))}
                 </div>
