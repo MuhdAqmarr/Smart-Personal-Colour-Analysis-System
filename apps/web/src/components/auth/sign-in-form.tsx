@@ -11,6 +11,7 @@ import { z } from "zod";
 import { TextField } from "@/components/auth/form-field";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { getMe } from "@/lib/api/admin";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 
 const signInSchema = z.object({
@@ -39,13 +40,21 @@ export function SignInForm() {
     }
     setSubmitting(true);
     const { error } = await supabase.auth.signInWithPassword(values);
-    setSubmitting(false);
     if (error) {
+      setSubmitting(false);
       toast.error("Sign in failed", { description: error.message });
       return;
     }
+    // Administrators land in their own console; members follow the
+    // requested redirect (deep links win) or the member dashboard.
     const redirect = searchParams.get("redirect");
-    router.push(redirect && redirect.startsWith("/") ? redirect : "/dashboard");
+    let target = redirect && redirect.startsWith("/") ? redirect : "/dashboard";
+    if (!redirect) {
+      const me = await getMe().catch(() => null);
+      if (me?.role === "admin") target = "/admin";
+    }
+    setSubmitting(false);
+    router.push(target);
     router.refresh();
   }
 
