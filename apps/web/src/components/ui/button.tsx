@@ -69,7 +69,10 @@ type RenderedButtonProps = useRender.ComponentProps<"button">;
 function RenderedButton({ className, render, ...props }: RenderedButtonProps) {
   return useRender({
     render: render!,
-    props: mergeProps<"button">({ className, "data-slot": "button" } as Record<string, string>, props),
+    props: mergeProps<"button">(
+      { className, "data-slot": "button" } as Record<string, string>,
+      props,
+    ),
   });
 }
 
