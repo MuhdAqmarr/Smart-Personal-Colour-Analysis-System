@@ -35,7 +35,7 @@ export default function SettingsPage() {
           </p>
           <Link
             href="/settings/privacy"
-            className="text-foreground hover:bg-surface ring-border mt-4 inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium ring-1 transition-colors duration-(--motion-fast)"
+            className="text-foreground hover:bg-surface ring-border duration-(--motion-fast) mt-4 inline-flex items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium ring-1 transition-colors"
           >
             <Lock className="size-4" aria-hidden="true" />
             Open privacy settings

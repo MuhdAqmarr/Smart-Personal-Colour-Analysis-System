@@ -268,7 +268,7 @@ export function CameraCapture({ onCapture, onUnavailable }: CameraCaptureProps) 
                   stopStream();
                   setState({ status: "idle" });
                 }}
-                className="text-foreground/80 hover:text-foreground focus-visible:ring-ring/50 flex size-9 items-center justify-center rounded-full outline-none transition-colors focus-visible:ring-3"
+                className="text-foreground/80 hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-3 flex size-9 items-center justify-center rounded-full outline-none transition-colors"
               >
                 <RefreshCcw className="size-4.5" aria-hidden="true" />
               </button>
@@ -277,7 +277,7 @@ export function CameraCapture({ onCapture, onUnavailable }: CameraCaptureProps) 
                 aria-label="Take photo"
                 onClick={handleCapture}
                 disabled={capturing}
-                className="border-foreground/85 bg-card focus-visible:ring-ring/50 flex size-14 items-center justify-center rounded-full border-[3px] outline-none transition-transform focus-visible:ring-3 disabled:opacity-60 motion-safe:active:scale-95"
+                className="border-foreground/85 bg-card focus-visible:ring-ring/50 focus-visible:ring-3 flex size-14 items-center justify-center rounded-full border-[3px] outline-none transition-transform disabled:opacity-60 motion-safe:active:scale-95"
               >
                 {capturing ? (
                   <Spinner className="size-5" />
@@ -290,7 +290,7 @@ export function CameraCapture({ onCapture, onUnavailable }: CameraCaptureProps) 
                 aria-label="Switch camera"
                 onClick={handleSwitchCamera}
                 disabled={devices.length < 2}
-                className="text-foreground/80 hover:text-foreground focus-visible:ring-ring/50 flex size-9 items-center justify-center rounded-full outline-none transition-colors focus-visible:ring-3 disabled:invisible"
+                className="text-foreground/80 hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-3 flex size-9 items-center justify-center rounded-full outline-none transition-colors disabled:invisible"
               >
                 <SwitchCamera className="size-4.5" aria-hidden="true" />
               </button>

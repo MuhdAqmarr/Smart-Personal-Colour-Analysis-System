@@ -39,7 +39,10 @@ export function GuidanceStep() {
       </div>
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <section aria-labelledby="tips-do" className="bg-surface ring-border rounded-xl p-4 ring-1 sm:p-5">
+        <section
+          aria-labelledby="tips-do"
+          className="bg-surface ring-border rounded-xl p-4 ring-1 sm:p-5"
+        >
           <h3 id="tips-do" className="mb-3 flex items-center gap-2 text-sm font-semibold">
             <CheckCircle2 className="text-success size-4" aria-hidden="true" />
             Aim for

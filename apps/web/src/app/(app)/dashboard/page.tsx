@@ -57,7 +57,7 @@ export default async function DashboardPage() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="hover:bg-surface group flex items-center gap-3.5 p-4 transition-colors duration-(--motion-fast) first:rounded-t-xl last:rounded-b-xl"
+                  className="hover:bg-surface duration-(--motion-fast) group flex items-center gap-3.5 p-4 transition-colors first:rounded-t-xl last:rounded-b-xl"
                 >
                   <span className="bg-secondary text-foreground flex size-9 shrink-0 items-center justify-center rounded-lg">
                     <link.icon className="size-4" aria-hidden="true" />
@@ -67,7 +67,7 @@ export default async function DashboardPage() {
                     <span className="text-muted-foreground block text-xs">{link.body}</span>
                   </span>
                   <ArrowRight
-                    className="text-muted-foreground group-hover:text-foreground size-4 shrink-0 transition-colors duration-(--motion-fast)"
+                    className="text-muted-foreground group-hover:text-foreground duration-(--motion-fast) size-4 shrink-0 transition-colors"
                     aria-hidden="true"
                   />
                 </Link>
@@ -82,10 +82,7 @@ export default async function DashboardPage() {
         <span>
           Analyses store only derived colour values — never your photo, unless you explicitly opted
           to save it. Everything can be deleted from{" "}
-          <Link
-            href="/settings/privacy"
-            className="text-foreground underline underline-offset-4"
-          >
+          <Link href="/settings/privacy" className="text-foreground underline underline-offset-4">
             privacy settings
           </Link>
           .

@@ -41,7 +41,7 @@ export function TextField({ label, error, hint, type, ...inputProps }: TextField
             onClick={() => setShowPassword((current) => !current)}
             aria-label={showPassword ? "Hide password" : "Show password"}
             aria-pressed={showPassword}
-            className="text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 absolute inset-y-0 right-0 flex w-10 items-center justify-center rounded-r-lg outline-none transition-colors focus-visible:ring-3"
+            className="text-muted-foreground hover:text-foreground focus-visible:ring-ring/50 focus-visible:ring-3 absolute inset-y-0 right-0 flex w-10 items-center justify-center rounded-r-lg outline-none transition-colors"
           >
             {showPassword ? (
               <EyeOff className="size-4" aria-hidden="true" />

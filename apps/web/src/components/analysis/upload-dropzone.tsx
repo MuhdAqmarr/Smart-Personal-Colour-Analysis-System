@@ -71,8 +71,10 @@ export function UploadDropzone({ onSelect }: UploadDropzoneProps) {
           void handleFile(event.dataTransfer.files?.[0]);
         }}
         className={cn(
-          "focus-visible:ring-ring/50 focus-visible:border-ring focus-visible:ring-3 flex min-h-56 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed p-8 text-center outline-none transition-colors duration-(--motion-fast)",
-          dragging ? "border-ring bg-accent/50" : "border-border hover:border-border-strong hover:bg-surface",
+          "focus-visible:ring-ring/50 focus-visible:border-ring focus-visible:ring-3 duration-(--motion-fast) flex min-h-56 cursor-pointer flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed p-8 text-center outline-none transition-colors",
+          dragging
+            ? "border-ring bg-accent/50"
+            : "border-border hover:border-border-strong hover:bg-surface",
         )}
       >
         {processing ? (

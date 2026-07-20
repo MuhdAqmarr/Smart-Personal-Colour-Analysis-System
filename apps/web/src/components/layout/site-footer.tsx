@@ -31,7 +31,7 @@ export function SiteFooter() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-(--motion-fast)"
+                    className="text-muted-foreground hover:text-foreground duration-(--motion-fast) text-sm transition-colors"
                   >
                     {item.title}
                   </Link>
@@ -47,7 +47,7 @@ export function SiteFooter() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-(--motion-fast)"
+                    className="text-muted-foreground hover:text-foreground duration-(--motion-fast) text-sm transition-colors"
                   >
                     {item.title}
                   </Link>

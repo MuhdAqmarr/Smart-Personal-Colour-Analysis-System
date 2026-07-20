@@ -7,11 +7,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans:
-    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", monospace;
-  --font-heading:
-    var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-heading: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -109,8 +107,7 @@
 
   /* Elevation (soft, layered, cool-tinted) */
   --elevation-xs: 0 1px 2px oklch(0.28 0.02 262 / 5%);
-  --elevation-sm:
-    0 1px 2px oklch(0.28 0.02 262 / 5%), 0 3px 10px -2px oklch(0.28 0.02 262 / 6%);
+  --elevation-sm: 0 1px 2px oklch(0.28 0.02 262 / 5%), 0 3px 10px -2px oklch(0.28 0.02 262 / 6%);
   --elevation-glass:
     inset 0 1px 0 var(--glass-highlight), 0 14px 40px -18px oklch(0.28 0.02 262 / 22%);
   --elevation-floating:
@@ -184,10 +181,8 @@
 
   --elevation-xs: 0 1px 2px oklch(0 0 0 / 25%);
   --elevation-sm: 0 1px 2px oklch(0 0 0 / 25%), 0 3px 10px -2px oklch(0 0 0 / 25%);
-  --elevation-glass:
-    inset 0 1px 0 var(--glass-highlight), 0 14px 40px -18px oklch(0 0 0 / 55%);
-  --elevation-floating:
-    0 2px 6px oklch(0 0 0 / 28%), 0 22px 55px -22px oklch(0 0 0 / 55%);
+  --elevation-glass: inset 0 1px 0 var(--glass-highlight), 0 14px 40px -18px oklch(0 0 0 / 55%);
+  --elevation-floating: 0 2px 6px oklch(0 0 0 / 28%), 0 22px 55px -22px oklch(0 0 0 / 55%);
   --elevation-modal: 0 4px 12px oklch(0 0 0 / 32%), 0 32px 90px -24px oklch(0 0 0 / 65%);
 
   --season-spring: oklch(0.76 0.1 55);

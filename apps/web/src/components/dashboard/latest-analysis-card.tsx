@@ -78,7 +78,12 @@ export function LatestAnalysisCard() {
         </p>
       </div>
       <div className="mt-4">
-        <Button variant="outline" size="sm" className="bg-card/70" render={<Link href={`/history/${latest.id}`} />}>
+        <Button
+          variant="outline"
+          size="sm"
+          className="bg-card/70"
+          render={<Link href={`/history/${latest.id}`} />}
+        >
           View full result
           <ArrowRight aria-hidden="true" data-icon="inline-end" />
         </Button>

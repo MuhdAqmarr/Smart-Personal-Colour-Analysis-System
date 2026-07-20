@@ -30,7 +30,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       <SiteHeader />
       <div className="mx-auto flex w-full max-w-6xl flex-1 gap-10 px-4 py-8 sm:px-6">
         <aside className="hidden w-56 shrink-0 md:block">
-          <nav aria-label="Account navigation" className="sticky top-22 space-y-0.5">
+          <nav aria-label="Account navigation" className="top-22 sticky space-y-0.5">
             {nav.map((item) => {
               const active =
                 pathname === item.href ||
@@ -41,7 +41,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "text-muted-foreground hover:text-foreground flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-(--motion-fast)",
+                    "text-muted-foreground hover:text-foreground duration-(--motion-fast) flex items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
                     active
                       ? "bg-card text-foreground ring-border shadow-xs ring-1"
                       : "hover:bg-muted/60",
@@ -80,13 +80,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
                   href={item.href}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "text-muted-foreground flex min-h-14 flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors duration-(--motion-fast)",
+                    "text-muted-foreground duration-(--motion-fast) flex min-h-14 flex-col items-center justify-center gap-1 text-[10px] font-medium transition-colors",
                     active && "text-foreground",
                   )}
                 >
                   <span
                     className={cn(
-                      "flex h-7 w-12 items-center justify-center rounded-full transition-colors duration-(--motion-fast)",
+                      "duration-(--motion-fast) flex h-7 w-12 items-center justify-center rounded-full transition-colors",
                       active && "bg-secondary",
                     )}
                   >

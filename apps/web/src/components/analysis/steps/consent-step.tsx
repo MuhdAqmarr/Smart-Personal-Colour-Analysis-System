@@ -61,7 +61,10 @@ export function ConsentStep() {
       <ul className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
         {consentPoints.map((point) => (
           <li key={point.title} className="flex gap-3">
-            <point.icon className="text-muted-foreground mt-0.5 size-4.5 shrink-0" aria-hidden="true" />
+            <point.icon
+              className="text-muted-foreground size-4.5 mt-0.5 shrink-0"
+              aria-hidden="true"
+            />
             <div>
               <h3 className="text-sm font-semibold">{point.title}</h3>
               <p className="text-muted-foreground mt-1 text-sm leading-relaxed">{point.body}</p>

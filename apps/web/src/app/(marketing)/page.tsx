@@ -74,9 +74,7 @@ export default function HomePage() {
             <p className="text-eyebrow text-muted-foreground">
               Rule-based colour science — honest, explainable results
             </p>
-            <h1 className="text-display text-balance">
-              Find the colours that were made for you
-            </h1>
+            <h1 className="text-display text-balance">Find the colours that were made for you</h1>
             <p className="text-muted-foreground max-w-prose text-lg leading-relaxed">
               {siteConfig.name} analyses a single facial photo to estimate your undertone and
               seasonal colour palette — then translates it into outfits, cosmetics, and products you
@@ -99,7 +97,7 @@ export default function HomePage() {
           {/* Product demonstration: an example result card with layered
               palette panels — real UI abstraction, no stock imagery. */}
           <div className="relative mx-auto hidden w-full max-w-sm md:block" aria-hidden="true">
-            <div className="bg-card ring-border absolute -left-10 top-6 w-52 -rotate-6 rounded-2xl p-4 shadow-xs ring-1">
+            <div className="bg-card ring-border shadow-xs absolute -left-10 top-6 w-52 -rotate-6 rounded-2xl p-4 ring-1">
               <p className="text-muted-foreground mb-2.5 text-xs font-medium">Summer</p>
               <div className="grid grid-cols-4 gap-1.5">
                 {seasonPreviews
@@ -110,7 +108,7 @@ export default function HomePage() {
                   ))}
               </div>
             </div>
-            <div className="bg-card ring-border absolute -right-6 bottom-2 w-48 rotate-3 rounded-2xl p-4 shadow-xs ring-1">
+            <div className="bg-card ring-border shadow-xs absolute -right-6 bottom-2 w-48 rotate-3 rounded-2xl p-4 ring-1">
               <p className="text-muted-foreground mb-2.5 text-xs font-medium">Spring</p>
               <div className="grid grid-cols-4 gap-1.5">
                 {seasonPreviews
@@ -233,7 +231,7 @@ export default function HomePage() {
             lede="Your season unlocks a curated palette organised the way you dress: neutrals, core colours, accents, formal wear, casual wear, accessories, and hijab or headwear tones — plus colours to use cautiously, with gentler alternatives suggested."
           />
           <div>
-            <div className="bg-card ring-border rounded-2xl p-6 shadow-xs ring-1">
+            <div className="bg-card ring-border shadow-xs rounded-2xl p-6 ring-1">
               <p className="mb-4 text-sm font-semibold">Autumn — core colours</p>
               <SwatchGrid
                 swatches={[
@@ -267,10 +265,7 @@ export default function HomePage() {
       </section>
 
       {/* Cosmetics + products ------------------------------------------ */}
-      <section
-        aria-labelledby="cosmetics-heading"
-        className="bg-surface border-separator border-y"
-      >
+      <section aria-labelledby="cosmetics-heading" className="bg-surface border-separator border-y">
         <div className="mx-auto grid w-full max-w-6xl gap-12 px-4 py-20 sm:px-6 md:grid-cols-2 md:py-24">
           <div className="space-y-10">
             <SectionHeading
@@ -279,7 +274,7 @@ export default function HomePage() {
               title="Cosmetic shades that work with you"
               lede="Lipstick, blusher, eyeshadow, eyeliner, and highlighter suggestions tuned to your season — each with intensity and day-or-evening guidance. Foundation advice stays honest: we point you to a warm, cool, or neutral direction and always recommend testing in daylight."
             />
-            <div className="bg-card ring-border rounded-2xl p-6 shadow-xs ring-1">
+            <div className="bg-card ring-border shadow-xs rounded-2xl p-6 ring-1">
               <p className="mb-4 text-sm font-semibold">Winter — cosmetic direction</p>
               <SwatchGrid
                 swatches={[
@@ -302,7 +297,7 @@ export default function HomePage() {
               title="From palette to products"
               lede="Every product in the directory carries measured colour data. We rank matches for your palette using the CIEDE2000 colour-difference formula — the same maths used in colour-critical industries — then link you to the store to buy."
             />
-            <div className="bg-card ring-border rounded-2xl p-6 shadow-xs ring-1">
+            <div className="bg-card ring-border shadow-xs rounded-2xl p-6 ring-1">
               <dl className="space-y-4 text-sm">
                 {[
                   ["Palette proximity", "How close the product colour sits to your best colours"],

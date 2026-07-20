@@ -77,9 +77,7 @@ export default function AdminCosmeticsPage() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-title-3">
-          Cosmetic recommendations
-        </h1>
+        <h1 className="text-title-3">Cosmetic recommendations</h1>
         <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger render={<Button size="sm" />}>
             <Plus aria-hidden="true" data-icon="inline-start" />

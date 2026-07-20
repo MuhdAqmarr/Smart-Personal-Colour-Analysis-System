@@ -65,7 +65,7 @@ export function SiteHeader() {
       onClick={() => setMenuOpen(false)}
       aria-current={pathname === href ? "page" : undefined}
       className={cn(
-        "text-muted-foreground hover:text-foreground rounded-md text-sm font-medium transition-colors duration-(--motion-fast)",
+        "text-muted-foreground hover:text-foreground duration-(--motion-fast) rounded-md text-sm font-medium transition-colors",
         mobile ? "px-2 py-2 text-base" : "px-3 py-2",
         pathname === href && "text-foreground",
       )}
@@ -78,7 +78,7 @@ export function SiteHeader() {
     <header
       data-scrolled={scrolled || undefined}
       className={cn(
-        "glass-navigation sticky top-0 z-40 transition-shadow duration-(--motion-medium)",
+        "glass-navigation duration-(--motion-medium) sticky top-0 z-40 transition-shadow",
         scrolled ? "shadow-xs" : "border-b-transparent",
       )}
     >

@@ -82,7 +82,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 href={item.href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "text-muted-foreground hover:text-foreground whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-colors duration-(--motion-fast)",
+                  "text-muted-foreground hover:text-foreground duration-(--motion-fast) whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
                   active && "bg-card text-foreground shadow-xs",
                 )}
               >

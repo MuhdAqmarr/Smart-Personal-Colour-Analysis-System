@@ -35,7 +35,7 @@ function StepIndicator() {
             <span
               aria-hidden="true"
               className={cn(
-                "h-1 w-full rounded-full transition-colors duration-(--motion-medium)",
+                "duration-(--motion-medium) h-1 w-full rounded-full transition-colors",
                 state === "done" && "bg-foreground/75",
                 state === "current" && "bg-foreground/35",
                 state === "upcoming" && "bg-surface-strong",

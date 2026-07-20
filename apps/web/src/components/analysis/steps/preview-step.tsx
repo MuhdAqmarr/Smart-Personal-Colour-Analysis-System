@@ -20,9 +20,7 @@ export function PreviewStep() {
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-[1.4rem] font-semibold tracking-[-0.015em]">
-          Happy with this photo?
-        </h2>
+        <h2 className="text-[1.4rem] font-semibold tracking-[-0.015em]">Happy with this photo?</h2>
         <p className="text-muted-foreground mt-2 leading-relaxed">
           Check that your face is well lit, sharp, and free of shadows before analysing.
         </p>

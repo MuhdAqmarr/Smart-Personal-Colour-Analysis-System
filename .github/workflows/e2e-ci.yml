@@ -69,7 +69,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends libgl1 libgles2 libegl1 libglib2.0-0
 
-
       - name: Prepare database (shim + migrations + seed)
         run: ./scripts/db-reset.sh
         env:

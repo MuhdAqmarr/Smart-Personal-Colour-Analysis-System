@@ -33,7 +33,7 @@ function MetricCard({
           </span>
         ) : null}
       </div>
-      <p className="text-foreground mt-2 text-2xl font-semibold tracking-[-0.01em] tabular-nums">
+      <p className="text-foreground mt-2 text-2xl font-semibold tabular-nums tracking-[-0.01em]">
         {value}
       </p>
       {hint ? <p className="text-muted-foreground mt-1 text-xs">{hint}</p> : null}

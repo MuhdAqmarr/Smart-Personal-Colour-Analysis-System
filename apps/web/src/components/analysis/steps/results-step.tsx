@@ -193,9 +193,7 @@ function PaletteSection({
   }
   return (
     <section aria-label="Your fashion and cosmetic palette" className="border-t pt-6">
-      <h3 className="mb-4 text-xl font-semibold tracking-tight">
-        Your colours to explore
-      </h3>
+      <h3 className="mb-4 text-xl font-semibold tracking-tight">Your colours to explore</h3>
       <PaletteView
         palette={palette.data}
         interactive={interactive}
