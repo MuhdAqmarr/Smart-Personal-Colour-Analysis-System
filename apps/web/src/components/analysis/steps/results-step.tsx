@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PaletteView } from "@/components/palette/palette-view";
+import { ShopPalette } from "@/components/products/shop-palette";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSession } from "@/hooks/use-session";
 import { saveAnalysisImage } from "@/lib/api/analyses";
@@ -192,13 +193,16 @@ function PaletteSection({
     );
   }
   return (
-    <section aria-label="Your fashion and cosmetic palette" className="border-t pt-6">
-      <h3 className="mb-4 text-xl font-semibold tracking-tight">Your colours to explore</h3>
-      <PaletteView
-        palette={palette.data}
-        interactive={interactive}
-        invalidateKeys={[["season-palette", season, subSeason]]}
-      />
+    <section aria-label="Your fashion and cosmetic palette" className="space-y-6 border-t pt-6">
+      <div>
+        <h3 className="mb-4 text-xl font-semibold tracking-tight">Your colours to explore</h3>
+        <PaletteView
+          palette={palette.data}
+          interactive={interactive}
+          invalidateKeys={[["season-palette", season, subSeason]]}
+        />
+      </div>
+      <ShopPalette palette={palette.data} />
     </section>
   );
 }

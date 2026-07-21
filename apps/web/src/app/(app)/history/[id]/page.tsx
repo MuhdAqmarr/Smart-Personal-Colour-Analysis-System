@@ -31,6 +31,7 @@ import {
 import { ApiError } from "@/lib/api/client";
 import { getAnalysisPalette } from "@/lib/api/palettes";
 import { ProductCard } from "@/components/products/product-card";
+import { ShopPalette } from "@/components/products/shop-palette";
 import {
   favouriteProduct,
   getRecommendedProducts,
@@ -334,6 +335,8 @@ export default function AnalysisDetailPage() {
           </CardContent>
         </Card>
       ) : null}
+
+      {palette.isSuccess ? <ShopPalette palette={palette.data} /> : null}
 
       {recommended.isSuccess && recommended.data.length > 0 ? (
         <Card>
