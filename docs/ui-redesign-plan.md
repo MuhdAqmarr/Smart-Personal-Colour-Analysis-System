@@ -33,7 +33,7 @@ push milestones.
 | 7 | `feat(dashboard): modernise authenticated user pages` | dashboard, history, detail, favourites, settings, privacy |
 | 8 | `feat(admin): modernise admin interface` | admin dashboard, tables, forms, CSV import flow, audit log |
 | 9 | `fix(ui): responsive, dark-mode and accessibility refinement` | safe-area, 320px pass, dark review, axe fixes |
-| 10 | `docs(ui): document the ColourSense design system` + `test(ui)` if needed | design-system.md, redesign report, README/status updates, final QA, push, PR |
+| 10 | `docs(ui): document the Match.Lab design system` + `test(ui)` if needed | design-system.md, redesign report, README/status updates, final QA, push, PR |
 
 ## Phase 1 file plan (foundations)
 

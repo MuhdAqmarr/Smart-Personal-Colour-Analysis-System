@@ -1,4 +1,4 @@
-# Project Plan — Smart Personal Colour Analysis System (ColourSense)
+# Project Plan — Smart Personal Colour Analysis System (Match.Lab)
 
 > Authoritative execution plan derived from `SMART_PERSONAL_COLOUR_ANALYSIS_MASTER_PROMPT.md`.
 > Status tracking lives in `PROJECT_STATUS.md`. Decisions live in `DECISIONS.md`.

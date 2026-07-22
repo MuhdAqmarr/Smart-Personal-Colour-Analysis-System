@@ -1,6 +1,6 @@
 # @coloursense/colour-engine — Versioned Classifier Configuration
 
-Single source of truth for **every threshold and weight** used by the ColourSense rule-based colour-analysis engine. The Python backend (`apps/api`) loads and validates `config/classifier-v1.json` at startup and stamps every analysis result with its `version`. Nothing in the pipeline may hard-code a tunable number.
+Single source of truth for **every threshold and weight** used by the Match.Lab rule-based colour-analysis engine. The Python backend (`apps/api`) loads and validates `config/classifier-v1.json` at startup and stamps every analysis result with its `version`. Nothing in the pipeline may hard-code a tunable number.
 
 > The engine is deterministic and rule-based. These values are documented heuristics grounded in colour science (CIE Lab, ITA bands, CIEDE2000) — not trained parameters. Changing any value requires a version bump and a new file (`classifier-v2.json`), keeping historical results reproducible.
 

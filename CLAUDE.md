@@ -1,4 +1,4 @@
-# CLAUDE.md — Smart Personal Colour Analysis System (ColourSense)
+# CLAUDE.md — Smart Personal Colour Analysis System (Match.Lab)
 
 Authoritative spec: `SMART_PERSONAL_COLOUR_ANALYSIS_MASTER_PROMPT.md`. Plan: `PROJECT_PLAN.md`. Status: `PROJECT_STATUS.md`. Decisions: `DECISIONS.md`.
 

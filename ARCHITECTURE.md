@@ -1,4 +1,4 @@
-# Architecture — Smart Personal Colour Analysis System (ColourSense)
+# Architecture — Smart Personal Colour Analysis System (Match.Lab)
 
 ## 1. System overview
 

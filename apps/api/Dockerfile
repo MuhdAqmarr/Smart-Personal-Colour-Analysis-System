@@ -1,4 +1,4 @@
-# Production image for the ColourSense API.
+# Production image for the Match.Lab API.
 # Build from the REPOSITORY ROOT so the classifier config can be copied:
 #   docker build -f apps/api/Dockerfile -t coloursense-api .
 
