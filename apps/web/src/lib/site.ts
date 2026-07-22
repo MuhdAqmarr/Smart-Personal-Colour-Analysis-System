@@ -4,7 +4,7 @@
  * refactoring.
  */
 export const siteConfig = {
-  name: process.env.NEXT_PUBLIC_APP_NAME ?? "ColourSense",
+  name: process.env.NEXT_PUBLIC_APP_NAME ?? "Match.Lab",
   url: process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000",
   description:
     "Analyse a facial photo to receive an estimated undertone, a suggested colour season, personal fashion and cosmetic palettes, and colour-matched product ideas. A rule-based styling tool — not a medical or biometric system.",

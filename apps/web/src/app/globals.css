@@ -68,7 +68,7 @@
 }
 
 :root {
-  /* ColourSense modern theme: cool off-white canvas, graphite ink,
+  /* Match.Lab modern theme: cool off-white canvas, graphite ink,
      glass materials, restrained blue-lilac accent. Seasonal colours are
      a supporting language used only where seasons are the content. */
   --background: oklch(0.985 0.002 250);
