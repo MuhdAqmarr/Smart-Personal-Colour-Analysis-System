@@ -1,4 +1,4 @@
-# ColourSense — Smart Personal Colour Analysis System
+# Match.Lab — Smart Personal Colour Analysis System
 
 > Final Year Project: a responsive web application that analyses a facial photo and returns an **estimated undertone**, a **suggested colour season** (Spring / Summer / Autumn / Winter + 12 sub-seasons), **personal fashion & cosmetic palettes**, and **colour-matched product recommendations** — built on transparent, rule-based colour science with privacy by default.
 

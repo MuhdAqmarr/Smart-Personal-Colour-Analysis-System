@@ -1,4 +1,4 @@
-"""Application factory for the ColourSense API."""
+"""Application factory for the Match.Lab API."""
 
 from __future__ import annotations
 
@@ -53,7 +53,7 @@ def create_app() -> FastAPI:
     configure_logging(settings)
 
     app = FastAPI(
-        title="ColourSense API",
+        title="Match.Lab API",
         version=settings.app_version,
         description=(
             "Smart Personal Colour Analysis System backend: image-quality validation and a "

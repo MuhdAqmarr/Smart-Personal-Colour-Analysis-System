@@ -1,1 +1,1 @@
-"""ColourSense backend API."""
+"""Match.Lab backend API."""
