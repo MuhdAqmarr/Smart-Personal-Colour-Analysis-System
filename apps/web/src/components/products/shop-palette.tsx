@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import type { PaletteColour, SeasonDetail } from "@/lib/api/palettes";
 import { buildShopQuery, SHOP_CATEGORIES, SHOP_PLATFORMS } from "@/lib/shop-links";
+import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
 // The wearable heart of the palette — the colours worth shopping for.
@@ -154,7 +155,7 @@ export function ShopPalette({ palette, className }: { palette: SeasonDetail; cla
         </div>
         <p className="text-muted-foreground mt-3 text-xs leading-relaxed">
           Opens the store’s own search in a new tab. Purchases and prices happen on the external
-          site — {"ColourSense"} does not sell or verify these products.
+          site — {siteConfig.name} does not sell or verify these products.
         </p>
       </div>
     </section>

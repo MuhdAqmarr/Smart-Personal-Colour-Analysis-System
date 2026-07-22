@@ -22,6 +22,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getMe } from "@/lib/api/admin";
+import { siteConfig } from "@/lib/site";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
@@ -85,7 +86,9 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <span className="bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-[10px]">
               <ShieldCheck className="size-4" aria-hidden="true" />
             </span>
-            <span className="text-[1.0625rem] font-semibold tracking-[-0.01em]">ColourSense</span>
+            <span className="text-[1.0625rem] font-semibold tracking-[-0.01em]">
+              {siteConfig.name}
+            </span>
             <span className="bg-secondary text-secondary-foreground rounded-full px-2 py-0.5 text-xs font-medium">
               Admin
             </span>
