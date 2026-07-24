@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { SiteHeader } from "@/components/layout/site-header";
+import { PageBack } from "@/components/navigation/page-back";
 import { cn } from "@/lib/utils";
 
 // Administration lives in its own console (see AdminShell); the member
@@ -54,6 +55,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </aside>
 
         <main id="main-content" className="min-w-0 flex-1 pb-20 md:pb-0">
+          <PageBack fallbackHref="/dashboard" hideOn={["/dashboard"]} />
           {children}
         </main>
       </div>

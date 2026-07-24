@@ -18,6 +18,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
 import { ThemeToggle } from "@/components/design-system/theme-toggle";
+import { PageBack } from "@/components/navigation/page-back";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -145,6 +146,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
           </aside>
 
           <main id="main-content" className="min-w-0 flex-1">
+            <PageBack fallbackHref="/dashboard" hideOn={["/admin"]} />
             <nav
               aria-label="Admin sections"
               className="bg-surface-strong scrollbar-none -mx-1 mb-6 flex w-fit max-w-full items-center gap-0.5 overflow-x-auto rounded-lg p-[3px] md:hidden"
