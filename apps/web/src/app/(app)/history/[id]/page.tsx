@@ -175,11 +175,7 @@ export default function AnalysisDetailPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <Button variant="ghost" size="sm" render={<Link href="/history" />}>
-          <ArrowLeft aria-hidden="true" data-icon="inline-start" />
-          History
-        </Button>
+      <div className="flex flex-wrap items-center justify-end gap-3">
         <AlertDialog>
           <AlertDialogTrigger render={<Button variant="destructive" size="sm" />}>
             <Trash2 aria-hidden="true" data-icon="inline-start" />

@@ -1,6 +1,7 @@
 import { Palette } from "lucide-react";
 import Link from "next/link";
 
+import { PageBack } from "@/components/navigation/page-back";
 import { siteConfig } from "@/lib/site";
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
@@ -21,7 +22,10 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         </Link>
       </header>
       <main id="main-content" className="flex flex-1 items-center justify-center px-4 pb-20">
-        <div className="w-full max-w-md">{children}</div>
+        <div className="w-full max-w-md">
+          <PageBack fallbackHref="/" />
+          {children}
+        </div>
       </main>
     </div>
   );
