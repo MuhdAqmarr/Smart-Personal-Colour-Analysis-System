@@ -1,14 +1,15 @@
 "use client";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Camera, CheckCircle2, History, LogIn, RefreshCcw } from "lucide-react";
+import { Camera, CheckCircle2, ChevronDown, History, LogIn, RefreshCcw } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { toast } from "sonner";
 
 import { useWizard } from "@/components/analysis/wizard-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { PaletteView } from "@/components/palette/palette-view";
 import { ShopPalette } from "@/components/products/shop-palette";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -16,6 +17,7 @@ import { useSession } from "@/hooks/use-session";
 import { saveAnalysisImage } from "@/lib/api/analyses";
 import { ApiError } from "@/lib/api/client";
 import { getSeasonDetail } from "@/lib/api/palettes";
+import { cn } from "@/lib/utils";
 
 const CONFIDENCE_STYLE: Record<string, string> = {
   high: "bg-success/10 text-success",
@@ -38,6 +40,7 @@ const SEASON_TINT: Record<string, string> = {
 export function ResultsStep() {
   const { result, image, consent, reset } = useWizard();
   const { session, configured } = useSession();
+  const [showDetails, setShowDetails] = useState(false);
 
   const saveImage = useMutation({
     mutationFn: () => {
@@ -86,16 +89,33 @@ export function ResultsStep() {
         </p>
       </div>
 
+      {/* Plain-language summary sits in the hero above; the technical
+          evidence (hue angles, Lab values) is tucked behind a toggle so the
+          result stays approachable but the numbers remain available. */}
       <Card variant="tinted">
-        <CardHeader>
-          <CardTitle className="text-base">Why this result</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="text-muted-foreground list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
-            {result.explanation.evidence.map((line) => (
-              <li key={line}>{line}</li>
-            ))}
-          </ul>
+        <CardContent className="py-4">
+          <button
+            type="button"
+            onClick={() => setShowDetails((open) => !open)}
+            aria-expanded={showDetails}
+            className="focus-visible:ring-ring/50 flex w-full items-center justify-between gap-3 rounded-md text-sm font-semibold outline-none focus-visible:ring-2"
+          >
+            <span>Why this result</span>
+            <span className="text-muted-foreground flex items-center gap-1 text-xs font-normal">
+              {showDetails ? "Hide" : "Show details"}
+              <ChevronDown
+                className={cn("size-4 transition-transform", showDetails && "rotate-180")}
+                aria-hidden="true"
+              />
+            </span>
+          </button>
+          {showDetails ? (
+            <ul className="text-muted-foreground mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
+              {result.explanation.evidence.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+          ) : null}
         </CardContent>
       </Card>
 

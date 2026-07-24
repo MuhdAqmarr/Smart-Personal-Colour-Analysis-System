@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 import { useWizard } from "@/components/analysis/wizard-context";
-import { Button } from "@/components/ui/button";
+import { WizardNav } from "@/components/analysis/wizard-nav";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
@@ -13,22 +13,22 @@ const consentPoints = [
   {
     icon: ScanFace,
     title: "Why a photo is needed",
-    body: "The analysis measures the colour of your skin in small regions of the forehead and cheeks, located with facial landmarks. Without a photo there is nothing to measure.",
+    body: "We measure your skin colour in small spots on your forehead and cheeks. No photo, nothing to measure.",
   },
   {
     icon: Eye,
     title: "No identity recognition",
-    body: "Landmarks are used purely for geometry. The system never identifies you, never compares you with anyone else, and creates no biometric templates.",
+    body: "Face points are only used for positioning. We never identify you or keep a face template.",
   },
   {
     icon: ImageOff,
     title: "Your photo is temporary by default",
-    body: "Processing happens in memory and the image is discarded when the analysis finishes. Only derived values — colour numbers, quality scores, and the result — can be saved, and only to your own account.",
+    body: "It is processed in memory and deleted straight after. Only the colour results can be saved.",
   },
   {
     icon: Trash2,
     title: "You stay in control",
-    body: "Signed-in users can delete any analysis, any stored image, or the whole account at any time. Guests are never stored at all.",
+    body: "Signed in? Delete any result, saved photo, or your whole account anytime. Guests are never stored.",
   },
 ];
 
@@ -54,7 +54,7 @@ export function ConsentStep() {
           Before we start: your consent
         </h2>
         <p className="text-muted-foreground mt-2 leading-relaxed">
-          Facial images are sensitive personal data. Here is exactly what happens with yours.
+          Your photo is sensitive, so here is exactly what happens with it — in plain terms.
         </p>
       </div>
 
@@ -124,11 +124,7 @@ export function ConsentStep() {
         </div>
       </div>
 
-      <div className="flex justify-end">
-        <Button size="lg" onClick={handleContinue}>
-          I agree — continue
-        </Button>
-      </div>
+      <WizardNav onContinue={handleContinue} continueLabel="Continue" />
     </div>
   );
 }

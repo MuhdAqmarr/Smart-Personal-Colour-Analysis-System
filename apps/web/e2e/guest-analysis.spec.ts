@@ -9,8 +9,8 @@ const NO_FACE = path.join(__dirname, "fixtures", "no-face.jpg");
 async function reachCaptureStep(page: import("@playwright/test").Page) {
   await page.goto("/analysis");
   await page.getByRole("checkbox", { name: /i agree to the analysis/i }).click();
-  await page.getByRole("button", { name: /i agree — continue/i }).click();
-  await page.getByRole("button", { name: /i'm ready/i }).click();
+  await page.getByRole("button", { name: /continue/i }).click();
+  await page.getByRole("button", { name: /continue/i }).click();
   await expect(page.getByText("Add your photo")).toBeVisible();
 }
 
@@ -23,7 +23,7 @@ async function uploadFixture(page: import("@playwright/test").Page, file: string
 test.describe("Guest analysis journey", () => {
   test("consent gate blocks continuing without agreement", async ({ page }) => {
     await page.goto("/analysis");
-    await page.getByRole("button", { name: /i agree — continue/i }).click();
+    await page.getByRole("button", { name: /continue/i }).click();
     await expect(page.getByText(/consent is required/i)).toBeVisible();
   });
 

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { CameraCapture } from "@/components/analysis/camera-capture";
 import { UploadDropzone } from "@/components/analysis/upload-dropzone";
 import { useWizard } from "@/components/analysis/wizard-context";
-import { Button } from "@/components/ui/button";
+import { WizardNav } from "@/components/analysis/wizard-nav";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function CaptureStep() {
@@ -17,7 +17,7 @@ export function CaptureStep() {
       <div>
         <h2 className="text-[1.4rem] font-semibold tracking-[-0.015em]">Add your photo</h2>
         <p className="text-muted-foreground mt-2 leading-relaxed">
-          Use the camera for a fresh photo, or upload one that follows the guidance.
+          Take a photo with your camera, or upload one.
         </p>
       </div>
 
@@ -41,11 +41,7 @@ export function CaptureStep() {
         </TabsContent>
       </Tabs>
 
-      <div className="flex justify-between">
-        <Button variant="ghost" onClick={() => go("guidance")}>
-          Back to guidance
-        </Button>
-      </div>
+      <WizardNav onBack={() => go("guidance")} />
     </div>
   );
 }
