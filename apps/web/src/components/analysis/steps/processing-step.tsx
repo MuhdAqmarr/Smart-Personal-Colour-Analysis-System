@@ -107,8 +107,7 @@ export function ProcessingStep() {
       <div className="space-y-2">
         <h2 className="text-xl font-semibold tracking-[-0.01em]">Analysing your photo…</h2>
         <p className="text-muted-foreground max-w-sm text-sm leading-relaxed">
-          Checking image quality, locating skin regions, and measuring colours. This usually takes a
-          few seconds.
+          Reading the colours in your photo. This takes a few seconds.
         </p>
       </div>
       <Progress value={null} className="max-w-xs" aria-label="Analysis in progress" />

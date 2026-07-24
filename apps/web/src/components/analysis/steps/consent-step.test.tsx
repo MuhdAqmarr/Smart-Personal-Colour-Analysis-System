@@ -9,7 +9,7 @@ describe("Consent step", () => {
     const user = userEvent.setup();
     render(<AnalysisWizard />);
 
-    await user.click(screen.getByRole("button", { name: /i agree — continue/i }));
+    await user.click(screen.getByRole("button", { name: /continue/i }));
     expect(
       await screen.findByText(/consent is required before an analysis can run/i),
     ).toBeInTheDocument();
@@ -30,10 +30,10 @@ describe("Consent step", () => {
     render(<AnalysisWizard />);
 
     await user.click(screen.getByRole("checkbox", { name: /i agree to the analysis/i }));
-    await user.click(screen.getByRole("button", { name: /i agree — continue/i }));
+    await user.click(screen.getByRole("button", { name: /continue/i }));
     expect(await screen.findByText(/getting a reliable photo/i)).toBeInTheDocument();
 
-    await user.click(screen.getByRole("button", { name: /i'm ready/i }));
+    await user.click(screen.getByRole("button", { name: /continue/i }));
     expect(await screen.findByText(/add your photo/i)).toBeInTheDocument();
   });
 

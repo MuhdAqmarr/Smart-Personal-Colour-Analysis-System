@@ -1,8 +1,7 @@
 "use client";
 
-import { ArrowRight, RefreshCcw } from "lucide-react";
-
 import { useWizard } from "@/components/analysis/wizard-context";
+import { WizardNav } from "@/components/analysis/wizard-nav";
 import { Button } from "@/components/ui/button";
 
 export function PreviewStep() {
@@ -22,7 +21,7 @@ export function PreviewStep() {
       <div>
         <h2 className="text-[1.4rem] font-semibold tracking-[-0.015em]">Happy with this photo?</h2>
         <p className="text-muted-foreground mt-2 leading-relaxed">
-          Check that your face is well lit, sharp, and free of shadows before analysing.
+          Make sure your face is clear, sharp, and well lit.
         </p>
       </div>
 
@@ -42,20 +41,16 @@ export function PreviewStep() {
         </figcaption>
       </figure>
 
-      <div className="flex flex-wrap items-center justify-center gap-3">
-        <Button variant="outline" onClick={clearImage}>
-          <RefreshCcw aria-hidden="true" data-icon="inline-start" />
-          Retake / choose another
-        </Button>
-        <Button size="lg" onClick={() => go("processing")}>
-          Analyse this photo
-          <ArrowRight aria-hidden="true" data-icon="inline-end" />
-        </Button>
-      </div>
-
       <p className="text-muted-foreground text-center text-xs">
-        The photo is sent once for analysis and is not stored unless you chose to save it.
+        Your photo is analysed once and not stored unless you chose to save it.
       </p>
+
+      <WizardNav
+        onBack={clearImage}
+        backLabel="Back"
+        onContinue={() => go("processing")}
+        continueLabel="Analyse this photo"
+      />
     </div>
   );
 }

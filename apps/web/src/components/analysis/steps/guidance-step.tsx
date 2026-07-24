@@ -3,7 +3,7 @@
 import { CheckCircle2, XCircle } from "lucide-react";
 
 import { useWizard } from "@/components/analysis/wizard-context";
-import { Button } from "@/components/ui/button";
+import { WizardNav } from "@/components/analysis/wizard-nav";
 
 const doTips = [
   "Face the camera directly, eyes level",
@@ -33,8 +33,7 @@ export function GuidanceStep() {
           Getting a reliable photo
         </h2>
         <p className="text-muted-foreground mt-2 leading-relaxed">
-          Lighting is the single biggest factor in colour accuracy. Thirty seconds of setup makes
-          the difference between a confident result and a retake.
+          Good lighting matters most. A little setup now gives a more reliable result.
         </p>
       </div>
 
@@ -71,18 +70,10 @@ export function GuidanceStep() {
       </div>
 
       <p className="text-muted-foreground text-sm">
-        The quality check will flag problems it finds — but it cannot fix bad lighting after the
-        fact.
+        We&apos;ll check your photo next — but good light now saves a retake.
       </p>
 
-      <div className="flex justify-between">
-        <Button variant="ghost" onClick={() => go("consent")}>
-          Back
-        </Button>
-        <Button size="lg" onClick={() => go("capture")}>
-          I&apos;m ready — open camera or upload
-        </Button>
-      </div>
+      <WizardNav onBack={() => go("consent")} onContinue={() => go("capture")} />
     </div>
   );
 }
