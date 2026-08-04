@@ -32,6 +32,8 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: "apps/api/uv.lock"
+          # Skip the post-job cache prune (deadlocks on the cache lock).
+          prune-cache: false
 
       - name: Install dependencies
         run: uv sync --frozen
