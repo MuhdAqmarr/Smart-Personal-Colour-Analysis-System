@@ -47,6 +47,10 @@ jobs:
         with:
           enable-cache: true
           cache-dependency-glob: "apps/api/uv.lock"
+          # Skip the post-job `uv cache prune`; it deadlocks on the cache
+          # lock (300s timeout) while the API's uv process is still around,
+          # failing the job after the tests have already passed.
+          prune-cache: false
 
       - uses: pnpm/action-setup@v4
 
