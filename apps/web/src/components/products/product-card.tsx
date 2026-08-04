@@ -38,9 +38,23 @@ export function ProductCard({
       <CardContent className="flex h-full flex-col gap-3">
         <div
           aria-hidden="true"
-          className="relative h-36 rounded-xl shadow-[inset_0_0_0_1px_oklch(0.2_0.01_260/8%)]"
+          className="relative h-36 overflow-hidden rounded-xl shadow-[inset_0_0_0_1px_oklch(0.2_0.01_260/8%)]"
           style={{ backgroundColor: primaryColour?.hex ?? "#d8d2c8" }}
         >
+          {/* Real product photo when available; the colour block behind it is
+              the graceful fallback (also shown if the image fails to load). */}
+          {product.imageUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={product.imageUrl}
+              alt=""
+              loading="lazy"
+              className="absolute inset-0 h-full w-full object-cover"
+              onError={(event) => {
+                event.currentTarget.style.display = "none";
+              }}
+            />
+          ) : null}
           {product.isDemo ? (
             <Badge variant="secondary" className="absolute left-2 top-2 text-[10px]">
               Demo data
