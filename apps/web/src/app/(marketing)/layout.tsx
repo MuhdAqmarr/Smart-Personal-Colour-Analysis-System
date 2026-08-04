@@ -9,7 +9,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
       <main id="main-content" className="flex-1">
         <PageBack
           fallbackHref="/"
-          hideOn={["/", "/analysis"]}
+          hideOn={["/"]}
           className="mx-auto w-full max-w-6xl px-4 pt-4 sm:px-6"
         />
         {children}
