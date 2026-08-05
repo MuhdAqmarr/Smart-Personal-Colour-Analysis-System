@@ -1,5 +1,6 @@
 "use client";
 
+import { useQuery } from "@tanstack/react-query";
 import { ExternalLink, ShoppingBag } from "lucide-react";
 import { useState } from "react";
 
@@ -13,6 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useSession } from "@/hooks/use-session";
+import { getPreferences } from "@/lib/api/me";
 import type { PaletteColour, SeasonDetail } from "@/lib/api/palettes";
 import { buildShopQuery, SHOP_CATEGORIES, SHOP_PLATFORMS } from "@/lib/shop-links";
 import { siteConfig } from "@/lib/site";
@@ -49,12 +52,31 @@ export function ShopPalette({ palette, className }: { palette: SeasonDetail; cla
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [category, setCategory] = useState("all");
 
+  // Signed-in users' explicit shopping-gender preference refines the search
+  // (guests aren't queried). "everyone"/"unisex" add no gender word.
+  const { session } = useSession();
+  const preferences = useQuery({
+    queryKey: ["preferences"],
+    queryFn: getPreferences,
+    enabled: Boolean(session),
+    staleTime: 60_000,
+  });
+  const genderTerm =
+    preferences.data?.shoppingGender === "women"
+      ? "women"
+      : preferences.data?.shoppingGender === "men"
+        ? "men"
+        : "";
+
   if (colours.length === 0) return null;
 
   const colour = colours[Math.min(selectedIndex, colours.length - 1)];
   const categoryOption =
     SHOP_CATEGORIES.find((option) => option.value === category) ?? SHOP_CATEGORIES[0];
-  const query = buildShopQuery(colour.name, categoryOption.term);
+  const query = buildShopQuery(
+    colour.name,
+    [categoryOption.term, genderTerm].filter(Boolean).join(" "),
+  );
 
   return (
     <section

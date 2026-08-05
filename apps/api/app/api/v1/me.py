@@ -4,7 +4,7 @@ from typing import Annotated, Literal
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
-from pydantic import Field
+from pydantic import Field, field_validator
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -58,16 +58,29 @@ async def read_me(
     )
 
 
+SHOPPING_GENDERS = {"everyone", "women", "men", "unisex"}
+
+
 class PreferencesUpdate(CamelModel):
     default_image_storage: bool | None = None
     preferred_currency: str | None = Field(default=None, min_length=3, max_length=3)
     reduced_motion: bool | None = None
+    shopping_gender: str | None = None
+
+    @field_validator("shopping_gender")
+    @classmethod
+    def _valid_shopping_gender(cls, value: str | None) -> str | None:
+        if value is not None and value not in SHOPPING_GENDERS:
+            allowed = ", ".join(sorted(SHOPPING_GENDERS))
+            raise ValueError(f"shopping_gender must be one of: {allowed}")
+        return value
 
 
 class PreferencesResponse(CamelModel):
     default_image_storage: bool
     preferred_currency: str
     reduced_motion: bool
+    shopping_gender: str
 
 
 @router.get("/me/preferences", response_model=PreferencesResponse)
@@ -83,7 +96,8 @@ async def read_preferences(
                 insert into public.user_preferences (user_id)
                 values (:user_id)
                 on conflict (user_id) do update set user_id = excluded.user_id
-                returning default_image_storage, preferred_currency, reduced_motion
+                returning default_image_storage, preferred_currency, reduced_motion,
+                          shopping_gender
                 """
                 ),
                 {"user_id": str(user.user_id)},
@@ -97,6 +111,7 @@ async def read_preferences(
         default_image_storage=row["default_image_storage"],
         preferred_currency=row["preferred_currency"].strip(),
         reduced_motion=row["reduced_motion"],
+        shopping_gender=row["shopping_gender"],
     )
 
 
@@ -112,15 +127,18 @@ async def update_preferences(
                 text(
                     """
                 insert into public.user_preferences
-                  (user_id, default_image_storage, preferred_currency, reduced_motion)
+                  (user_id, default_image_storage, preferred_currency, reduced_motion,
+                   shopping_gender)
                 values (:user_id, coalesce(:dis, false), coalesce(:cur, 'MYR'),
-                        coalesce(:rm, false))
+                        coalesce(:rm, false), coalesce(:sg, 'everyone'))
                 on conflict (user_id) do update set
                   default_image_storage =
                     coalesce(:dis, public.user_preferences.default_image_storage),
                   preferred_currency = coalesce(:cur, public.user_preferences.preferred_currency),
-                  reduced_motion = coalesce(:rm, public.user_preferences.reduced_motion)
-                returning default_image_storage, preferred_currency, reduced_motion
+                  reduced_motion = coalesce(:rm, public.user_preferences.reduced_motion),
+                  shopping_gender = coalesce(:sg, public.user_preferences.shopping_gender)
+                returning default_image_storage, preferred_currency, reduced_motion,
+                          shopping_gender
                 """
                 ),
                 {
@@ -130,6 +148,7 @@ async def update_preferences(
                     if payload.preferred_currency
                     else None,
                     "rm": payload.reduced_motion,
+                    "sg": payload.shopping_gender,
                 },
             )
         )
@@ -141,6 +160,7 @@ async def update_preferences(
         default_image_storage=row["default_image_storage"],
         preferred_currency=row["preferred_currency"].strip(),
         reduced_motion=row["reduced_motion"],
+        shopping_gender=row["shopping_gender"],
     )
 
 

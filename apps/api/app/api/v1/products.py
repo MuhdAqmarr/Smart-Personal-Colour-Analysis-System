@@ -184,6 +184,16 @@ async def recommended_products(
         dtype=np.float64,
     )
     products = await repo.list_active_products_for_ranking(session)
+
+    # Honour the user's chosen shopping gender (explicit preference, never
+    # inferred). "everyone" (default) leaves suggestions unfiltered; a specific
+    # gender keeps that gender plus unisex items.
+    shopping_gender = await repo.get_shopping_gender(session, user.user_id)
+    if shopping_gender in ("women", "men"):
+        products = [p for p in products if p["gender"] in (shopping_gender, "unisex")]
+    elif shopping_gender == "unisex":
+        products = [p for p in products if p["gender"] == "unisex"]
+
     config = get_classifier_config().productMatching
 
     ranked = rank_products(

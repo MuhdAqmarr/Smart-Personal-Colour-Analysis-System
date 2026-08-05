@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PageHeader } from "@/components/design-system/page-header";
 import { Separator } from "@/components/ui/separator";
 import { ProfileSettings } from "@/components/settings/profile-settings";
+import { ShoppingPreference } from "@/components/settings/shopping-preference";
 
 export const metadata: Metadata = { title: "Settings" };
 
@@ -21,6 +22,20 @@ export default function SettingsPage() {
           <p className="text-muted-foreground mt-1 text-sm">The display name used to greet you.</p>
           <div className="mt-4 max-w-md">
             <ProfileSettings />
+          </div>
+        </section>
+
+        <Separator className="my-6" />
+
+        <section aria-labelledby="settings-shopping">
+          <h2 id="settings-shopping" className="text-base font-semibold">
+            Shopping
+          </h2>
+          <p className="text-muted-foreground mt-1 text-sm">
+            Filter product suggestions by who you shop for.
+          </p>
+          <div className="mt-4">
+            <ShoppingPreference />
           </div>
         </section>
 
