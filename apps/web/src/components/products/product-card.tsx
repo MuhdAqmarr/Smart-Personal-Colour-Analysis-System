@@ -34,7 +34,7 @@ export function ProductCard({
   const price = formatPrice(product);
 
   return (
-    <Card variant="interactive" className="h-full">
+    <Card variant="interactive" className="relative h-full">
       <CardContent className="flex h-full flex-col gap-3">
         <div
           aria-hidden="true"
@@ -81,7 +81,7 @@ export function ProductCard({
                     ? `Remove ${product.name} from favourites`
                     : `Add ${product.name} to favourites`
                 }
-                className="text-muted-foreground hover:text-primary focus-visible:ring-ring/50 shrink-0 rounded p-0.5 outline-none focus-visible:ring-2 disabled:opacity-50"
+                className="text-muted-foreground hover:text-primary focus-visible:ring-ring/50 relative z-10 shrink-0 rounded p-0.5 outline-none focus-visible:ring-2 disabled:opacity-50"
               >
                 <Heart
                   className={cn("size-4", product.isFavourite && "fill-primary text-primary")}
@@ -115,11 +115,15 @@ export function ProductCard({
         </div>
 
         <div className="border-t pt-2.5">
+          {/* Stretched link: `after:absolute after:inset-0` (positioned against
+              the `relative` Card) makes the whole card open the store, while the
+              heart button (relative z-10) stays clickable above this overlay. */}
           <a
             href={product.productUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary focus-visible:ring-ring/50 inline-flex items-center gap-1.5 rounded text-sm font-medium underline-offset-4 outline-none hover:underline focus-visible:ring-2"
+            aria-label={`${product.name} — view at ${product.storeName} (opens in a new tab)`}
+            className="text-primary focus-visible:ring-ring/50 inline-flex items-center gap-1.5 rounded text-sm font-medium underline-offset-4 outline-none after:absolute after:inset-0 hover:underline focus-visible:ring-2"
           >
             View at {product.storeName}
             <ExternalLink className="size-3.5" aria-hidden="true" />
