@@ -58,7 +58,9 @@ export function ShoppingPreference() {
         onValueChange={(value) => value && save.mutate(value as ShoppingGender)}
       >
         <SelectTrigger id="shopping-gender" className="w-full" disabled={save.isPending}>
-          <SelectValue />
+          <SelectValue>
+            {(value) => OPTIONS.find((option) => option.value === value)?.label ?? "Everyone"}
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           {OPTIONS.map((option) => (
