@@ -47,7 +47,16 @@ function curatedColours(palette: SeasonDetail): PaletteColour[] {
  * own search in a new tab. No scraping, no measured-match claim: this is
  * search assistance, kept distinct from the internal CIEDE2000 ranking.
  */
-export function ShopPalette({ palette, className }: { palette: SeasonDetail; className?: string }) {
+export function ShopPalette({
+  palette,
+  className,
+  bare = false,
+}: {
+  palette: SeasonDetail;
+  className?: string;
+  /** Drop the outer card chrome + heading (for embedding in a ResultSection). */
+  bare?: boolean;
+}) {
   const colours = curatedColours(palette);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [category, setCategory] = useState("all");
@@ -78,30 +87,9 @@ export function ShopPalette({ palette, className }: { palette: SeasonDetail; cla
     [categoryOption.term, genderTerm].filter(Boolean).join(" "),
   );
 
-  return (
-    <section
-      aria-labelledby="shop-palette-heading"
-      className={cn("bg-card ring-border shadow-xs rounded-2xl p-5 ring-1 sm:p-6", className)}
-    >
-      <div className="flex items-start gap-3">
-        <span
-          aria-hidden="true"
-          className="bg-secondary text-foreground flex size-9 shrink-0 items-center justify-center rounded-lg"
-        >
-          <ShoppingBag className="size-4.5" />
-        </span>
-        <div className="min-w-0">
-          <h3 id="shop-palette-heading" className="text-base font-semibold tracking-[-0.01em]">
-            Shop your palette
-          </h3>
-          <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
-            Open a live marketplace search for any of your colours. Listings and their colours are
-            provided by the store and may differ from your palette or screen.
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-5 max-w-xs">
+  const controls = (
+    <div className="space-y-5">
+      <div className="max-w-xs">
         <Label htmlFor="shop-category" className="mb-1.5 block">
           Category
         </Label>
@@ -123,7 +111,7 @@ export function ShopPalette({ palette, className }: { palette: SeasonDetail; cla
         </Select>
       </div>
 
-      <fieldset className="mt-5">
+      <fieldset>
         <legend className="text-muted-foreground mb-2 text-[0.8125rem] font-medium">
           Choose a colour
         </legend>
@@ -151,7 +139,7 @@ export function ShopPalette({ palette, className }: { palette: SeasonDetail; cla
         </div>
       </fieldset>
 
-      <div className="border-separator mt-5 border-t pt-5">
+      <div className="border-separator border-t pt-5">
         <p className="text-sm">
           Search <span className="font-semibold">“{query}”</span> on:
         </p>
@@ -180,6 +168,39 @@ export function ShopPalette({ palette, className }: { palette: SeasonDetail; cla
           site — {siteConfig.name} does not sell or verify these products.
         </p>
       </div>
+    </div>
+  );
+
+  // Embedded in a ResultSection: the section header already names it, so drop
+  // the card chrome + heading and render just the controls.
+  if (bare) {
+    return <div className={className}>{controls}</div>;
+  }
+
+  return (
+    <section
+      aria-labelledby="shop-palette-heading"
+      className={cn("bg-card ring-border shadow-xs rounded-2xl p-5 ring-1 sm:p-6", className)}
+    >
+      <div className="flex items-start gap-3">
+        <span
+          aria-hidden="true"
+          className="bg-secondary text-foreground flex size-9 shrink-0 items-center justify-center rounded-lg"
+        >
+          <ShoppingBag className="size-4.5" />
+        </span>
+        <div className="min-w-0">
+          <h3 id="shop-palette-heading" className="text-base font-semibold tracking-[-0.01em]">
+            Shop your palette
+          </h3>
+          <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
+            Open a live marketplace search for any of your colours. Listings and their colours are
+            provided by the store and may differ from your palette or screen.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-5">{controls}</div>
     </section>
   );
 }

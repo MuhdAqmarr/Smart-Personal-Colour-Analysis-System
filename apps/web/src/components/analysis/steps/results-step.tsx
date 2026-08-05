@@ -1,11 +1,11 @@
 "use client";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Camera, CheckCircle2, ChevronDown, History, LogIn, RefreshCcw } from "lucide-react";
+import { Camera, CheckCircle2, History, LogIn, RefreshCcw } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 import { toast } from "sonner";
 
+import { ResultSection } from "@/components/analysis/result-section";
 import { useWizard } from "@/components/analysis/wizard-context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,7 +17,6 @@ import { useSession } from "@/hooks/use-session";
 import { saveAnalysisImage } from "@/lib/api/analyses";
 import { ApiError } from "@/lib/api/client";
 import { getSeasonDetail } from "@/lib/api/palettes";
-import { cn } from "@/lib/utils";
 
 const CONFIDENCE_STYLE: Record<string, string> = {
   high: "bg-success/10 text-success",
@@ -40,7 +39,6 @@ const SEASON_TINT: Record<string, string> = {
 export function ResultsStep() {
   const { result, image, consent, reset } = useWizard();
   const { session, configured } = useSession();
-  const [showDetails, setShowDetails] = useState(false);
 
   const saveImage = useMutation({
     mutationFn: () => {
@@ -90,34 +88,16 @@ export function ResultsStep() {
       </div>
 
       {/* Plain-language summary sits in the hero above; the technical
-          evidence (hue angles, Lab values) is tucked behind a toggle so the
-          result stays approachable but the numbers remain available. */}
-      <Card variant="tinted">
-        <CardContent className="py-4">
-          <button
-            type="button"
-            onClick={() => setShowDetails((open) => !open)}
-            aria-expanded={showDetails}
-            className="focus-visible:ring-ring/50 flex w-full items-center justify-between gap-3 rounded-md text-sm font-semibold outline-none focus-visible:ring-2"
-          >
-            <span>Why this result</span>
-            <span className="text-muted-foreground flex items-center gap-1 text-xs font-normal">
-              {showDetails ? "Hide" : "Show details"}
-              <ChevronDown
-                className={cn("size-4 transition-transform", showDetails && "rotate-180")}
-                aria-hidden="true"
-              />
-            </span>
-          </button>
-          {showDetails ? (
-            <ul className="text-muted-foreground mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
-              {result.explanation.evidence.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          ) : null}
-        </CardContent>
-      </Card>
+          evidence (hue angles, Lab values) is tucked behind a collapsible
+          section so the result stays approachable but the numbers remain
+          available. */}
+      <ResultSection title="Why this result">
+        <ul className="text-muted-foreground list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
+          {result.explanation.evidence.map((line) => (
+            <li key={line}>{line}</li>
+          ))}
+        </ul>
+      </ResultSection>
 
       {/* Save state ---------------------------------------------------- */}
       {result.persisted && result.analysisId ? (
@@ -213,16 +193,20 @@ function PaletteSection({
     );
   }
   return (
-    <section aria-label="Your fashion and cosmetic palette" className="space-y-6 border-t pt-6">
-      <div>
-        <h3 className="mb-4 text-xl font-semibold tracking-tight">Your colours to explore</h3>
+    <div className="space-y-6" aria-label="Your fashion and cosmetic palette">
+      <ResultSection title="Your colours to explore" defaultOpen>
         <PaletteView
           palette={palette.data}
           interactive={interactive}
           invalidateKeys={[["season-palette", season, subSeason]]}
         />
-      </div>
-      <ShopPalette palette={palette.data} />
-    </section>
+      </ResultSection>
+      <ResultSection
+        title="Shop your palette"
+        description="Open a live marketplace search for any of your colours. Listings and their colours are provided by the store and may differ from your palette or screen."
+      >
+        <ShopPalette palette={palette.data} bare />
+      </ResultSection>
+    </div>
   );
 }
