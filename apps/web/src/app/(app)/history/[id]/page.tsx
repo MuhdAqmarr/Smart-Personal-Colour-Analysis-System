@@ -347,26 +347,55 @@ export default function AnalysisDetailPage() {
       ) : null}
 
       {classification ? (
-        <ResultSection title="Styling dimensions">
-          <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+        <ResultSection
+          title="Styling dimensions"
+          description="The four traits the engine measures from your photo to choose your season — your season is the one whose typical profile sits closest to where these bars land. The marker shows where you fall between the two ends."
+        >
+          <dl className="grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-4">
             {(
               [
-                ["Temperature", classification.dim_temperature, "Cool", "Warm"],
-                ["Value", classification.dim_value, "Deep", "Light"],
-                ["Chroma", classification.dim_chroma, "Muted", "Clear"],
-                ["Contrast", classification.dim_contrast, "Low", "High"],
+                [
+                  "Temperature",
+                  classification.dim_temperature,
+                  "Cool",
+                  "Warm",
+                  "Your undertone — how warm or cool your skin reads.",
+                ],
+                [
+                  "Value",
+                  classification.dim_value,
+                  "Deep",
+                  "Light",
+                  "How light or deep your natural colouring is.",
+                ],
+                [
+                  "Chroma",
+                  classification.dim_chroma,
+                  "Muted",
+                  "Clear",
+                  "How clear and vivid vs soft and muted your colouring is.",
+                ],
+                [
+                  "Contrast",
+                  classification.dim_contrast,
+                  "Low",
+                  "High",
+                  "The light-to-dark gap across your features.",
+                ],
               ] as const
-            ).map(([label, value, lowLabel, highLabel]) => (
-              <div key={label}>
+            ).map(([label, value, lowLabel, highLabel, hint]) => (
+              <div key={label} className="flex flex-col">
                 <dt className="text-sm font-medium">{label}</dt>
-                <dd className="mt-1.5">
-                  <div className="bg-muted h-2 overflow-hidden rounded-full">
+                <p className="text-muted-foreground mt-0.5 text-xs leading-snug">{hint}</p>
+                <dd className="mt-auto pt-3">
+                  <div className="bg-muted relative h-2 rounded-full">
+                    {/* Marker for where this trait falls on the axis. */}
                     <div
-                      className="bg-primary h-full rounded-full"
-                      style={{ width: `${((value ?? 0.5) * 100).toFixed(0)}%` }}
+                      className="bg-primary ring-card absolute top-1/2 size-3 -translate-x-1/2 -translate-y-1/2 rounded-full ring-2"
+                      style={{ left: `${((value ?? 0.5) * 100).toFixed(0)}%` }}
                     />
                   </div>
-                  <span className="text-muted-foreground mt-1 flex justify-between text-[10px]">
+                  <span className="text-muted-foreground mt-1.5 flex justify-between text-[10px]">
                     <span>{lowLabel}</span>
                     <span>{highLabel}</span>
                   </span>
