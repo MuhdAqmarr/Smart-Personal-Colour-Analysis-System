@@ -19,8 +19,8 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ResultSection } from "@/components/analysis/result-section";
 import { PaletteView } from "@/components/palette/palette-view";
 import {
   deleteAnalysis,
@@ -228,14 +228,11 @@ export default function AnalysisDetailPage() {
       </div>
 
       {detail.imageUrl ? (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Saved photo</CardTitle>
-            <CardDescription>
-              Stored privately with your consent; the link below expires after a few minutes.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-3">
+        <ResultSection
+          title="Saved photo"
+          description="Stored privately with your consent; the link below expires after a few minutes."
+        >
+          <div className="space-y-3">
             {/* Signed, short-lived URL from private storage. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -254,33 +251,25 @@ export default function AnalysisDetailPage() {
                 Delete the stored photo
               </Button>
             </div>
-          </CardContent>
-        </Card>
+          </div>
+        </ResultSection>
       ) : null}
 
       {classification?.evidence?.length ? (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Why this result</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ul className="text-muted-foreground list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
-              {classification.evidence.map((line) => (
-                <li key={line}>{line}</li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <ResultSection title="Why this result">
+          <ul className="text-muted-foreground list-disc space-y-1.5 pl-5 text-sm leading-relaxed">
+            {classification.evidence.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+        </ResultSection>
       ) : null}
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Measured skin colours</CardTitle>
-          <CardDescription>
-            Median colour of each sampled region after filtering, in sRGB and CIE Lab.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="overflow-x-auto">
+      <ResultSection
+        title="Measured skin colours"
+        description="Median colour of each sampled region after filtering, in sRGB and CIE Lab."
+      >
+        <div className="overflow-x-auto">
           <table className="w-full min-w-[540px] text-sm">
             <thead>
               <tr className="text-muted-foreground border-border/60 border-b text-left text-xs">
@@ -310,90 +299,82 @@ export default function AnalysisDetailPage() {
               ))}
             </tbody>
           </table>
-        </CardContent>
-      </Card>
+        </div>
+      </ResultSection>
 
       {palette.isSuccess ? (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Fashion &amp; cosmetic palette</CardTitle>
-            <CardDescription>
-              The full palette for this result, including hijab-friendly tones and colours to use
-              with care.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <PaletteView
-              palette={palette.data}
-              interactive
-              invalidateKeys={[["analysis-palette", analysisId]]}
-            />
-          </CardContent>
-        </Card>
+        <ResultSection
+          title="Fashion &amp; cosmetic palette"
+          description="The full palette for this result, including hijab-friendly tones and colours to use with care."
+          defaultOpen
+        >
+          <PaletteView
+            palette={palette.data}
+            interactive
+            invalidateKeys={[["analysis-palette", analysisId]]}
+          />
+        </ResultSection>
       ) : null}
 
-      {palette.isSuccess ? <ShopPalette palette={palette.data} /> : null}
+      {palette.isSuccess ? (
+        <ResultSection
+          title="Shop your palette"
+          description="Open a live marketplace search for any of your colours. Listings and their colours are provided by the store and may differ from your palette or screen."
+        >
+          <ShopPalette palette={palette.data} bare />
+        </ResultSection>
+      ) : null}
 
       {recommended.isSuccess && recommended.data.length > 0 ? (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Products for your palette</CardTitle>
-            <CardDescription>
-              Ranked by CIEDE2000 colour distance to your recommended palette, plus season tags and
-              availability. Purchases happen on the external stores.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {recommended.data.slice(0, 9).map((product) => (
-                <li key={product.id}>
-                  <ProductCard
-                    product={product}
-                    interactive
-                    onToggleFavourite={(target) => toggleFavourite.mutate(target)}
-                    favouriteBusy={toggleFavourite.isPending}
-                  />
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+        <ResultSection
+          title="Products for your palette"
+          description="Ranked by CIEDE2000 colour distance to your recommended palette, plus season tags and availability. Purchases happen on the external stores."
+          meta={<Badge variant="secondary">{Math.min(recommended.data.length, 9)}</Badge>}
+        >
+          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {recommended.data.slice(0, 9).map((product) => (
+              <li key={product.id}>
+                <ProductCard
+                  product={product}
+                  interactive
+                  onToggleFavourite={(target) => toggleFavourite.mutate(target)}
+                  favouriteBusy={toggleFavourite.isPending}
+                />
+              </li>
+            ))}
+          </ul>
+        </ResultSection>
       ) : null}
 
       {classification ? (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg">Styling dimensions</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {(
-                [
-                  ["Temperature", classification.dim_temperature, "Cool", "Warm"],
-                  ["Value", classification.dim_value, "Deep", "Light"],
-                  ["Chroma", classification.dim_chroma, "Muted", "Clear"],
-                  ["Contrast", classification.dim_contrast, "Low", "High"],
-                ] as const
-              ).map(([label, value, lowLabel, highLabel]) => (
-                <div key={label}>
-                  <dt className="text-sm font-medium">{label}</dt>
-                  <dd className="mt-1.5">
-                    <div className="bg-muted h-2 overflow-hidden rounded-full">
-                      <div
-                        className="bg-primary h-full rounded-full"
-                        style={{ width: `${((value ?? 0.5) * 100).toFixed(0)}%` }}
-                      />
-                    </div>
-                    <span className="text-muted-foreground mt-1 flex justify-between text-[10px]">
-                      <span>{lowLabel}</span>
-                      <span>{highLabel}</span>
-                    </span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </CardContent>
-        </Card>
+        <ResultSection title="Styling dimensions">
+          <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+            {(
+              [
+                ["Temperature", classification.dim_temperature, "Cool", "Warm"],
+                ["Value", classification.dim_value, "Deep", "Light"],
+                ["Chroma", classification.dim_chroma, "Muted", "Clear"],
+                ["Contrast", classification.dim_contrast, "Low", "High"],
+              ] as const
+            ).map(([label, value, lowLabel, highLabel]) => (
+              <div key={label}>
+                <dt className="text-sm font-medium">{label}</dt>
+                <dd className="mt-1.5">
+                  <div className="bg-muted h-2 overflow-hidden rounded-full">
+                    <div
+                      className="bg-primary h-full rounded-full"
+                      style={{ width: `${((value ?? 0.5) * 100).toFixed(0)}%` }}
+                    />
+                  </div>
+                  <span className="text-muted-foreground mt-1 flex justify-between text-[10px]">
+                    <span>{lowLabel}</span>
+                    <span>{highLabel}</span>
+                  </span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </ResultSection>
       ) : null}
     </div>
   );
