@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, ImageOff, Trash2 } from "lucide-react";
+import { ArrowLeft, ImageOff, Store, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -45,6 +45,21 @@ function titleCase(slug: string | null): string {
     .split(/[-_]/)
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
     .join(" ");
+}
+
+/**
+ * Group recommended products by store, preserving match-rank order. Products
+ * arrive best-match-first, so Map insertion order puts the store with the
+ * top-matching product first, and each store's items stay match-sorted.
+ */
+function groupByStore(products: Product[]): { store: string; items: Product[] }[] {
+  const groups = new Map<string, Product[]>();
+  for (const product of products) {
+    const existing = groups.get(product.storeName);
+    if (existing) existing.push(product);
+    else groups.set(product.storeName, [product]);
+  }
+  return Array.from(groups, ([store, items]) => ({ store, items }));
 }
 
 function SampleRow({ sample }: { sample: StoredSample }) {
@@ -331,18 +346,29 @@ export default function AnalysisDetailPage() {
           description="Ranked by CIEDE2000 colour distance to your recommended palette, plus season tags and availability. Purchases happen on the external stores."
           meta={<Badge variant="secondary">{Math.min(recommended.data.length, 9)}</Badge>}
         >
-          <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {recommended.data.slice(0, 9).map((product) => (
-              <li key={product.id}>
-                <ProductCard
-                  product={product}
-                  interactive
-                  onToggleFavourite={(target) => toggleFavourite.mutate(target)}
-                  favouriteBusy={toggleFavourite.isPending}
-                />
-              </li>
+          <div className="space-y-6">
+            {groupByStore(recommended.data.slice(0, 9)).map(({ store, items }) => (
+              <div key={store}>
+                <h3 className="text-muted-foreground mb-3 flex items-center gap-1.5 text-sm font-semibold">
+                  <Store className="size-4 shrink-0" aria-hidden="true" />
+                  {store}
+                  <span className="text-muted-foreground/70 font-normal">· {items.length}</span>
+                </h3>
+                <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {items.map((product) => (
+                    <li key={product.id}>
+                      <ProductCard
+                        product={product}
+                        interactive
+                        onToggleFavourite={(target) => toggleFavourite.mutate(target)}
+                        favouriteBusy={toggleFavourite.isPending}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
         </ResultSection>
       ) : null}
 
