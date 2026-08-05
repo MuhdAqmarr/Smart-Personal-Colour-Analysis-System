@@ -22,6 +22,7 @@ import csv
 import io
 import json
 import os
+import re
 import sys
 import time
 
@@ -80,6 +81,22 @@ NAMED_COLOURS: list[tuple[str, tuple[int, int, int]]] = [
 def named_colour(rgb: tuple[int, int, int]) -> str:
     r, g, b = rgb
     return min(NAMED_COLOURS, key=lambda c: (c[1][0] - r) ** 2 + (c[1][1] - g) ** 2 + (c[1][2] - b) ** 2)[0]
+
+
+# The colour usually trails the product title after "in" or a dash. Reject
+# segments that read like a size/quantity rather than a colour.
+_COLOUR_SEPS = (" in ", " - ", " – ", " — ")
+_NON_COLOUR_RE = re.compile(r"\d|\bml\b|\bg\b|pack|pcs|\bcm\b|size|\bset\b", re.IGNORECASE)
+
+
+def colour_name_from_title(title: str, rgb: tuple[int, int, int]) -> str:
+    """Store's own colour label (segment after 'in'/dash); else nearest basic name."""
+    for sep in _COLOUR_SEPS:
+        if sep in title:
+            candidate = title.rsplit(sep, 1)[-1].strip()
+            if candidate and len(candidate) <= 30 and not _NON_COLOUR_RE.search(candidate):
+                return candidate[:60]
+    return named_colour(rgb)
 
 
 def load_palette(path: str) -> list[dict]:
@@ -211,10 +228,8 @@ def crawl(store_key: str, limit: int, palette: list[dict], client: httpx.Client)
                 continue
             lab = rgb_to_lab(np.array(rgb, dtype=np.uint8))
             season, sub = nearest_season(lab, palette)
-            # Prefer the store's own colour name ("Nisa 2.0 in Carafe" -> Carafe);
-            # fall back to the nearest basic colour name.
             title = (product.get("title") or "").strip()
-            colour_label = (title.split(" in ")[-1].strip() if " in " in title else named_colour(rgb))[:60]
+            colour_label = colour_name_from_title(title, rgb)
             variant = variants[0]
             price = variant.get("price")
             compare = variant.get("compare_at_price")
