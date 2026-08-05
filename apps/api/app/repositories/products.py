@@ -133,6 +133,15 @@ async def list_active_products_for_ranking(session: AsyncSession) -> list[dict[s
     return [dict(row) for row in rows.mappings()]
 
 
+async def get_shopping_gender(session: AsyncSession, user_id: UUID) -> str:
+    """The user's explicit shopping-gender preference ('everyone' if unset)."""
+    result = await session.execute(
+        text("select shopping_gender from public.user_preferences where user_id = :uid"),
+        {"uid": str(user_id)},
+    )
+    return result.scalar_one_or_none() or "everyone"
+
+
 async def recommended_palette_labs(
     session: AsyncSession, season_slug: str, subseason_slug: str | None
 ) -> list[tuple[float, float, float]]:

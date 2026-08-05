@@ -1,9 +1,12 @@
 import { apiFetch } from "@/lib/api/client";
 
+export type ShoppingGender = "everyone" | "women" | "men" | "unisex";
+
 export interface Preferences {
   defaultImageStorage: boolean;
   preferredCurrency: string;
   reducedMotion: boolean;
+  shoppingGender: ShoppingGender;
 }
 
 export function getPreferences(): Promise<Preferences> {
