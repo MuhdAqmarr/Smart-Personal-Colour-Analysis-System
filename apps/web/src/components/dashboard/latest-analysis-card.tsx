@@ -32,7 +32,7 @@ export function LatestAnalysisCard() {
 
   if (query.isError || !latest) {
     return (
-      <Card variant="tinted" className="h-full">
+      <Card variant="tinted" className="relative h-full">
         <CardHeader>
           <CardTitle className="text-base">No analyses yet</CardTitle>
         </CardHeader>
@@ -40,7 +40,8 @@ export function LatestAnalysisCard() {
           <p className="text-muted-foreground text-sm leading-relaxed">
             Your saved results will appear here. Run your first analysis to find your season.
           </p>
-          <Button render={<Link href="/analysis" />}>
+          {/* Stretched link makes the whole prompt card start an analysis. */}
+          <Button className="after:absolute after:inset-0" render={<Link href="/analysis" />}>
             <ScanFace aria-hidden="true" data-icon="inline-start" />
             Start your first analysis
           </Button>
@@ -53,7 +54,7 @@ export function LatestAnalysisCard() {
 
   return (
     <div
-      className="wash-season ring-border flex h-full flex-col justify-between rounded-xl p-5 ring-1"
+      className="wash-season ring-border relative flex h-full flex-col justify-between rounded-xl p-5 ring-1"
       style={
         {
           "--season-tint": `var(--season-${latest.seasonSlug}, var(--accent))`,
@@ -78,10 +79,11 @@ export function LatestAnalysisCard() {
         </p>
       </div>
       <div className="mt-4">
+        {/* Stretched link makes the whole latest-result tile open the result. */}
         <Button
           variant="outline"
           size="sm"
-          className="bg-card/70"
+          className="bg-card/70 after:absolute after:inset-0"
           render={<Link href={`/history/${latest.id}`} />}
         >
           View full result

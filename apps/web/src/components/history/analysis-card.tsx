@@ -45,7 +45,7 @@ export function AnalysisCard({ analysis, onDelete, deleting = false }: AnalysisC
   const headline = titleCase(analysis.subseasonSlug ?? analysis.seasonSlug);
 
   return (
-    <Card variant="interactive">
+    <Card variant="interactive" className="relative">
       <CardContent className="flex items-center gap-4">
         <span
           aria-hidden="true"
@@ -53,9 +53,13 @@ export function AnalysisCard({ analysis, onDelete, deleting = false }: AnalysisC
           style={{ backgroundColor: analysis.combinedHex ?? "#d4c5b5" }}
         />
         <div className="min-w-0 flex-1">
+          {/* Stretched link: the title is the whole-card link (its `after`
+              overlay fills the `relative` Card); the Delete trigger sits above
+              it via `relative z-10`. */}
           <Link
             href={`/history/${analysis.id}`}
-            className="focus-visible:ring-ring/50 focus-visible:ring-3 rounded font-semibold tracking-[-0.01em] underline-offset-4 outline-none hover:underline"
+            aria-label={`View ${headline} analysis from ${formatDate(analysis.createdAt)}`}
+            className="focus-visible:ring-ring/50 focus-visible:ring-3 rounded font-semibold tracking-[-0.01em] underline-offset-4 outline-none after:absolute after:inset-0 hover:underline"
           >
             {headline}
           </Link>
@@ -83,6 +87,7 @@ export function AnalysisCard({ analysis, onDelete, deleting = false }: AnalysisC
                 size="icon"
                 aria-label={`Delete analysis from ${formatDate(analysis.createdAt)}`}
                 disabled={deleting}
+                className="relative z-10"
               />
             }
           >
