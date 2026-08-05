@@ -45,9 +45,7 @@ export function ShoppingPreference() {
 
   if (preferences.isPending) return <Skeleton className="h-10 w-full max-w-xs" />;
   if (preferences.isError) {
-    return (
-      <p className="text-muted-foreground text-sm">Your preferences could not be loaded.</p>
-    );
+    return <p className="text-muted-foreground text-sm">Your preferences could not be loaded.</p>;
   }
 
   return (
