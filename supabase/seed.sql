@@ -690,7 +690,7 @@ from public.colour_seasons s where s.slug = 'winter';
 
 -- Demo stores ---------------------------------------------------------
 insert into public.stores (slug, name, website_url, country)
-values ('coloursense-demo-boutique', 'Match.Lab Demo Boutique', 'https://example.com/demo-boutique', 'MY')
+values ('coloursense-demo-boutique', 'MatchLab Demo Boutique', 'https://example.com/demo-boutique', 'MY')
 on conflict (slug) do update set name = excluded.name, website_url = excluded.website_url;
 insert into public.stores (slug, name, website_url, country)
 values ('demo-modest-wear', 'Demo Modest Wear', 'https://example.com/demo-modest-wear', 'MY')
@@ -706,7 +706,7 @@ on conflict (slug) do update set name = excluded.name, website_url = excluded.we
 delete from public.products where is_demo;
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Coral Satin Blouse', 'Match.Lab Demo', 'tops', 'women', 'Fluid satin blouse in a fresh warm coral.', 'https://example.com/demo/products/001-coral-satin-blouse', 89.0, 'MYR', 'in_stock', true
+  select st.id, 'Coral Satin Blouse', 'MatchLab Demo', 'tops', 'women', 'Fluid satin blouse in a fresh warm coral.', 'https://example.com/demo/products/001-coral-satin-blouse', 89.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -717,7 +717,7 @@ select p.id, 'spring' from public.products p
 where p.product_url = 'https://example.com/demo/products/001-coral-satin-blouse';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Peach Linen Shirt Dress', 'Match.Lab Demo', 'dresses', 'women', 'Breathable linen dress in a soft peach.', 'https://example.com/demo/products/002-peach-linen-shirt-dress', 129.0, 'MYR', 'in_stock', true
+  select st.id, 'Peach Linen Shirt Dress', 'MatchLab Demo', 'dresses', 'women', 'Breathable linen dress in a soft peach.', 'https://example.com/demo/products/002-peach-linen-shirt-dress', 129.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -728,7 +728,7 @@ select p.id, 'spring' from public.products p
 where p.product_url = 'https://example.com/demo/products/002-peach-linen-shirt-dress';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Warm Navy Oxford Shirt', 'Match.Lab Demo', 'shirts', 'men', 'Classic oxford in a warm-leaning navy.', 'https://example.com/demo/products/003-warm-navy-oxford-shirt', 79.0, 'MYR', 'in_stock', true
+  select st.id, 'Warm Navy Oxford Shirt', 'MatchLab Demo', 'shirts', 'men', 'Classic oxford in a warm-leaning navy.', 'https://example.com/demo/products/003-warm-navy-oxford-shirt', 79.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-mens-essentials'
   returning id
 )
@@ -742,7 +742,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/003-warm-navy-oxford-shirt';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Turquoise Knit Top', 'Match.Lab Demo', 'tops', 'women', 'Lightweight knit in lively turquoise.', 'https://example.com/demo/products/004-turquoise-knit-top', 69.0, 'MYR', 'in_stock', true
+  select st.id, 'Turquoise Knit Top', 'MatchLab Demo', 'tops', 'women', 'Lightweight knit in lively turquoise.', 'https://example.com/demo/products/004-turquoise-knit-top', 69.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -753,7 +753,7 @@ select p.id, 'spring' from public.products p
 where p.product_url = 'https://example.com/demo/products/004-turquoise-knit-top';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Peach Blossom Chiffon Hijab', 'Match.Lab Demo', 'hijabs', 'women', 'Airy chiffon hijab in a face-brightening peach.', 'https://example.com/demo/products/005-peach-blossom-chiffon-hijab', 25.0, 'MYR', 'in_stock', true
+  select st.id, 'Peach Blossom Chiffon Hijab', 'MatchLab Demo', 'hijabs', 'women', 'Airy chiffon hijab in a face-brightening peach.', 'https://example.com/demo/products/005-peach-blossom-chiffon-hijab', 25.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-modest-wear'
   returning id
 )
@@ -764,7 +764,7 @@ select p.id, 'spring' from public.products p
 where p.product_url = 'https://example.com/demo/products/005-peach-blossom-chiffon-hijab';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Camel Trench Coat', 'Match.Lab Demo', 'outerwear', 'unisex', 'Timeless trench in warm camel.', 'https://example.com/demo/products/006-camel-trench-coat', 199.0, 'MYR', 'in_stock', true
+  select st.id, 'Camel Trench Coat', 'MatchLab Demo', 'outerwear', 'unisex', 'Timeless trench in warm camel.', 'https://example.com/demo/products/006-camel-trench-coat', 199.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -778,7 +778,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/006-camel-trench-coat';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Coral Cream Lipstick', 'Match.Lab Demo', 'cosmetics', 'unisex', 'Creamy lipstick in a fresh warm coral.', 'https://example.com/demo/products/007-coral-cream-lipstick', 39.0, 'MYR', 'in_stock', true
+  select st.id, 'Coral Cream Lipstick', 'MatchLab Demo', 'cosmetics', 'unisex', 'Creamy lipstick in a fresh warm coral.', 'https://example.com/demo/products/007-coral-cream-lipstick', 39.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-beauty-counter'
   returning id
 )
@@ -789,7 +789,7 @@ select p.id, 'spring' from public.products p
 where p.product_url = 'https://example.com/demo/products/007-coral-cream-lipstick';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Golden Tan Leather Tote', 'Match.Lab Demo', 'bags', 'unisex', 'Structured tote in golden tan.', 'https://example.com/demo/products/008-golden-tan-leather-tote', 149.0, 'MYR', 'in_stock', true
+  select st.id, 'Golden Tan Leather Tote', 'MatchLab Demo', 'bags', 'unisex', 'Structured tote in golden tan.', 'https://example.com/demo/products/008-golden-tan-leather-tote', 149.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -803,7 +803,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/008-golden-tan-leather-tote';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Powder Blue Poplin Shirt', 'Match.Lab Demo', 'shirts', 'women', 'Crisp poplin shirt in powder blue.', 'https://example.com/demo/products/009-powder-blue-poplin-shirt', 75.0, 'MYR', 'in_stock', true
+  select st.id, 'Powder Blue Poplin Shirt', 'MatchLab Demo', 'shirts', 'women', 'Crisp poplin shirt in powder blue.', 'https://example.com/demo/products/009-powder-blue-poplin-shirt', 75.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -814,7 +814,7 @@ select p.id, 'summer' from public.products p
 where p.product_url = 'https://example.com/demo/products/009-powder-blue-poplin-shirt';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Lavender Knit Cardigan', 'Match.Lab Demo', 'tops', 'women', 'Soft cardigan in gentle lavender.', 'https://example.com/demo/products/010-lavender-knit-cardigan', 95.0, 'MYR', 'in_stock', true
+  select st.id, 'Lavender Knit Cardigan', 'MatchLab Demo', 'tops', 'women', 'Soft cardigan in gentle lavender.', 'https://example.com/demo/products/010-lavender-knit-cardigan', 95.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -825,7 +825,7 @@ select p.id, 'summer' from public.products p
 where p.product_url = 'https://example.com/demo/products/010-lavender-knit-cardigan';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Slate Grey Polo', 'Match.Lab Demo', 'tops', 'men', 'Everyday polo in a cool slate grey.', 'https://example.com/demo/products/011-slate-grey-polo', 59.0, 'MYR', 'in_stock', true
+  select st.id, 'Slate Grey Polo', 'MatchLab Demo', 'tops', 'men', 'Everyday polo in a cool slate grey.', 'https://example.com/demo/products/011-slate-grey-polo', 59.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-mens-essentials'
   returning id
 )
@@ -836,7 +836,7 @@ select p.id, 'summer' from public.products p
 where p.product_url = 'https://example.com/demo/products/011-slate-grey-polo';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Dusty Rose Midi Skirt', 'Match.Lab Demo', 'skirts', 'women', 'Flowing midi skirt in dusty rose.', 'https://example.com/demo/products/012-dusty-rose-midi-skirt', 99.0, 'MYR', 'in_stock', true
+  select st.id, 'Dusty Rose Midi Skirt', 'MatchLab Demo', 'skirts', 'women', 'Flowing midi skirt in dusty rose.', 'https://example.com/demo/products/012-dusty-rose-midi-skirt', 99.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -847,7 +847,7 @@ select p.id, 'summer' from public.products p
 where p.product_url = 'https://example.com/demo/products/012-dusty-rose-midi-skirt';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Misty Lilac Satin Hijab', 'Match.Lab Demo', 'hijabs', 'women', 'Satin-finish hijab in misty lilac.', 'https://example.com/demo/products/013-misty-lilac-satin-hijab', 29.0, 'MYR', 'in_stock', true
+  select st.id, 'Misty Lilac Satin Hijab', 'MatchLab Demo', 'hijabs', 'women', 'Satin-finish hijab in misty lilac.', 'https://example.com/demo/products/013-misty-lilac-satin-hijab', 29.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-modest-wear'
   returning id
 )
@@ -858,7 +858,7 @@ select p.id, 'summer' from public.products p
 where p.product_url = 'https://example.com/demo/products/013-misty-lilac-satin-hijab';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Soft Navy Blazer', 'Match.Lab Demo', 'outerwear', 'women', 'Tailored blazer in a softened navy.', 'https://example.com/demo/products/014-soft-navy-blazer', 189.0, 'MYR', 'in_stock', true
+  select st.id, 'Soft Navy Blazer', 'MatchLab Demo', 'outerwear', 'women', 'Tailored blazer in a softened navy.', 'https://example.com/demo/products/014-soft-navy-blazer', 189.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -872,7 +872,7 @@ select p.id, 'winter' from public.products p
 where p.product_url = 'https://example.com/demo/products/014-soft-navy-blazer';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Rose Pink Lipstick', 'Match.Lab Demo', 'cosmetics', 'unisex', 'Satin lipstick in a cool rose.', 'https://example.com/demo/products/015-rose-pink-lipstick', 39.0, 'MYR', 'in_stock', true
+  select st.id, 'Rose Pink Lipstick', 'MatchLab Demo', 'cosmetics', 'unisex', 'Satin lipstick in a cool rose.', 'https://example.com/demo/products/015-rose-pink-lipstick', 39.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-beauty-counter'
   returning id
 )
@@ -883,7 +883,7 @@ select p.id, 'summer' from public.products p
 where p.product_url = 'https://example.com/demo/products/015-rose-pink-lipstick';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Sea Glass Scarf', 'Match.Lab Demo', 'scarves', 'unisex', 'Featherweight scarf in misty sea glass.', 'https://example.com/demo/products/016-sea-glass-scarf', 45.0, 'MYR', 'in_stock', true
+  select st.id, 'Sea Glass Scarf', 'MatchLab Demo', 'scarves', 'unisex', 'Featherweight scarf in misty sea glass.', 'https://example.com/demo/products/016-sea-glass-scarf', 45.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -894,7 +894,7 @@ select p.id, 'summer' from public.products p
 where p.product_url = 'https://example.com/demo/products/016-sea-glass-scarf';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Terracotta Wrap Dress', 'Match.Lab Demo', 'dresses', 'women', 'Wrap dress in earthy terracotta.', 'https://example.com/demo/products/017-terracotta-wrap-dress', 139.0, 'MYR', 'in_stock', true
+  select st.id, 'Terracotta Wrap Dress', 'MatchLab Demo', 'dresses', 'women', 'Wrap dress in earthy terracotta.', 'https://example.com/demo/products/017-terracotta-wrap-dress', 139.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -905,7 +905,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/017-terracotta-wrap-dress';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Olive Field Jacket', 'Match.Lab Demo', 'outerwear', 'men', 'Utility jacket in core olive.', 'https://example.com/demo/products/018-olive-field-jacket', 179.0, 'MYR', 'in_stock', true
+  select st.id, 'Olive Field Jacket', 'MatchLab Demo', 'outerwear', 'men', 'Utility jacket in core olive.', 'https://example.com/demo/products/018-olive-field-jacket', 179.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-mens-essentials'
   returning id
 )
@@ -916,7 +916,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/018-olive-field-jacket';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Mustard Ribbed Knit', 'Match.Lab Demo', 'tops', 'women', 'Ribbed knit in golden mustard.', 'https://example.com/demo/products/019-mustard-ribbed-knit', 79.0, 'MYR', 'in_stock', true
+  select st.id, 'Mustard Ribbed Knit', 'MatchLab Demo', 'tops', 'women', 'Ribbed knit in golden mustard.', 'https://example.com/demo/products/019-mustard-ribbed-knit', 79.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -927,7 +927,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/019-mustard-ribbed-knit';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Rust Flannel Shirt', 'Match.Lab Demo', 'shirts', 'men', 'Brushed flannel in rich rust.', 'https://example.com/demo/products/020-rust-flannel-shirt', 85.0, 'MYR', 'in_stock', true
+  select st.id, 'Rust Flannel Shirt', 'MatchLab Demo', 'shirts', 'men', 'Brushed flannel in rich rust.', 'https://example.com/demo/products/020-rust-flannel-shirt', 85.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-mens-essentials'
   returning id
 )
@@ -938,7 +938,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/020-rust-flannel-shirt';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Warm Olive Jersey Hijab', 'Match.Lab Demo', 'hijabs', 'women', 'Everyday jersey hijab in warm olive.', 'https://example.com/demo/products/021-warm-olive-jersey-hijab', 25.0, 'MYR', 'in_stock', true
+  select st.id, 'Warm Olive Jersey Hijab', 'MatchLab Demo', 'hijabs', 'women', 'Everyday jersey hijab in warm olive.', 'https://example.com/demo/products/021-warm-olive-jersey-hijab', 25.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-modest-wear'
   returning id
 )
@@ -949,7 +949,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/021-warm-olive-jersey-hijab';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Chocolate Wide-Leg Trousers', 'Match.Lab Demo', 'trousers', 'women', 'Wide-leg trousers in deep chocolate.', 'https://example.com/demo/products/022-chocolate-wide-leg-trousers', 119.0, 'MYR', 'in_stock', true
+  select st.id, 'Chocolate Wide-Leg Trousers', 'MatchLab Demo', 'trousers', 'women', 'Wide-leg trousers in deep chocolate.', 'https://example.com/demo/products/022-chocolate-wide-leg-trousers', 119.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -960,7 +960,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/022-chocolate-wide-leg-trousers';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Terracotta Lipstick', 'Match.Lab Demo', 'cosmetics', 'unisex', 'Matte lipstick in earthy terracotta.', 'https://example.com/demo/products/023-terracotta-lipstick', 39.0, 'MYR', 'in_stock', true
+  select st.id, 'Terracotta Lipstick', 'MatchLab Demo', 'cosmetics', 'unisex', 'Matte lipstick in earthy terracotta.', 'https://example.com/demo/products/023-terracotta-lipstick', 39.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-beauty-counter'
   returning id
 )
@@ -971,7 +971,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/023-terracotta-lipstick';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Cognac Leather Belt', 'Match.Lab Demo', 'accessories', 'unisex', 'Full-grain belt in cognac.', 'https://example.com/demo/products/024-cognac-leather-belt', 59.0, 'MYR', 'in_stock', true
+  select st.id, 'Cognac Leather Belt', 'MatchLab Demo', 'accessories', 'unisex', 'Full-grain belt in cognac.', 'https://example.com/demo/products/024-cognac-leather-belt', 59.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -982,7 +982,7 @@ select p.id, 'autumn' from public.products p
 where p.product_url = 'https://example.com/demo/products/024-cognac-leather-belt';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'True Red Shift Dress', 'Match.Lab Demo', 'dresses', 'women', 'Sharp shift dress in clear true red.', 'https://example.com/demo/products/025-true-red-shift-dress', 149.0, 'MYR', 'in_stock', true
+  select st.id, 'True Red Shift Dress', 'MatchLab Demo', 'dresses', 'women', 'Sharp shift dress in clear true red.', 'https://example.com/demo/products/025-true-red-shift-dress', 149.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -993,7 +993,7 @@ select p.id, 'winter' from public.products p
 where p.product_url = 'https://example.com/demo/products/025-true-red-shift-dress';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Royal Blue Merino Jumper', 'Match.Lab Demo', 'tops', 'men', 'Fine merino in vivid royal blue.', 'https://example.com/demo/products/026-royal-blue-merino-jumper', 129.0, 'MYR', 'in_stock', true
+  select st.id, 'Royal Blue Merino Jumper', 'MatchLab Demo', 'tops', 'men', 'Fine merino in vivid royal blue.', 'https://example.com/demo/products/026-royal-blue-merino-jumper', 129.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-mens-essentials'
   returning id
 )
@@ -1004,7 +1004,7 @@ select p.id, 'winter' from public.products p
 where p.product_url = 'https://example.com/demo/products/026-royal-blue-merino-jumper';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Emerald Satin Blouse', 'Match.Lab Demo', 'tops', 'women', 'Lustrous blouse in jewel emerald.', 'https://example.com/demo/products/027-emerald-satin-blouse', 99.0, 'MYR', 'in_stock', true
+  select st.id, 'Emerald Satin Blouse', 'MatchLab Demo', 'tops', 'women', 'Lustrous blouse in jewel emerald.', 'https://example.com/demo/products/027-emerald-satin-blouse', 99.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -1015,7 +1015,7 @@ select p.id, 'winter' from public.products p
 where p.product_url = 'https://example.com/demo/products/027-emerald-satin-blouse';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Charcoal Wool Overcoat', 'Match.Lab Demo', 'outerwear', 'men', 'Structured overcoat in deep charcoal.', 'https://example.com/demo/products/028-charcoal-wool-overcoat', 259.0, 'MYR', 'in_stock', true
+  select st.id, 'Charcoal Wool Overcoat', 'MatchLab Demo', 'outerwear', 'men', 'Structured overcoat in deep charcoal.', 'https://example.com/demo/products/028-charcoal-wool-overcoat', 259.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-mens-essentials'
   returning id
 )
@@ -1026,7 +1026,7 @@ select p.id, 'winter' from public.products p
 where p.product_url = 'https://example.com/demo/products/028-charcoal-wool-overcoat';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Ice Grey Satin Hijab', 'Match.Lab Demo', 'hijabs', 'women', 'Cool satin hijab in ice grey.', 'https://example.com/demo/products/029-ice-grey-satin-hijab', 29.0, 'MYR', 'in_stock', true
+  select st.id, 'Ice Grey Satin Hijab', 'MatchLab Demo', 'hijabs', 'women', 'Cool satin hijab in ice grey.', 'https://example.com/demo/products/029-ice-grey-satin-hijab', 29.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-modest-wear'
   returning id
 )
@@ -1037,7 +1037,7 @@ select p.id, 'winter' from public.products p
 where p.product_url = 'https://example.com/demo/products/029-ice-grey-satin-hijab';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Fuchsia Evening Skirt', 'Match.Lab Demo', 'skirts', 'women', 'Statement skirt in cool fuchsia.', 'https://example.com/demo/products/030-fuchsia-evening-skirt', 109.0, 'MYR', 'in_stock', true
+  select st.id, 'Fuchsia Evening Skirt', 'MatchLab Demo', 'skirts', 'women', 'Statement skirt in cool fuchsia.', 'https://example.com/demo/products/030-fuchsia-evening-skirt', 109.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )
@@ -1048,7 +1048,7 @@ select p.id, 'winter' from public.products p
 where p.product_url = 'https://example.com/demo/products/030-fuchsia-evening-skirt';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'True Red Lipstick', 'Match.Lab Demo', 'cosmetics', 'unisex', 'Blue-based classic red lipstick.', 'https://example.com/demo/products/031-true-red-lipstick', 39.0, 'MYR', 'in_stock', true
+  select st.id, 'True Red Lipstick', 'MatchLab Demo', 'cosmetics', 'unisex', 'Blue-based classic red lipstick.', 'https://example.com/demo/products/031-true-red-lipstick', 39.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'demo-beauty-counter'
   returning id
 )
@@ -1059,7 +1059,7 @@ select p.id, 'winter' from public.products p
 where p.product_url = 'https://example.com/demo/products/031-true-red-lipstick';
 with new_product as (
   insert into public.products (store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)
-  select st.id, 'Silver Chain Necklace', 'Match.Lab Demo', 'accessories', 'unisex', 'Cool-toned chain necklace.', 'https://example.com/demo/products/032-silver-chain-necklace', 49.0, 'MYR', 'in_stock', true
+  select st.id, 'Silver Chain Necklace', 'MatchLab Demo', 'accessories', 'unisex', 'Cool-toned chain necklace.', 'https://example.com/demo/products/032-silver-chain-necklace', 49.0, 'MYR', 'in_stock', true
   from public.stores st where st.slug = 'coloursense-demo-boutique'
   returning id
 )

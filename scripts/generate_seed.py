@@ -389,7 +389,7 @@ COSMETICS = [
 # --------------------------------------------------------------------------
 
 STORES = [
-    ("coloursense-demo-boutique", "Match.Lab Demo Boutique", "https://example.com/demo-boutique", "MY"),
+    ("coloursense-demo-boutique", "MatchLab Demo Boutique", "https://example.com/demo-boutique", "MY"),
     ("demo-modest-wear", "Demo Modest Wear", "https://example.com/demo-modest-wear", "MY"),
     ("demo-mens-essentials", "Demo Men's Essentials", "https://example.com/demo-mens", "MY"),
     ("demo-beauty-counter", "Demo Beauty Counter", "https://example.com/demo-beauty", "MY"),
@@ -544,7 +544,7 @@ def main() -> None:
             "with new_product as (\n"
             "  insert into public.products "
             "(store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)\n"
-            f"  select st.id, {sql_str(name)}, 'Match.Lab Demo', {sql_str(category)}, {sql_str(gender)}, "
+            f"  select st.id, {sql_str(name)}, 'MatchLab Demo', {sql_str(category)}, {sql_str(gender)}, "
             f"{sql_str(desc)}, {sql_str(url)}, {price}, 'MYR', 'in_stock', true\n"
             f"  from public.stores st where st.slug = {sql_str(store)}\n"
             "  returning id\n"
