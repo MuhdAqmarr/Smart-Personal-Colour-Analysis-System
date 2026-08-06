@@ -15,7 +15,7 @@ gradable problems are reported inside the QualityReportData instead.
 from __future__ import annotations
 
 import time
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import Any, cast
 
 from app.analysis.classification.seasons import (
@@ -31,6 +31,7 @@ from app.analysis.explainability.generate import Explanation, build_explanation
 from app.analysis.face_detection.detector import detect_faces
 from app.analysis.landmarks.geometry import extract_pose
 from app.analysis.preprocessing.validation import UploadLimits, validate_and_decode
+from app.analysis.preprocessing.white_balance import apply_white_balance
 from app.analysis.quality.metrics import (
     blur_variance_of_laplacian,
     estimate_colour_cast,
@@ -178,6 +179,23 @@ def run_quality_stage(
         face_consistency_weight=cast_cfg["faceConsistencyWeight"],
         warn_ab_shift=cast_cfg["warnAbShift"],
     )
+
+    # White-patch white balance (classifier 1.1.0). Geometry/exposure/cast
+    # above are measured on the ORIGINAL image, so a genuine colour cast is
+    # still detected and surfaced to the user. From here the classification
+    # samples the illuminant-corrected image, so coloured lighting no longer
+    # skews the undertone/season. On a neutral photo the gains are ≈1, so this
+    # is a no-op and the true undertone is preserved.
+    wb = config.whiteBalance
+    if wb.enabled:
+        corrected_rgb, _gains = apply_white_balance(
+            image.rgb,
+            bright_percentile=wb.brightPercentile,
+            clip_ceiling=wb.clipCeiling,
+            strength=wb.strength,
+            gain_clamp=wb.gainClamp,
+        )
+        image = replace(image, rgb=corrected_rgb)
 
     report = build_quality_report(
         config=quality_dict,

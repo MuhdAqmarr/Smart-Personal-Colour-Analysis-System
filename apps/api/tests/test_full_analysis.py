@@ -50,7 +50,7 @@ class TestFullPipeline:
         assert result.sub_season.sub_season is not None
         assert result.explanation.summary
         assert result.explanation.evidence
-        assert result.classifier_version == "1.0.0"
+        assert result.classifier_version == "1.1.0"
         assert result.processing_ms >= 0
 
     def test_pipeline_is_fully_deterministic(self) -> None:
@@ -95,7 +95,7 @@ class TestAnalysisEndpoint:
 
         assert body["analysisId"] is None
         assert body["persisted"] is False
-        assert body["classifierVersion"] == "1.0.0"
+        assert body["classifierVersion"] == "1.1.0"
         assert body["quality"]["acceptable"] is True
         assert len(body["samples"]) == 4
         assert body["undertone"]["undertone"] in ("warm", "cool")

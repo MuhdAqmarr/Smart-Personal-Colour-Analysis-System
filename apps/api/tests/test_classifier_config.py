@@ -13,8 +13,9 @@ from app.core.classifier import (
 
 def test_bundled_config_loads_and_validates() -> None:
     config = get_classifier_config()
-    assert config.version == "1.0.0"
+    assert config.version == "1.1.0"
     assert config.name == "coloursense-rule-based-classifier"
+    assert config.whiteBalance.enabled is True
     assert set(config.seasons.prototypes) == {"spring", "summer", "autumn", "winter"}
     assert config.image.allowedFormats == ("jpeg", "png", "webp")
 

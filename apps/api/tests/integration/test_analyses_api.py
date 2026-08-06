@@ -55,7 +55,7 @@ class TestPersistence:
         )
         assert row is not None
         assert str(row["user_id"]) == str(user_id)
-        assert row["classifier_version"] == "1.0.0"
+        assert row["classifier_version"] == "1.1.0"
 
         for table, expected in (
             ("analysis_quality_metrics", 1),
