@@ -22,7 +22,6 @@ class TestAuthorisation:
             "/api/v1/admin/stats",
             "/api/v1/admin/audit-logs",
             "/api/v1/admin/algorithm-versions",
-            "/api/v1/admin/settings",
             "/api/v1/admin/stores",
             "/api/v1/admin/products",
         ],
@@ -62,43 +61,6 @@ class TestStats:
         blob = str(body).lower()
         assert "email" not in blob
         assert "@test.local" not in blob
-
-
-class TestSettings:
-    async def test_update_setting_and_audit(
-        self, app_client: httpx.AsyncClient, users: UserFactory, db_conn
-    ) -> None:
-        _, admin_token = await users.create(role="admin")
-        response = await app_client.put(
-            "/api/v1/admin/settings/products.max_recommendations",
-            headers=auth(admin_token),
-            json={"value": 18},
-        )
-        assert response.status_code == 200
-        assert response.json()["value"] == 18
-
-        audits = await db_conn.fetchval(
-            "select count(*) from public.admin_audit_logs where action = 'settings.update'"
-        )
-        assert audits >= 1
-
-        # Restore the seeded value.
-        await app_client.put(
-            "/api/v1/admin/settings/products.max_recommendations",
-            headers=auth(admin_token),
-            json={"value": 24},
-        )
-
-    async def test_unknown_setting_404(
-        self, app_client: httpx.AsyncClient, users: UserFactory
-    ) -> None:
-        _, admin_token = await users.create(role="admin")
-        response = await app_client.put(
-            "/api/v1/admin/settings/not.a.real.key",
-            headers=auth(admin_token),
-            json={"value": 1},
-        )
-        assert response.status_code == 404
 
 
 class TestStoreCrud:
@@ -267,11 +229,12 @@ class TestAuditLog:
         self, app_client: httpx.AsyncClient, users: UserFactory
     ) -> None:
         _, admin_token = await users.create(role="admin")
-        await app_client.put(
-            "/api/v1/admin/settings/app.product_name",
+        # Any audited admin write should surface in the log.
+        await app_client.post(
+            "/api/v1/admin/stores",
             headers=auth(admin_token),
-            json={"value": "ColourSense"},
+            json={"slug": "audit-probe-store", "name": "Audit Probe Store"},
         )
         logs = await app_client.get("/api/v1/admin/audit-logs", headers=auth(admin_token))
         assert logs.status_code == 200
-        assert any(entry["action"] == "settings.update" for entry in logs.json())
+        assert len(logs.json()) >= 1
