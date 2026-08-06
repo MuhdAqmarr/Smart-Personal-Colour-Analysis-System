@@ -9,10 +9,10 @@ import {
   Palette,
   ScrollText,
   ShieldAlert,
-  ShieldCheck,
   Sparkles,
   Store,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -82,9 +82,14 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <header className="glass-navigation sticky top-0 z-40 border-b">
         <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
           <Link href="/admin" className="flex items-center gap-2.5" aria-label="Admin console home">
-            <span className="bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-[10px]">
-              <ShieldCheck className="size-4" aria-hidden="true" />
-            </span>
+            <Image
+              src="/logo.png"
+              alt=""
+              width={36}
+              height={36}
+              className="size-9 shrink-0"
+              priority
+            />
             <span className="text-[1.0625rem] font-semibold tracking-[-0.01em]">
               {siteConfig.name}
             </span>
