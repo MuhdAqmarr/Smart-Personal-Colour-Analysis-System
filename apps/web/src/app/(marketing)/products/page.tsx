@@ -29,6 +29,7 @@ import { ApiError } from "@/lib/api/client";
 import {
   favouriteProduct,
   listProducts,
+  listStores,
   unfavouriteProduct,
   type Product,
 } from "@/lib/api/products";
@@ -50,12 +51,26 @@ const CATEGORIES = [
 const SEASONS = ["spring", "summer", "autumn", "winter"];
 const ALL = "all";
 
+const GENDER_LABELS: Record<string, string> = {
+  all: "Everyone",
+  women: "Women",
+  men: "Men",
+  unisex: "Unisex",
+};
+const SORT_LABELS: Record<string, string> = {
+  newest: "Newest",
+  price_asc: "Price: low to high",
+  price_desc: "Price: high to low",
+  name: "Name A–Z",
+};
+
 export default function ProductsPage() {
   const { session } = useSession();
   const queryClient = useQueryClient();
   const [category, setCategory] = useState(ALL);
   const [season, setSeason] = useState(ALL);
   const [gender, setGender] = useState(ALL);
+  const [store, setStore] = useState(ALL);
   const [sort, setSort] = useState("newest");
   const [search, setSearch] = useState("");
   const [submittedSearch, setSubmittedSearch] = useState("");
@@ -65,6 +80,7 @@ export default function ProductsPage() {
     category: category === ALL ? undefined : category,
     season: season === ALL ? undefined : season,
     gender: gender === ALL ? undefined : gender,
+    store: store === ALL ? undefined : store,
     q: submittedSearch || undefined,
     sort,
     page,
@@ -73,6 +89,12 @@ export default function ProductsPage() {
   const query = useQuery({
     queryKey: ["products", filters],
     queryFn: () => listProducts(filters),
+  });
+
+  const stores = useQuery({
+    queryKey: ["stores"],
+    queryFn: listStores,
+    staleTime: 5 * 60_000,
   });
 
   const toggleFavourite = useMutation({
@@ -113,7 +135,7 @@ export default function ProductsPage() {
       <form
         role="search"
         aria-label="Filter products"
-        className="bg-surface ring-border mb-8 grid gap-3 rounded-2xl p-4 ring-1 sm:grid-cols-2 lg:grid-cols-5"
+        className="bg-surface ring-border mb-8 grid gap-3 rounded-2xl p-4 ring-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
         onSubmit={(event) => {
           event.preventDefault();
           setSubmittedSearch(search.trim());
@@ -132,8 +154,8 @@ export default function ProductsPage() {
         <div className="space-y-1.5">
           <Label htmlFor="filter-category">Category</Label>
           <Select value={category} onValueChange={updateFilter(setCategory)}>
-            <SelectTrigger id="filter-category" className="w-full">
-              <SelectValue />
+            <SelectTrigger id="filter-category" className="w-full capitalize">
+              <SelectValue>{(value) => (value === ALL ? "All categories" : value)}</SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value={ALL}>All categories</SelectItem>
@@ -148,8 +170,8 @@ export default function ProductsPage() {
         <div className="space-y-1.5">
           <Label htmlFor="filter-season">Season</Label>
           <Select value={season} onValueChange={updateFilter(setSeason)}>
-            <SelectTrigger id="filter-season" className="w-full">
-              <SelectValue />
+            <SelectTrigger id="filter-season" className="w-full capitalize">
+              <SelectValue>{(value) => (value === ALL ? "All seasons" : value)}</SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value={ALL}>All seasons</SelectItem>
@@ -162,10 +184,32 @@ export default function ProductsPage() {
           </Select>
         </div>
         <div className="space-y-1.5">
+          <Label htmlFor="filter-store">Store</Label>
+          <Select value={store} onValueChange={updateFilter(setStore)}>
+            <SelectTrigger id="filter-store" className="w-full">
+              <SelectValue>
+                {(value) =>
+                  value === ALL
+                    ? "All stores"
+                    : (stores.data?.find((option) => option.slug === value)?.name ?? "All stores")
+                }
+              </SelectValue>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={ALL}>All stores</SelectItem>
+              {(stores.data ?? []).map((option) => (
+                <SelectItem key={option.slug} value={option.slug}>
+                  {option.name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="space-y-1.5">
           <Label htmlFor="filter-gender">For</Label>
           <Select value={gender} onValueChange={updateFilter(setGender)}>
             <SelectTrigger id="filter-gender" className="w-full">
-              <SelectValue />
+              <SelectValue>{(value) => GENDER_LABELS[value] ?? "Everyone"}</SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value={ALL}>Everyone</SelectItem>
@@ -179,7 +223,7 @@ export default function ProductsPage() {
           <Label htmlFor="filter-sort">Sort</Label>
           <Select value={sort} onValueChange={updateFilter(setSort)}>
             <SelectTrigger id="filter-sort" className="w-full">
-              <SelectValue />
+              <SelectValue>{(value) => SORT_LABELS[value] ?? "Newest"}</SelectValue>
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="newest">Newest</SelectItem>

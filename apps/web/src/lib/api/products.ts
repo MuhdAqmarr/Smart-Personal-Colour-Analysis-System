@@ -41,6 +41,7 @@ export interface ProductFilters {
   category?: string;
   gender?: string;
   season?: string;
+  store?: string;
   q?: string;
   sort?: string;
   page?: number;
@@ -52,11 +53,21 @@ export function listProducts(filters: ProductFilters = {}): Promise<ProductListR
   if (filters.category) params.set("category", filters.category);
   if (filters.gender) params.set("gender", filters.gender);
   if (filters.season) params.set("season", filters.season);
+  if (filters.store) params.set("store", filters.store);
   if (filters.q) params.set("q", filters.q);
   if (filters.sort) params.set("sort", filters.sort);
   params.set("page", String(filters.page ?? 1));
   params.set("page_size", String(filters.pageSize ?? 12));
   return apiFetch<ProductListResponse>(`/products?${params.toString()}`, { auth: false });
+}
+
+export interface StoreOption {
+  slug: string;
+  name: string;
+}
+
+export function listStores(): Promise<StoreOption[]> {
+  return apiFetch<StoreOption[]>("/stores", { auth: false });
 }
 
 export function getRecommendedProducts(analysisId: string): Promise<Product[]> {
