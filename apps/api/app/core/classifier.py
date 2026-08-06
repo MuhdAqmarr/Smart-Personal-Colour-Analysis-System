@@ -13,13 +13,21 @@ import math
 from functools import lru_cache
 from pathlib import Path
 
-from pydantic import BaseModel, ConfigDict, field_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from app.core.config import get_settings
 
 
 class _StrictModel(BaseModel):
     model_config = ConfigDict(frozen=True, extra="allow")
+
+
+class WhiteBalanceConfig(_StrictModel):
+    enabled: bool = True
+    brightPercentile: float = 0.97
+    clipCeiling: float = 250.0
+    strength: float = 1.0
+    gainClamp: float = 1.5
 
 
 class ImageConfig(_StrictModel):
@@ -125,6 +133,7 @@ class ProductMatchingConfig(_StrictModel):
 class ClassifierConfig(_StrictModel):
     version: str
     name: str
+    whiteBalance: WhiteBalanceConfig = Field(default_factory=WhiteBalanceConfig)
     image: ImageConfig
     quality: QualityConfig
     seasons: SeasonsConfig

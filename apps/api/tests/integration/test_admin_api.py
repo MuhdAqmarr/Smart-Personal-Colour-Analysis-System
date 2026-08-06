@@ -56,7 +56,7 @@ class TestStats:
         assert response.status_code == 200
         body = response.json()
         assert body["totalAnalyses"] >= 1
-        assert body["classifierVersion"] == "1.0.0"
+        assert body["classifierVersion"] == "1.1.0"
         assert isinstance(body["seasonDistribution"], dict)
         # Nothing user-identifiable in the payload.
         blob = str(body).lower()

@@ -15,6 +15,17 @@ Single source of truth for **every threshold and weight** used by the Match.Lab 
 | `maxDecodedPixels` | Decompression-bomb ceiling (Pillow `MAX_IMAGE_PIXELS`) |
 | `minEdgePixels` | Reject images too small to analyse reliably |
 
+### `whiteBalance`
+White-patch illuminant correction (classifier ≥ 1.1.0). The brightest near-neutral pixels reflect the illuminant, so mapping them toward grey removes a coloured-light cast without touching the skin's own warmth — unlike gray-world, which would neutralise the undertone we measure. Geometry, exposure, and the colour-cast metric are computed on the **original** image (a real cast is still detected and surfaced); skin sampling and classification run on the corrected image, so the season is robust to coloured lighting. On a neutral photo the gains are ≈ 1 (a no-op).
+
+| Field | Meaning |
+|---|---|
+| `enabled` | Master switch for the correction step |
+| `brightPercentile` | Luminance quantile defining "brightest" reference pixels (e.g. 0.97 = top 3%) |
+| `clipCeiling` | Exclude clipped highlights ≥ this (they carry no chroma) |
+| `strength` | Blend toward full correction, 0 (identity) → 1 (full) |
+| `gainClamp` | Per-channel gains clamped to `[1/clamp, clamp]` so a bad estimate can't wildly recolour |
+
 ### `quality`
 Composite quality score = `Σ componentScore × componentWeights` (weights sum to 1), scaled to 0–100. Analysis stops below `minOverallScore` unless `allowLowQualityContinuation` (or an explicit user override in the request, surfaced in the UI as a warned choice).
 
