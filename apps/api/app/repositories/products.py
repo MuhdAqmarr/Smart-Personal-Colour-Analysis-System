@@ -133,6 +133,25 @@ async def list_active_products_for_ranking(session: AsyncSession) -> list[dict[s
     return [dict(row) for row in rows.mappings()]
 
 
+async def list_active_stores(session: AsyncSession) -> list[dict[str, Any]]:
+    """Active stores that have at least one active product (for directory filters)."""
+    rows = await session.execute(
+        text(
+            """
+            select st.slug, st.name
+            from public.stores st
+            where st.is_active
+              and exists (
+                select 1 from public.products p
+                where p.store_id = st.id and p.is_active
+              )
+            order by st.name
+            """
+        )
+    )
+    return [dict(row) for row in rows.mappings()]
+
+
 async def get_shopping_gender(session: AsyncSession, user_id: UUID) -> str:
     """The user's explicit shopping-gender preference ('everyone' if unset)."""
     result = await session.execute(

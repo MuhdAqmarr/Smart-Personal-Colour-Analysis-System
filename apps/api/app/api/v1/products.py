@@ -65,6 +65,11 @@ class ProductListSchema(CamelModel):
     pagination: PaginationSchema
 
 
+class StoreOptionSchema(CamelModel):
+    slug: str
+    name: str
+
+
 def _to_schema(
     row: dict[str, Any],
     favourite_ids: set[str],
@@ -153,6 +158,15 @@ async def list_products(
             total_pages=max(1, math.ceil(total / page_size)) if total else 0,
         ),
     )
+
+
+@router.get("/stores", response_model=list[StoreOptionSchema])
+async def list_stores(
+    session: Annotated[AsyncSession, Depends(get_db_session)],
+) -> list[StoreOptionSchema]:
+    """Active stores that stock at least one product — for the directory filter."""
+    rows = await repo.list_active_stores(session)
+    return [StoreOptionSchema(slug=row["slug"], name=row["name"]) for row in rows]
 
 
 @router.get("/products/{product_id}", response_model=ProductSchema)
