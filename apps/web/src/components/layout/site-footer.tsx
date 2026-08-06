@@ -1,4 +1,4 @@
-import { Palette } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
 import { footerNav, siteConfig } from "@/lib/site";
@@ -10,9 +10,7 @@ export function SiteFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3 sm:col-span-2">
             <div className="flex items-center gap-2.5">
-              <span className="bg-primary text-primary-foreground flex size-7 items-center justify-center rounded-[10px]">
-                <Palette className="size-4" aria-hidden="true" />
-              </span>
+              <Image src="/logo.png" alt="" width={36} height={36} className="size-9 shrink-0" />
               <span className="text-[1.0625rem] font-semibold tracking-[-0.01em]">
                 {siteConfig.name}
               </span>
