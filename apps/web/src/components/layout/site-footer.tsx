@@ -10,7 +10,7 @@ export function SiteFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-3 sm:col-span-2">
             <div className="flex items-center gap-2.5">
-              <Image src="/logo.png" alt="" width={36} height={36} className="size-9 shrink-0" />
+              <Image src="/logo.png" alt="" width={44} height={44} className="size-11 shrink-0" />
               <span className="text-[1.0625rem] font-semibold tracking-[-0.01em]">
                 {siteConfig.name}
               </span>
