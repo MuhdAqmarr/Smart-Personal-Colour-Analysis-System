@@ -88,9 +88,9 @@ export function SiteHeader() {
           <Image
             src="/logo.png"
             alt=""
-            width={36}
-            height={36}
-            className="size-9 shrink-0"
+            width={44}
+            height={44}
+            className="size-11 shrink-0"
             priority
           />
           <span className="text-[1.0625rem] font-semibold tracking-[-0.01em]">
