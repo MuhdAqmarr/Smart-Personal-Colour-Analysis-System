@@ -389,7 +389,7 @@ COSMETICS = [
 # --------------------------------------------------------------------------
 
 STORES = [
-    ("coloursense-demo-boutique", "ColourSense Demo Boutique", "https://example.com/demo-boutique", "MY"),
+    ("coloursense-demo-boutique", "Match.Lab Demo Boutique", "https://example.com/demo-boutique", "MY"),
     ("demo-modest-wear", "Demo Modest Wear", "https://example.com/demo-modest-wear", "MY"),
     ("demo-mens-essentials", "Demo Men's Essentials", "https://example.com/demo-mens", "MY"),
     ("demo-beauty-counter", "Demo Beauty Counter", "https://example.com/demo-beauty", "MY"),
@@ -444,14 +444,6 @@ CONTENT_PAGES = [
         True,
     ),
 ]
-
-SYSTEM_SETTINGS = [
-    ("app.product_name", json.dumps("ColourSense"), "Display name of the product; configurable without refactoring."),
-    ("analysis.allow_low_quality_continuation", json.dumps(False), "Permit analyses below the minimum quality score (results flagged low-confidence)."),
-    ("products.max_recommendations", json.dumps(24), "Maximum products returned by the recommendation endpoint."),
-    ("storage.signed_url_ttl_seconds", json.dumps(300), "Lifetime of signed URLs issued for stored analysis images."),
-]
-
 
 def main() -> None:
     classifier = json.loads(CLASSIFIER.read_text(encoding="utf-8"))
@@ -552,7 +544,7 @@ def main() -> None:
             "with new_product as (\n"
             "  insert into public.products "
             "(store_id, name, brand, category, gender, description, product_url, price, currency, availability, is_demo)\n"
-            f"  select st.id, {sql_str(name)}, 'ColourSense Demo', {sql_str(category)}, {sql_str(gender)}, "
+            f"  select st.id, {sql_str(name)}, 'Match.Lab Demo', {sql_str(category)}, {sql_str(gender)}, "
             f"{sql_str(desc)}, {sql_str(url)}, {price}, 'MYR', 'in_stock', true\n"
             f"  from public.stores st where st.slug = {sql_str(store)}\n"
             "  returning id\n"
@@ -590,15 +582,6 @@ def main() -> None:
         )
     add("")
 
-    # System settings ---------------------------------------------------------
-    add("-- System settings --------------------------------------------------------")
-    for key, value, description in SYSTEM_SETTINGS:
-        add(
-            "insert into public.system_settings (key, value, description)\n"
-            f"values ({sql_str(key)}, {sql_str(value)}::jsonb, {sql_str(description)})\n"
-            "on conflict (key) do update set value = excluded.value, description = excluded.description;"
-        )
-    add("")
     add("commit;")
     add("")
 

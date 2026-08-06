@@ -34,12 +34,6 @@ export interface AlgorithmVersion {
   releasedAt: string;
 }
 
-export interface SystemSetting {
-  key: string;
-  value: unknown;
-  description: string;
-}
-
 export interface AdminStore {
   id: string;
   slug: string;
@@ -99,9 +93,6 @@ export const listAuditLogs = (page = 1) =>
   apiFetch<AuditLogEntry[]>(`/admin/audit-logs?page=${page}`);
 export const listAlgorithmVersions = () =>
   apiFetch<AlgorithmVersion[]>("/admin/algorithm-versions");
-export const listSettings = () => apiFetch<SystemSetting[]>("/admin/settings");
-export const updateSetting = (key: string, value: unknown) =>
-  apiFetch<SystemSetting>(`/admin/settings/${key}`, { method: "PUT", body: { value } });
 
 export const listAdminStores = () => apiFetch<AdminStore[]>("/admin/stores");
 export const createStore = (store: {

@@ -8,7 +8,6 @@ import {
   Package,
   Palette,
   ScrollText,
-  Settings2,
   ShieldAlert,
   ShieldCheck,
   Sparkles,
@@ -35,7 +34,6 @@ const adminNav = [
   { title: "Cosmetics", href: "/admin/cosmetics", icon: Sparkles },
   { title: "CSV import", href: "/admin/imports", icon: FileUp },
   { title: "Audit log", href: "/admin/audit", icon: ScrollText },
-  { title: "Settings", href: "/admin/settings", icon: Settings2 },
 ];
 
 /**
@@ -123,8 +121,8 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
             <AlertTitle>Administrator access required</AlertTitle>
             <AlertDescription>
               <p>
-                This area manages the public catalogue and system settings. Your account does not
-                have the administrator role.
+                This area manages the public catalogue. Your account does not have the administrator
+                role.
               </p>
               <Button
                 variant="outline"
