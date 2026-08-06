@@ -1,4 +1,4 @@
-# Architecture — Smart Personal Colour Analysis System (Match.Lab)
+# Architecture — Smart Personal Colour Analysis System (MatchLab)
 
 ## 1. System overview
 

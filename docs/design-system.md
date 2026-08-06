@@ -1,4 +1,4 @@
-# Match.Lab Design System
+# MatchLab Design System
 
 The visual language introduced by the modern glass redesign
 (`feat/modern-glass-ui-redesign`). Everything here is implemented as

@@ -1,4 +1,4 @@
-# Match.Lab API (`apps/api`)
+# MatchLab API (`apps/api`)
 
 FastAPI backend: upload hardening, image-quality validation, and the deterministic rule-based colour-analysis pipeline (OpenCV + MediaPipe + NumPy), plus persistence, palettes, products, and admin APIs backed by Supabase PostgreSQL.
 

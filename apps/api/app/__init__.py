@@ -1,1 +1,1 @@
-"""Match.Lab backend API."""
+"""MatchLab backend API."""
