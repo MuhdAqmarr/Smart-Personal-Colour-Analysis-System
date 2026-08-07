@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { Providers } from "@/app/providers";
+import { InstallPrompt } from "@/components/pwa/install-prompt";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
@@ -75,7 +76,10 @@ export default function RootLayout({
         >
           Skip to main content
         </a>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <InstallPrompt />
+        </Providers>
       </body>
     </html>
   );
