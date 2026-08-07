@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { Card, QA, Section, Step } from "@/components/docs/blocks";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -30,59 +31,6 @@ const TOC = [
   ["qna", "15 · Likely questions & answers"],
   ["glossary", "16 · Glossary"],
 ] as const;
-
-function Section({
-  id,
-  title,
-  children,
-}: {
-  id: string;
-  title: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <section id={id} aria-labelledby={`${id}-h`} className="scroll-mt-8">
-      <h2 id={`${id}-h`} className="text-xl font-bold tracking-[-0.01em] sm:text-2xl">
-        {title}
-      </h2>
-      <div className="text-foreground/90 mt-4 space-y-4 text-[0.95rem] leading-relaxed">
-        {children}
-      </div>
-    </section>
-  );
-}
-
-function Card({ title, children }: { title?: string; children: React.ReactNode }) {
-  return (
-    <div data-print-card className="border-border bg-card rounded-2xl border p-4 sm:p-5">
-      {title ? <h3 className="mb-2 text-sm font-semibold">{title}</h3> : null}
-      <div className="text-muted-foreground space-y-2 text-sm leading-relaxed">{children}</div>
-    </div>
-  );
-}
-
-function Step({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
-  return (
-    <li data-print-card className="border-border bg-card flex gap-3.5 rounded-2xl border p-4">
-      <span className="bg-primary text-primary-foreground mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg text-xs font-bold tabular-nums">
-        {n}
-      </span>
-      <div>
-        <p className="text-sm font-semibold">{title}</p>
-        <p className="text-muted-foreground mt-1 text-sm leading-relaxed">{children}</p>
-      </div>
-    </li>
-  );
-}
-
-function QA({ q, children }: { q: string; children: React.ReactNode }) {
-  return (
-    <div data-print-card className="border-border bg-card rounded-2xl border p-4 sm:p-5">
-      <p className="text-sm font-semibold">“{q}”</p>
-      <div className="text-muted-foreground mt-2 space-y-2 text-sm leading-relaxed">{children}</div>
-    </div>
-  );
-}
 
 const CONFIDENCE_FACTORS = [
   ["Image quality", "0.30", "Sharpness, exposure, lighting and face-size checks from the photo."],
@@ -138,6 +86,12 @@ export default function DocsPage() {
             Prototype screens:{" "}
             <Link href="/prototype" className="text-foreground underline">
               /prototype
+            </Link>
+          </span>
+          <span>
+            Technical A–Z:{" "}
+            <Link href="/docs/technical" className="text-foreground underline">
+              /docs/technical
             </Link>
           </span>
         </div>
