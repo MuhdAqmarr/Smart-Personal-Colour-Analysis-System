@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { Providers } from "@/app/providers";
@@ -16,13 +16,45 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// Resolve the public origin for absolute URLs (og:image, canonical). Prefer an
+// explicit env; fall back to Vercel's production domain so shared links unfurl
+// correctly even when NEXT_PUBLIC_APP_URL is not set.
+const siteUrl =
+  process.env.NEXT_PUBLIC_APP_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : siteConfig.url);
+
+const defaultTitle = `${siteConfig.name} — Smart Personal Colour Analysis`;
+
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL(siteUrl),
+  applicationName: siteConfig.name,
   title: {
-    default: `${siteConfig.name} — Smart Personal Colour Analysis`,
+    default: defaultTitle,
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  // og:image / twitter:image are supplied by opengraph-image.png / twitter-image.png
+  openGraph: {
+    type: "website",
+    siteName: siteConfig.name,
+    title: defaultTitle,
+    description: siteConfig.description,
+    url: "/",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: defaultTitle,
+    description: siteConfig.description,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f9fafb" },
+    { media: "(prefers-color-scheme: dark)", color: "#111318" },
+  ],
 };
 
 export default function RootLayout({
