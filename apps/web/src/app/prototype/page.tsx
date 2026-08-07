@@ -84,7 +84,11 @@ export default function PrototypePage() {
     <div className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6 lg:py-14">
       <header className="flex flex-col gap-4">
         <div className="flex items-center justify-between gap-4">
-          <Link href="/" className="flex items-center gap-2.5" aria-label={`${siteConfig.name} home`}>
+          <Link
+            href="/"
+            className="flex items-center gap-2.5"
+            aria-label={`${siteConfig.name} home`}
+          >
             <Image src="/logo.png" alt="" width={40} height={40} className="size-10 shrink-0" />
             <span className="text-[1.0625rem] font-semibold tracking-[-0.01em]">
               {siteConfig.name}
@@ -135,9 +139,9 @@ export default function PrototypePage() {
 
       <footer className="border-border text-muted-foreground mt-14 border-t pt-6 text-xs leading-relaxed">
         <p>
-          {siteConfig.name} is a rule-based styling and educational tool — results are estimates, not
-          medical, dermatological, or biometric claims. These prototype mockups are for the Final
-          Year Project report.
+          {siteConfig.name} is a rule-based styling and educational tool — results are estimates,
+          not medical, dermatological, or biometric claims. These prototype mockups are for the
+          Final Year Project report.
         </p>
       </footer>
     </div>
