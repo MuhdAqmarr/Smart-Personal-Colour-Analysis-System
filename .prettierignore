@@ -12,3 +12,4 @@ uv.lock
 test-assets/generated
 playwright-report
 test-results
+apps/web/public/prototype.html

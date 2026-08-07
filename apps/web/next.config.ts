@@ -46,6 +46,12 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  async rewrites() {
+    // Serve the self-contained prototype poster (public/prototype.html) at a
+    // clean /prototype URL. It is a standalone HTML page (device mockups +
+    // per-screen PNG/JPG export) intentionally outside the React app shell.
+    return [{ source: "/prototype", destination: "/prototype.html" }];
+  },
 };
 
 export default nextConfig;
