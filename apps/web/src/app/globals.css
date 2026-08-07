@@ -390,7 +390,20 @@
 }
 
 /* Print styles: only the palette card area prints. */
+@page {
+  size: A4;
+  margin: 12mm;
+}
+
 @media print {
+  /* Browsers strip background colours by default when printing — force them
+     so palette swatches actually appear on paper/PDF. */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
   body * {
     visibility: hidden;
   }
@@ -401,6 +414,17 @@
   [data-print-root] {
     position: absolute;
     inset: 0;
-    padding: 1rem;
+    padding: 0;
+  }
+  /* Keep swatch cards intact and headings attached to their grids across
+     page breaks. */
+  [data-print-root] li,
+  [data-print-root] [data-print-card] {
+    break-inside: avoid;
+  }
+  [data-print-root] h2,
+  [data-print-root] h3,
+  [data-print-root] h4 {
+    break-after: avoid;
   }
 }
