@@ -21,12 +21,14 @@ const TOC = [
   ["seasons", "6 · Seasons & sub-seasons"],
   ["products", "7 · Product matching & shopping"],
   ["architecture", "8 · Architecture & tech stack"],
-  ["privacy", "9 · Privacy & ethics"],
-  ["quality", "10 · Quality assurance"],
-  ["deployment", "11 · Deployment"],
-  ["limitations", "12 · Honest limitations"],
-  ["qna", "13 · Likely questions & answers"],
-  ["glossary", "14 · Glossary"],
+  ["model", "9 · The model & key libraries"],
+  ["code", "10 · Code structure & API design"],
+  ["privacy", "11 · Privacy & ethics"],
+  ["quality", "12 · Quality assurance"],
+  ["deployment", "13 · Deployment"],
+  ["limitations", "14 · Honest limitations"],
+  ["qna", "15 · Likely questions & answers"],
+  ["glossary", "16 · Glossary"],
 ] as const;
 
 function Section({
@@ -449,7 +451,187 @@ export default function DocsPage() {
             </ul>
           </Section>
 
-          <Section id="privacy" title="9 · Privacy & ethics">
+          <Section id="model" title="9 · The model & key libraries">
+            <Card title="The only pretrained model: MediaPipe FaceLandmarker">
+              <ul className="list-disc space-y-1.5 pl-5">
+                <li>
+                  Google’s <strong>FaceLandmarker</strong> (Face Mesh topology,{" "}
+                  <strong>478 landmark points</strong>) — an open-source, Apache-2.0 licensed model,
+                  vendored into the repo as <code>apps/api/models/face_landmarker.task</code>.
+                </li>
+                <li>
+                  It runs <strong>in-process inside the API container</strong> (CPU, via TensorFlow
+                  Lite), loaded lazily as a singleton. No external AI API is called — the photo
+                  never leaves our server.
+                </li>
+                <li>
+                  We did <strong>not train or fine-tune</strong> anything, and the model’s output is
+                  used <em>only</em> to locate skin regions geometrically — every decision after
+                  that is our own rule-based code.
+                </li>
+              </ul>
+            </Card>
+            <p>The libraries around it, and what each is responsible for:</p>
+            <div className="overflow-x-auto">
+              <table className="w-full min-w-[30rem] border-collapse text-sm">
+                <thead>
+                  <tr className="border-border border-b text-left">
+                    <th className="py-2 pr-3 font-semibold">Layer</th>
+                    <th className="py-2 pr-3 font-semibold">Library</th>
+                    <th className="py-2 font-semibold">Role</th>
+                  </tr>
+                </thead>
+                <tbody className="text-muted-foreground">
+                  {(
+                    [
+                      [
+                        "API",
+                        "FastAPI + Pydantic v2",
+                        "Async REST endpoints, request/response validation",
+                      ],
+                      [
+                        "Vision",
+                        "MediaPipe ≥ 0.10",
+                        "Face landmarks (478 points) — the only ML component",
+                      ],
+                      [
+                        "Imaging",
+                        "OpenCV (headless) + Pillow",
+                        "Decode, resize, orientation, pixel operations",
+                      ],
+                      ["Maths", "NumPy", "Vectorised colour maths over sampled pixels"],
+                      [
+                        "Database",
+                        "SQLAlchemy 2 async + asyncpg",
+                        "Typed queries to PostgreSQL, repository layer",
+                      ],
+                      [
+                        "Auth",
+                        "PyJWT + JWKS client",
+                        "Verify Supabase JWTs (HS256 legacy, RS256/ES256)",
+                      ],
+                      [
+                        "Observability",
+                        "structlog + slowapi",
+                        "Structured request logs with requestId; rate limiting",
+                      ],
+                      [
+                        "Web",
+                        "Next.js 16 + React 19 + TypeScript strict",
+                        "App Router frontend, server components",
+                      ],
+                      [
+                        "Web data",
+                        "TanStack Query 5",
+                        "Client-side data fetching, caching, mutations",
+                      ],
+                      [
+                        "Forms",
+                        "React Hook Form 7 + Zod 4",
+                        "Forms with schema validation on the client",
+                      ],
+                      [
+                        "UI",
+                        "Tailwind CSS 4 + shadcn/ui",
+                        "Design system and accessible components",
+                      ],
+                      ["Auth (web)", "supabase-js", "Sign-in/session only — never data access"],
+                    ] as const
+                  ).map(([layer, lib, role]) => (
+                    <tr key={lib} className="border-border/60 border-b align-top">
+                      <td className="text-foreground whitespace-nowrap py-2 pr-3 font-medium">
+                        {layer}
+                      </td>
+                      <td className="py-2 pr-3">{lib}</td>
+                      <td className="py-2">{role}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <Card title="Hand-implemented (not from a library)">
+              <p>
+                The colour science itself is written from scratch in NumPy, in{" "}
+                <code>apps/api/app/analysis/</code>:
+              </p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>
+                  Colour-space conversions: sRGB → linear RGB → XYZ → <strong>CIELAB</strong>, plus
+                  chroma and hue-angle helpers (<code>colour_features/conversions.py</code>).
+                </li>
+                <li>
+                  The full <strong>CIEDE2000</strong> colour-difference formula (
+                  <code>colour_features/ciede2000.py</code>).
+                </li>
+                <li>
+                  <strong>White-patch white balance</strong> with von Kries channel gains (
+                  <code>preprocessing/white_balance.py</code>).
+                </li>
+                <li>
+                  Quality gates (blur via Laplacian variance, exposure, lighting, colour cast, face
+                  size, pose), ROI polygons from landmark indices, the season/sub-season classifier,
+                  the confidence model, and the explainability payload.
+                </li>
+              </ul>
+            </Card>
+          </Section>
+
+          <Section id="code" title="10 · Code structure & API design">
+            <p>One pnpm monorepo, four top-level pieces:</p>
+            <pre className="border-border bg-card overflow-x-auto rounded-2xl border p-4 font-mono text-xs leading-relaxed">
+              {`apps/web/                  Next.js 16 frontend (App Router, TS strict)
+apps/api/                  FastAPI service (Python 3.12, managed by uv)
+  app/api/v1/              thin routers only (validation + auth + calling services)
+  app/analysis/            the pure, framework-free engine:
+    preprocessing/  quality/  face_detection/  landmarks/
+    skin_regions/  colour_features/  classification/
+    confidence/  explainability/  pipeline.py
+  app/repositories/        SQL queries (ownership checked on every query)
+  app/security/            JWT verification (HS256 legacy + RS256/ES256 via JWKS)
+packages/colour-engine/    classifier-v1.json — every threshold, versioned
+supabase/                  SQL migrations, RLS policies, generated seed`}
+            </pre>
+            <ul className="list-disc space-y-1.5 pl-5">
+              <li>
+                <strong>Routers stay thin; the engine stays pure.</strong>{" "}
+                <code>app/analysis/</code> has no framework imports and no I/O — it takes an image
+                and a config, returns a result. That is what makes it deterministic and easy to
+                unit-test.
+              </li>
+              <li>
+                <strong>No magic numbers rule:</strong> analysis code contains no literal thresholds
+                — everything (quality cut-offs, undertone signal weights, season scoring, confidence
+                weights) comes from <code>classifier-v1.json</code>, and every stored result records
+                the config version that produced it.
+              </li>
+              <li>
+                <strong>Auth flow:</strong> Supabase issues the JWT at sign-in; the browser sends it
+                as a bearer token; the API verifies signature, expiry and the{" "}
+                <code>authenticated</code> audience (shared-secret HS256 or asymmetric RS256/ES256
+                against the project’s JWKS endpoint, cached). The user id comes from the token’s{" "}
+                <code>sub</code> claim — never from the request body.
+              </li>
+              <li>
+                <strong>Every response is predictable:</strong> errors use one envelope —{" "}
+                <code>{`{ "error": { "code", "message", "details?", "requestId" } }`}</code> — no
+                raw stack traces; requests are rate-limited (slowapi) and logged with structlog
+                (request id, duration, status — never image bytes).
+              </li>
+              <li>
+                <strong>Database:</strong> ~24 PostgreSQL tables (analyses and their
+                classifications/quality metrics/colour samples, seasons → sub-seasons → palette
+                colours, products/stores/import jobs, favourites, consents, audit logs). Row-level
+                security is enabled as defence-in-depth, and the API additionally enforces ownership
+                inside every repository query.
+              </li>
+              <li>
+                <strong>Validation on both ends:</strong> Zod schemas in the browser, Pydantic
+                models in the API — malformed input never reaches the engine.
+              </li>
+            </ul>
+          </Section>
+
+          <Section id="privacy" title="11 · Privacy & ethics">
             <ul className="list-disc space-y-1.5 pl-5">
               <li>
                 <strong>Guest photos are never stored</strong> — processed in memory, then
@@ -474,7 +656,7 @@ export default function DocsPage() {
             </ul>
           </Section>
 
-          <Section id="quality" title="10 · Quality assurance">
+          <Section id="quality" title="12 · Quality assurance">
             <ul className="list-disc space-y-1.5 pl-5">
               <li>
                 <strong>Determinism as a testable property:</strong> the same photo always produces
@@ -502,7 +684,7 @@ export default function DocsPage() {
             </ul>
           </Section>
 
-          <Section id="deployment" title="11 · Deployment">
+          <Section id="deployment" title="13 · Deployment">
             <ul className="list-disc space-y-1.5 pl-5">
               <li>
                 <strong>Vercel</strong> hosts the Next.js frontend —{" "}
@@ -527,7 +709,7 @@ export default function DocsPage() {
             </ul>
           </Section>
 
-          <Section id="limitations" title="12 · Honest limitations">
+          <Section id="limitations" title="14 · Honest limitations">
             <ul className="list-disc space-y-1.5 pl-5">
               <li>
                 Results depend on photo conditions — lighting, camera processing, makeup and filters
@@ -552,7 +734,7 @@ export default function DocsPage() {
             </ul>
           </Section>
 
-          <Section id="qna" title="13 · Likely questions & answers">
+          <Section id="qna" title="15 · Likely questions & answers">
             <div className="space-y-3">
               <QA q="Is this AI? Why not use machine learning?">
                 <p>
@@ -616,6 +798,40 @@ export default function DocsPage() {
                   privacy architecture, the admin console and the full UI.
                 </p>
               </QA>
+              <QA q="Which model do you use exactly — and did you train it?">
+                <p>
+                  One pretrained model only: <strong>MediaPipe FaceLandmarker</strong> (Google’s
+                  Face Mesh, 478 landmarks, Apache-2.0), vendored into the repo and run in-process
+                  on CPU. We did not train or fine-tune it, and it contributes zero classification
+                  decisions — it only tells us <em>where</em> the cheeks, forehead and jaw are.
+                  Undertone and season come entirely from our own rule-based code over CIELAB
+                  measurements. There is no external AI API anywhere in the system.
+                </p>
+              </QA>
+              <QA q="Show me the code — where does the analysis actually live?">
+                <p>
+                  In <code>apps/api/app/analysis/</code>, as a pure, framework-free Python package:{" "}
+                  <code>preprocessing/</code> (white balance), <code>quality/</code> (blur via
+                  Laplacian variance, exposure, lighting, cast), <code>landmarks/</code> +{" "}
+                  <code>skin_regions/</code> (ROI polygons from landmark indices),{" "}
+                  <code>colour_features/</code> (hand-written sRGB→XYZ→CIELAB conversions and the
+                  full CIEDE2000 formula in NumPy), <code>classification/</code>,{" "}
+                  <code>confidence/</code>, <code>explainability/</code>, orchestrated by{" "}
+                  <code>pipeline.py</code>. FastAPI routers stay thin — they validate, authenticate,
+                  call the pipeline, persist.
+                </p>
+              </QA>
+              <QA q="Why Python + FastAPI for the API, and Next.js for the web?">
+                <p>
+                  Python owns the imaging ecosystem — MediaPipe, OpenCV and NumPy are first-class
+                  there, so the engine is concise and fast (vectorised maths; analysis completes in
+                  well under a second). FastAPI adds async I/O, Pydantic validation and typed
+                  contracts with almost no boilerplate. Next.js gives server-side rendering for the
+                  public pages, the App Router for route groups (marketing / app / admin / auth),
+                  and a strict-TypeScript component stack — with Zod validating on the client what
+                  Pydantic re-validates on the server.
+                </p>
+              </QA>
               <QA q="How do you know the engine still works after a change?">
                 <p>
                   CI runs the full test pyramid on every pull request — unit tests for the colour
@@ -642,7 +858,7 @@ export default function DocsPage() {
             </div>
           </Section>
 
-          <Section id="glossary" title="14 · Glossary">
+          <Section id="glossary" title="16 · Glossary">
             <div className="grid gap-3 sm:grid-cols-2">
               <Card title="Undertone">
                 <p>
